@@ -431,6 +431,10 @@ select {
   min-height: 520px;
 }
 
+.plot-card--xl {
+  min-height: 650px;
+}
+
 .plot-card__loading {
   display: grid;
   place-items: center;

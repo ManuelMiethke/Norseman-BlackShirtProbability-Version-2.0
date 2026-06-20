@@ -139,7 +139,7 @@ The migration deliberately starts as a parallel frontend:
 - Streamlit remains the safe baseline
 - React becomes the new presentation layer
 - Plotly remains the charting language so diagrams keep the same analytical look
-- the React overview route now covers participation KPIs, distance-vs-time donuts, the cross-year median comparison and `Who Are We Racing?`
+- the React overview route now covers participation KPIs, distance-vs-time donuts, the cross-year median comparison, `Who Are We Racing?` and rank progression
 
 Reason:
 
@@ -173,7 +173,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend currently covers four overview analytics blocks; the remaining overview modules and the other pages are still queued for porting.
+- The React frontend currently covers five overview analytics blocks; the remaining Overview work is mainly `histograms`, after which the other pages are still queued for porting.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

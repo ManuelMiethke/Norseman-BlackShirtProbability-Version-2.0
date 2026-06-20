@@ -1,4 +1,5 @@
 import { ParticipantsSection } from "@/components/overview/ParticipantsSection";
+import { RankProgressionSection } from "@/components/overview/RankProgressionSection";
 import { TimeRelationsSection } from "@/components/overview/TimeRelationsSection";
 import { WhoAreWeRacingSection } from "@/components/overview/WhoAreWeRacingSection";
 import { YearComparisonSection } from "@/components/overview/YearComparisonSection";
@@ -15,12 +16,12 @@ export function OverviewPage() {
           <span className="page-hero__eyebrow">Overview Route</span>
           <h1>React overview migration</h1>
           <p>
-            This route now covers four analytical building blocks of the original dashboard overview: participation context, distance-vs-time relations, the cross-year median comparison and the first long-data race-pressure view. The Streamlit version stays available in parallel while the remaining pages are ported.
+            This route now covers five analytical building blocks of the original dashboard overview: participation context, distance-vs-time relations, the cross-year median comparison, the first long-data race-pressure view and rank progression. The Streamlit version stays available in parallel while the remaining pages are ported.
           </p>
         </div>
         <div className="page-hero__badge">
-          <strong>Phase 2</strong>
-          <span>Expanded overview port</span>
+          <strong>Phase 3</strong>
+          <span>Rank progression added</span>
         </div>
       </section>
 
@@ -36,6 +37,7 @@ export function OverviewPage() {
       <TimeRelationsSection />
       <YearComparisonSection />
       <WhoAreWeRacingSection />
+      <RankProgressionSection />
     </div>
   );
 }

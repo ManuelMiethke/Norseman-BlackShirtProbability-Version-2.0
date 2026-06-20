@@ -13,6 +13,7 @@
 - `completed` P0.R2 Port the first overview slice to React with Plotly preserved
 - `completed` P0.R3 Port the cross-year overview comparison to React
 - `completed` P0.R4 Add a route-local long-data hook and port `Who Are We Racing?`
+- `completed` P0.R5 Port the rank-progression overview modules to React
 - `in_progress` P1.R3 Port remaining pages to React through shared computation adapters
 - `pending` all other tasks unless noted otherwise
 
@@ -278,13 +279,21 @@
 - Dependencies: P0.R3
 - Acceptance criterion: React overview route loads the packaged long split data through a dedicated hook and renders the original `Who Are We Racing?` outcome and frontier views with preserved multi-year semantics
 
+#### P0.R5 Port the rank-progression overview modules to React
+
+- Status: `completed`
+- Benefit: removes two more Streamlit-only overview analyses by reusing the new long-data path and consolidating them into a cleaner React section
+- Risk: low
+- Dependencies: P0.R4
+- Acceptance criterion: React overview route renders both the Top-10 progression view and the all-athlete cut-off progression view from packaged long split data with year-aware course structure and preserved group semantics
+
 #### P1.R3 Port remaining pages to React through shared computation adapters
 
 - Status: `in_progress`
 - Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
 - Risk: medium
-- Dependencies: P1.1, P1.2, P0.R4
-- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, starting with the remaining overview modules (`histograms`, rank progressions)
+- Dependencies: P1.1, P1.2, P0.R5
+- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, starting with the remaining overview module `histograms`
 
 #### P1.R4 Introduce a frontend-oriented data contract
 
@@ -325,6 +334,7 @@
 9. P0.R2 Port the first overview slice to React
 10. P0.R3 Port the cross-year overview comparison to React
 11. P0.R4 Add a route-local long-data hook and port `Who Are We Racing?`
+12. P0.R5 Port the rank-progression overview modules to React
 
 ## Completed in This Iteration
 
@@ -343,11 +353,12 @@
 - Expanded the React overview route with the original year-comparison chart modes and a supporting median split table.
 - Added a route-local React long-data hook so long split parsing is no longer tied to the global wide-data dashboard context.
 - Ported `Who Are We Racing?` to React, including the yearly outcome stack and the empirical Black Shirt frontier summary.
+- Ported the Top-10 and all-athlete rank-progression modules into one React section backed by shared long split logic.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P1.R3 by migrating `histograms` and the remaining rank-progression modules before moving deeper into the other pages.
+- Continue P1.R3 by migrating `histograms`, then move from the now nearly complete Overview route into `Pacing & Course`.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.
