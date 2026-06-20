@@ -15,3 +15,15 @@ export type WideRow = {
   run_32_5km_langefonn_time?: string;
   run_37_5km_stavsro_cut_off_time?: string;
 };
+
+export type LongRow = {
+  year: number;
+  bib: number;
+  name: string;
+  finish_type: string;
+  overall_rank?: number;
+  split_key: string;
+  split_rank?: number;
+  race_distance_km?: number;
+  cum_time_seconds?: number;
+};

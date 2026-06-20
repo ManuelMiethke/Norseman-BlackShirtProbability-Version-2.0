@@ -1,6 +1,7 @@
 import Papa from "papaparse";
 
 let wideDataPromise: Promise<Record<string, unknown>[]> | null = null;
+let longDataPromise: Promise<Record<string, unknown>[]> | null = null;
 
 function parseCsv(url: string): Promise<Record<string, unknown>[]> {
   return new Promise((resolve, reject) => {
@@ -26,4 +27,11 @@ export async function loadWideCsv() {
     wideDataPromise = parseCsv("/nxtri_data_all_years.csv");
   }
   return wideDataPromise;
+}
+
+export async function loadLongCsv() {
+  if (!longDataPromise) {
+    longDataPromise = parseCsv("/nxtri_data_all_years_long_ready_featured.csv");
+  }
+  return longDataPromise;
 }

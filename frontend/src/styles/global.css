@@ -219,6 +219,11 @@ select {
   gap: 1.15rem;
 }
 
+.section-stack {
+  display: grid;
+  gap: 1rem;
+}
+
 .page-hero {
   display: flex;
   justify-content: space-between;

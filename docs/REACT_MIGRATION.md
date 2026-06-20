@@ -25,7 +25,9 @@ The repository now contains a parallel React frontend in `frontend/`.
   - finish/gender/country summary cards
   - `Distance vs. Time Relations` Plotly donut charts
   - `Year Comparison` with `Time Overview`, `Compared to 2025` and `Trend` modes
+- `Who Are We Racing?` is now also ported from the long split dataset.
 - A shared React-side filter helper layer now covers year and finisher-group filtering for migrated modules.
+- A route-local long-data hook now supports long split consumers without pushing that payload into global dashboard context.
 - Remaining pages are scaffolded as migration targets.
 
 ## Start the React app

@@ -20,6 +20,9 @@
 - Added `frontend/src/lib/groups.ts` to centralize React-side year and finisher-group filtering.
 - Added `frontend/src/lib/yearComparison.ts` to port the original cross-year median comparison and finish-trend logic.
 - Added `frontend/src/components/overview/YearComparisonSection.tsx` for the new React overview comparison block.
+- Added `frontend/src/hooks/useLongData.ts` so long split data can be loaded per route/module instead of being forced into global dashboard state.
+- Added `frontend/src/lib/whoAreWeRacing.ts` to port the original long-data outcome/frontier calculations.
+- Added `frontend/src/components/overview/WhoAreWeRacingSection.tsx` for the first long-data-driven React overview section.
 
 ### Verified
 
@@ -39,6 +42,8 @@
 - Verified the expanded React app still builds successfully with `npm run build` after the year-comparison migration slice.
 - Verified dashboard asset validation still passes after the React-side data-contract extension.
 - Verified Python tests still pass after the new React-side helper layer was added.
+- Verified the React app still builds successfully after introducing the route-local long-data hook and `Who Are We Racing?`.
+- Verified Python tests still pass after the new long-data React slice was added.
 
 ### Notes
 
@@ -58,6 +63,8 @@
 - Extended the React wide-row data contract with run-start and cutoff split fields needed for cross-year comparisons.
 - Hardened React time parsing so malformed segment strings now fail closed instead of producing silent `NaN` math.
 - Reused shared React filter helpers in the time-relations layer to reduce duplicated year/finish-group logic.
+- Extended the React frontend with a dedicated long-data loading path instead of reusing the wide-data dashboard context for every module.
+- Expanded the React overview route with the original `Who Are We Racing?` outcome stack and empirical frontier summary.
 
 ### Fixed
 
