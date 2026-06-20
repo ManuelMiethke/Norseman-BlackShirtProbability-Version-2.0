@@ -276,6 +276,12 @@ select {
   margin-bottom: 1rem;
 }
 
+.section-controls--stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.9rem;
+}
+
 .toggle-pill {
   display: inline-flex;
   align-items: center;
@@ -416,6 +422,10 @@ select {
   overflow: hidden;
 }
 
+.plot-card--tall {
+  min-height: 520px;
+}
+
 .plot-card__loading {
   display: grid;
   place-items: center;
@@ -446,6 +456,98 @@ select {
 .state-block--error {
   border-color: rgba(255, 127, 114, 0.2);
   background: rgba(255, 127, 114, 0.07);
+}
+
+.section-note,
+.table-panel {
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.section-note {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.section-note strong,
+.table-panel__header h4 {
+  margin: 0;
+  font-family: var(--font-display);
+}
+
+.section-note span,
+.table-panel__header p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.segmented-control {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.segmented-control__button {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 0.78rem 1rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.segmented-control__button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(99, 210, 255, 0.22);
+}
+
+.segmented-control__button--active {
+  border-color: rgba(99, 210, 255, 0.34);
+  background: linear-gradient(90deg, rgba(99, 210, 255, 0.14), rgba(213, 255, 90, 0.1));
+}
+
+.table-panel {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.table-panel__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.data-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.data-table th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(99, 210, 255, 0.04);
 }
 
 @media (max-width: 1200px) {
@@ -502,6 +604,14 @@ select {
   .metric-card__header,
   .metric-card__split {
     flex-direction: column;
+  }
+
+  .table-panel__header {
+    flex-direction: column;
+  }
+
+  .segmented-control {
+    display: grid;
   }
 
   .plot-grid--2,

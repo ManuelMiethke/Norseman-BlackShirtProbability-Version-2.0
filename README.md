@@ -72,6 +72,8 @@ npm install
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
+The main migrated route is available at `http://127.0.0.1:5173/overview`.
+
 ## Current architecture decisions
 
 ### 1. Shared configuration first, not a rewrite
@@ -137,6 +139,7 @@ The migration deliberately starts as a parallel frontend:
 - Streamlit remains the safe baseline
 - React becomes the new presentation layer
 - Plotly remains the charting language so diagrams keep the same analytical look
+- the React overview route now covers participation KPIs, distance-vs-time donuts and the cross-year median comparison
 
 Reason:
 
@@ -162,6 +165,7 @@ As of this redesign iteration:
 - dashboard asset validation passes
 - unit tests for config/data contracts pass
 - the four main Streamlit pages instantiate successfully via `streamlit.testing.v1.AppTest`
+- the React app builds successfully after the expanded overview migration slice
 
 ## Open points
 
@@ -169,7 +173,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend currently covers only the first migrated overview slice; the remaining pages are still queued for porting.
+- The React frontend currently covers the first three overview analytics blocks; the remaining overview modules and the other pages are still queued for porting.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

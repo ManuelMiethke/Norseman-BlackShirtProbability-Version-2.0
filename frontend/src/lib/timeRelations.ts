@@ -1,6 +1,12 @@
 import type { Layout, Data } from "plotly.js";
 
 import type { GroupOption } from "@/config/raceRegistry";
+import {
+  filterRowsByYear,
+  isBlackFinishType,
+  isCompleteFinisher,
+  isWhiteFinishType,
+} from "@/lib/groups";
 import { formatDelta, secondsToHms, timeToSeconds } from "@/lib/time";
 import type { WideRow } from "@/types/data";
 
@@ -91,7 +97,7 @@ function normalizeRows(rows: WideRow[]) {
 }
 
 function referenceBlack(rows: ReturnType<typeof normalizeRows>) {
-  const blackRows = rows.filter((row) => row.finish_type === "Black");
+  const blackRows = rows.filter((row) => isBlackFinishType(row.finish_type));
   if (blackRows.length === 0) {
     return null;
   }
@@ -118,15 +124,15 @@ function figureForGroup(
   deltaOnly: boolean,
   blackReference: { swim: number; bike: number; run: number } | null,
 ): GroupFigure | null {
-  const finisherRows = rows.filter((row) => row.finish_type === "Black" || row.finish_type === "White");
+  const finisherRows = rows.filter((row) => isCompleteFinisher(row));
   let groupRows = finisherRows;
 
   if (group === "Top 10") {
     groupRows = finisherRows.filter((row) => row.overallRankValue <= 10);
   } else if (group === "Black Shirt") {
-    groupRows = finisherRows.filter((row) => row.finish_type === "Black");
+    groupRows = finisherRows.filter((row) => isBlackFinishType(row.finish_type));
   } else if (group === "White Shirt") {
-    groupRows = finisherRows.filter((row) => row.finish_type === "White");
+    groupRows = finisherRows.filter((row) => isWhiteFinishType(row.finish_type));
   }
 
   if (groupRows.length === 0) {
@@ -166,8 +172,7 @@ export function buildTimeRelationFigures(
   selectedGroup: GroupOption,
   deltaOnly: boolean,
 ) {
-  const scopedRows =
-    selectedYear === "All" ? rows : rows.filter((row) => Number(row.year) === selectedYear);
+  const scopedRows = filterRowsByYear(rows, selectedYear);
   const normalized = normalizeRows(scopedRows);
   const distanceTotal = SEGMENT_DISTANCES.reduce((sum, value) => sum + value, 0);
   const distancePercentages = SEGMENT_DISTANCES.map((value) => (value / distanceTotal) * 100);

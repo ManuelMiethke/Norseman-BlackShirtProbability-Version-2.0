@@ -20,10 +20,12 @@ The repository now contains a parallel React frontend in `frontend/`.
 
 - React app shell and routing are scaffolded.
 - Shared year/group filters are wired.
-- The first overview slice is ported:
+- The React overview route currently covers:
   - participation KPI cards
   - finish/gender/country summary cards
   - `Distance vs. Time Relations` Plotly donut charts
+  - `Year Comparison` with `Time Overview`, `Compared to 2025` and `Trend` modes
+- A shared React-side filter helper layer now covers year and finisher-group filtering for migrated modules.
 - Remaining pages are scaffolded as migration targets.
 
 ## Start the React app
@@ -38,8 +40,8 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 ## Recommended migration order
 
-1. Overview page remaining charts
-2. Shared filter/group/cutoff utility layer
+1. Overview page remaining charts and rank-progress views
+2. Shared long-data contract for ranking/progression modules
 3. Pacing & Course page
 4. Model Predictions page
 5. Tools page

@@ -17,6 +17,9 @@
 - Added root `README.md` with startup, architecture summary and open points.
 - Added automated tests for dashboard config and data contracts under `tests/`.
 - Added a new `frontend/` React + Vite workspace with routed pages, shared filters and Plotly support.
+- Added `frontend/src/lib/groups.ts` to centralize React-side year and finisher-group filtering.
+- Added `frontend/src/lib/yearComparison.ts` to port the original cross-year median comparison and finish-trend logic.
+- Added `frontend/src/components/overview/YearComparisonSection.tsx` for the new React overview comparison block.
 
 ### Verified
 
@@ -33,6 +36,9 @@
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` passes.
 - Verified the React app builds successfully with `npm run build`.
 - Verified the React app renders locally on `http://127.0.0.1:5173/overview`.
+- Verified the expanded React app still builds successfully with `npm run build` after the year-comparison migration slice.
+- Verified dashboard asset validation still passes after the React-side data-contract extension.
+- Verified Python tests still pass after the new React-side helper layer was added.
 
 ### Notes
 
@@ -48,6 +54,10 @@
 - Delegated the remaining module-level CSV loading helpers in `modelaccuracy.py` and `weatherspeed.py` to the shared data layer.
 - Introduced a parallel React frontend instead of extending Streamlit further for the new UI direction.
 - Ported the first overview route to React while preserving Plotly-based diagram behavior for `Distance vs. Time Relations`.
+- Expanded the React overview route with the original year-comparison analytics and a matching median split reference table.
+- Extended the React wide-row data contract with run-start and cutoff split fields needed for cross-year comparisons.
+- Hardened React time parsing so malformed segment strings now fail closed instead of producing silent `NaN` math.
+- Reused shared React filter helpers in the time-relations layer to reduce duplicated year/finish-group logic.
 
 ### Fixed
 
@@ -57,3 +67,4 @@
 ### Notes
 
 - The React build currently emits a large bundle warning because Plotly is heavy; bundle/data chunking remains a follow-up optimization.
+- An in-app browser smoke test against `http://127.0.0.1:5173/overview` was attempted after this slice, but the browser tab crashed before a reliable visual confirmation; build and test checks remain green.

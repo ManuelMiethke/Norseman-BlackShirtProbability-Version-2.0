@@ -11,7 +11,8 @@
 - `completed` P0.7 Add tests for configuration and data-contract validation
 - `completed` P0.R1 Scaffold parallel React frontend
 - `completed` P0.R2 Port the first overview slice to React with Plotly preserved
-- `in_progress` P1.R3 Define the React-first migration path for the remaining dashboard pages
+- `completed` P0.R3 Port the cross-year overview comparison to React
+- `in_progress` P1.R3 Port remaining pages to React through shared computation adapters
 - `pending` all other tasks unless noted otherwise
 
 ## Repository Analysis
@@ -260,13 +261,21 @@
 - Dependencies: P0.R1
 - Acceptance criterion: React overview route renders shared year/group filters, participant summary cards and at least one migrated Plotly chart section
 
+#### P0.R3 Port the cross-year overview comparison to React
+
+- Status: `completed`
+- Benefit: extends the React overview route with the original cross-year comparison logic while keeping the packaged-data approach intact
+- Risk: low
+- Dependencies: P0.R2
+- Acceptance criterion: React overview route renders the all-years median split comparison in `Time Overview`, `Compared to 2025` and `Trend` modes using the packaged wide dataset and group-aware filtering
+
 #### P1.R3 Port remaining pages to React through shared computation adapters
 
 - Status: `in_progress`
 - Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
 - Risk: medium
-- Dependencies: P1.1, P1.2, P0.R2
-- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters
+- Dependencies: P1.1, P1.2, P0.R3
+- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, starting with the remaining overview modules (`histograms`, rank progressions, `whoareweracing`)
 
 #### P1.R4 Introduce a frontend-oriented data contract
 
@@ -305,6 +314,7 @@
 7. P0.7 Tests for config and data-contract validation
 8. P0.R1 Scaffold parallel React frontend
 9. P0.R2 Port the first overview slice to React
+10. P0.R3 Port the cross-year overview comparison to React
 
 ## Completed in This Iteration
 
@@ -319,11 +329,13 @@
 - Added `docs/ADDING_RACE_YEAR.md` and `README.md` to document architecture, startup, validation and open points.
 - Added a new `frontend/` React + Vite workspace that reuses the packaged dashboard assets directly.
 - Ported the first React overview slice, including participant summary cards and `Distance vs. Time Relations` Plotly donuts.
+- Added shared React-side filter helpers so migrated charts do not each re-implement year and finisher-group logic.
+- Expanded the React overview route with the original year-comparison chart modes and a supporting median split table.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P1.R3 by migrating the remaining overview charts and then `Pacing & Course` into React.
+- Continue P1.R3 by migrating the remaining overview charts and ranking modules before pulling the long-data-heavy pages into React.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.
