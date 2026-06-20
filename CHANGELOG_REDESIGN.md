@@ -25,6 +25,8 @@
 - Added `frontend/src/components/overview/WhoAreWeRacingSection.tsx` for the first long-data-driven React overview section.
 - Added `frontend/src/lib/rankProgression.ts` to port the Top-10 and all-athlete rank progression logic from the Streamlit overview.
 - Added `frontend/src/components/overview/RankProgressionSection.tsx` to render the combined React rank progression section.
+- Added `frontend/src/lib/histograms.ts` to port the overview time-distribution logic with absolute, relative and bike-scale modes.
+- Added `frontend/src/components/overview/HistogramsSection.tsx` for the React time-distribution block.
 
 ### Verified
 
@@ -48,6 +50,9 @@
 - Verified Python tests still pass after the new long-data React slice was added.
 - Verified the React app still builds successfully after adding the rank progression slice.
 - Verified Python tests still pass after the rank progression slice was added.
+- Verified the React app still builds successfully after adding the histogram slice.
+- Verified dashboard asset validation still passes after the histogram slice was added.
+- Verified Python tests still pass after the histogram slice was added.
 
 ### Notes
 
@@ -70,6 +75,7 @@
 - Extended the React frontend with a dedicated long-data loading path instead of reusing the wide-data dashboard context for every module.
 - Expanded the React overview route with the original `Who Are We Racing?` outcome stack and empirical frontier summary.
 - Expanded the React overview route with a combined rank progression section covering the original Top-10 and all-athlete cut-off views.
+- Expanded the React overview route with the original overview histogram block and completed the React coverage of the original Overview page.
 
 ### Fixed
 

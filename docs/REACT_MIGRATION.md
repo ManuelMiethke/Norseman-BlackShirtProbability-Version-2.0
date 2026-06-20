@@ -27,8 +27,10 @@ The repository now contains a parallel React frontend in `frontend/`.
   - `Year Comparison` with `Time Overview`, `Compared to 2025` and `Trend` modes
 - `Who Are We Racing?` is now also ported from the long split dataset.
 - `Rank Progression` is now also ported as a combined React section for Top-10 finishers and all athletes to the cut-off.
+- `Time Distributions` is now also ported with the original absolute, relative and bike-scale modes.
 - A shared React-side filter helper layer now covers year and finisher-group filtering for migrated modules.
 - A route-local long-data hook now supports long split consumers without pushing that payload into global dashboard context.
+- The React overview route now covers the original Streamlit Overview page end to end.
 - Remaining pages are scaffolded as migration targets.
 
 ## Start the React app
@@ -43,11 +45,10 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 ## Recommended migration order
 
-1. Overview page remaining `histograms`
-2. Shared long-data contract for ranking/progression modules
-3. Pacing & Course page
-4. Model Predictions page
-5. Tools page
+1. Pacing & Course page
+2. Model Predictions page
+3. Tools page
+4. Slimmer frontend-oriented data contract for route-specific assets
 
 ## Important constraint
 
