@@ -1,0 +1,548 @@
+index,year,bib,name,discipline,from_col,to_col,from_km,to_km,segment_km,segment_time_h,speed_kmh,pace_min_per_km,issue
+990,2024,89,Terhi RANTA-OJALA,bike,bike_6km_ovre_eidfjord_time,bike_11km_enter_gamlevegen_time,6.0,11.0,5.0,0.6772222222222222,7.383100902379,8.126666666666667,too_slow
+122,2018,51,Kaisa ILVESM√ÑKI-JAKOBSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6411111111111111,7.798960138648181,7.6933333333333325,too_slow
+129,2018,189,Jon ALMAAS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6338888888888888,7.887817703768625,7.6066666666666665,too_slow
+130,2018,177,Kenneth KRAGH,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6322222222222222,7.908611599297012,7.586666666666668,too_slow
+133,2018,188,Jon PAIN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6280555555555556,7.961079168509508,7.536666666666667,too_slow
+150,2018,142,Odd-Heine PEDERSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6294444444444445,7.94351279788173,7.553333333333333,too_slow
+163,2018,281,Andreas BARSTAD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7269444444444444,6.878104700038212,8.723333333333333,too_slow
+164,2018,93,S√∏lve ROBSTAD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6455555555555555,7.74526678141136,7.746666666666667,too_slow
+166,2018,32,Violeta DIALETARA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.705,7.092198581560284,8.459999999999999,too_slow
+168,2018,35,Sharon ALMAGOR,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6733333333333333,7.425742574257426,8.08,too_slow
+169,2018,171,Lars BERGET,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6611111111111111,7.563025210084033,7.933333333333333,too_slow
+170,2018,175,Kim Nicolai STR√òMSBORG,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6461111111111111,7.738607050730868,7.753333333333333,too_slow
+178,2018,110,Rolf Kristian TANGEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6375,7.843137254901961,7.65,too_slow
+179,2018,107,Ronald R√òYSLAND,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6336111111111111,7.89127575624726,7.6033333333333335,too_slow
+180,2018,108,Roman POTAPOV,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6552777777777777,7.630351844001696,7.863333333333332,too_slow
+183,2018,101,S√©bastien LEFEBVRE,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6422222222222222,7.7854671280276815,7.706666666666666,too_slow
+184,2018,52,Jenna EPIFANIO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6980555555555555,7.162753680859531,8.376666666666667,too_slow
+185,2018,170,Lars BJERTNAES,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6563888888888889,7.61743546339399,7.876666666666667,too_slow
+187,2018,199,Javier ALVAREZ,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6363888888888889,7.85683107813182,7.636666666666668,too_slow
+188,2018,41,Rikke HAAGENSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6588888888888889,7.588532883642496,7.906666666666666,too_slow
+189,2018,285,Anders STENVALL,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6569444444444444,7.6109936575052854,7.883333333333333,too_slow
+192,2018,223,Geir Harald MOVOLD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6788888888888889,7.364975450081833,8.146666666666667,too_slow
+194,2018,44,Michele SANTILHANO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6411111111111111,7.798960138648181,7.6933333333333325,too_slow
+195,2018,233,Fabio PELLEGRINI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6325,7.905138339920949,7.589999999999999,too_slow
+197,2018,150,Mikael KATAJAINEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6713888888888889,7.447248655357881,8.056666666666668,too_slow
+198,2018,92,Terje SYSTAD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6455555555555555,7.74526678141136,7.746666666666667,too_slow
+199,2018,216,Hans-Jacob R√òD√ò,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6802777777777778,7.349938750510413,8.163333333333332,too_slow
+200,2018,257,Christian SCHNEIDER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6394444444444445,7.819287576020851,7.673333333333334,too_slow
+201,2018,136,Paul HESELWOOD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6252777777777778,7.996446023989337,7.503333333333333,too_slow
+202,2018,56,Gabriele CELETTE,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6886111111111111,7.260992335619202,8.263333333333332,too_slow
+204,2018,67,Alina MIKRIUKOVA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7544444444444445,6.627393225331369,9.053333333333333,too_slow
+206,2018,165,Marek CHRZANOWSKI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7163888888888889,6.979449398991858,8.596666666666668,too_slow
+207,2018,201,Jaroslaw PERKOWSKI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6658333333333334,7.50938673341677,7.99,too_slow
+208,2018,64,Ane DAABACH ELVEMO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6775,7.380073800738008,8.129999999999999,too_slow
+209,2018,205,Iain TODD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6811111111111111,7.3409461663947795,8.173333333333334,too_slow
+210,2018,266,Bj√∏rn DILLEK√ÖS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6580555555555555,7.598142676234699,7.896666666666666,too_slow
+211,2018,151,Michal FORLAND,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6830555555555555,7.320048800325336,8.196666666666667,too_slow
+212,2018,172,Lars WOLD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7330555555555556,6.820765441455096,8.796666666666667,too_slow
+213,2018,33,Theresa BRYNILDSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6569444444444444,7.6109936575052854,7.883333333333333,too_slow
+214,2018,122,Prof. Dr. Tim-Nicolas KORF,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6758333333333333,7.398273736128237,8.11,too_slow
+215,2018,231,Franck VINCENT,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7136111111111111,7.006617360840794,8.563333333333333,too_slow
+216,2018,62,Brooke Bjorge SCHOHL,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6541666666666667,7.643312101910828,7.85,too_slow
+217,2018,154,Max BAGARD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6841666666666667,7.3081607795371495,8.21,too_slow
+218,2018,98,Stas BLAGIN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7133333333333334,7.009345794392523,8.56,too_slow
+219,2018,49,Kine Jeanette BERGUM HJELLEGJERDE,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6733333333333333,7.425742574257426,8.08,too_slow
+220,2018,167,Maciej CZAJKOWSKI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7061111111111111,7.081038552321007,8.473333333333333,too_slow
+221,2018,130,Peter TANDLICH,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.8072222222222222,6.194081211286993,9.686666666666666,too_slow
+222,2018,91,Thomas VANDEHEY II,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6625,7.547169811320755,7.95,too_slow
+223,2018,45,Louise MCCARTHY,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7552777777777778,6.620080912100036,9.063333333333334,too_slow
+224,2018,54,Hilde ACKENHAUSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7130555555555556,7.012076353720296,8.556666666666667,too_slow
+225,2018,134,Paul BURGESS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6663888888888889,7.503126302626094,7.996666666666667,too_slow
+226,2018,84,Tobias HILLER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7263888888888889,6.8833652007648185,8.716666666666665,too_slow
+227,2018,38,Sari DAHLSTEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7088888888888889,7.053291536050157,8.506666666666666,too_slow
+228,2018,36,Seyda ERKAHRAMAN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7211111111111111,6.933744221879815,8.653333333333332,too_slow
+229,2018,275,Antonio Tj JIMENEZ,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7522222222222222,6.646971935007385,9.026666666666667,too_slow
+230,2018,181,Jose Mari CAGURANGAN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7441666666666666,6.71892497200448,8.93,too_slow
+231,2018,166,Magnus HELLID,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7444444444444445,6.716417910447761,8.933333333333334,too_slow
+232,2018,97,Stian ALEKSANDERSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.9241666666666667,5.410279531109107,11.09,too_slow
+233,2018,290,Alexandre BORGES,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7672222222222222,6.517016654598117,9.206666666666667,too_slow
+234,2018,74,Yudiana FIANTO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.8741666666666666,5.719733079122975,10.489999999999998,too_slow
+416,2019,139,Monika POLKOWSKA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6305555555555555,7.929515418502203,7.5666666666666655,too_slow
+423,2019,178,Petter BJ√ñRKEB√ÑCK,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6738888888888889,7.41962077493817,8.086666666666666,too_slow
+426,2019,293,Dejan LJUSIC,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6252777777777778,7.996446023989337,7.503333333333333,too_slow
+440,2019,188,Pawel BUGAJNY,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7027777777777777,7.114624505928854,8.433333333333334,too_slow
+444,2019,327,Arkadiusz PTAK,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6705555555555556,7.456503728251864,8.046666666666667,too_slow
+447,2019,297,Igor MAJER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7466666666666667,6.696428571428571,8.96,too_slow
+450,2019,134,Louise MINCHIN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6830555555555555,7.320048800325336,8.196666666666667,too_slow
+456,2019,216,Marco EPIFANIO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6433333333333333,7.772020725388601,7.720000000000001,too_slow
+457,2019,265,Neil JONES,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6916666666666667,7.228915662650603,8.3,too_slow
+461,2019,115,Hege M√∏rch FOSSE,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7638888888888888,6.545454545454546,9.166666666666666,too_slow
+464,2019,285,Kelly LANGLEY,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6916666666666667,7.228915662650603,8.3,too_slow
+467,2019,104,Kieran BALLARD TREMEER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6994444444444444,7.148530579825258,8.393333333333334,too_slow
+469,2019,164,Lukas BACH,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6316666666666667,7.915567282321899,7.580000000000001,too_slow
+471,2019,166,James BAYHACK,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7613888888888889,6.566946369937979,9.136666666666667,too_slow
+472,2019,130,Eunice MACIAS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7519444444444444,6.649427410417436,9.023333333333333,too_slow
+473,2019,184,Hans BOSMAN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6708333333333333,7.453416149068324,8.05,too_slow
+476,2019,132,Nina Nyg√•rd MAGNUSSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6647222222222222,7.521938988717092,7.976666666666667,too_slow
+477,2019,135,Linn Bunse M√òLLERHAGEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6891666666666667,7.255139056831922,8.27,too_slow
+480,2019,195,Christian CARSTENSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6988888888888889,7.154213036565977,8.386666666666667,too_slow
+481,2019,167,Jeff BEAUDETTE,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6597222222222222,7.578947368421053,7.916666666666667,too_slow
+485,2019,108,Alicia BLANCO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7883333333333333,6.342494714587738,9.459999999999999,too_slow
+487,2019,141,Malin SJ√ñHOLM,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6594444444444445,7.582139848357202,7.913333333333334,too_slow
+493,2019,217,Lars ERS√ÑNG,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.9797222222222223,5.10348738304508,11.756666666666668,too_slow
+494,2019,256,Shezad INAYAT,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.8475,5.899705014749262,10.17,too_slow
+515,2021,9,Ane Gjengedal HELLESOY,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6255555555555555,7.992895204262878,7.506666666666666,too_slow
+563,2021,17,Nina TVETEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6480555555555556,7.715387912558937,7.776666666666668,too_slow
+570,2021,15,Marte CHRISTENSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6272222222222222,7.971656333038086,7.526666666666666,too_slow
+571,2021,36,Asgeir FL√òTLIEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.635,7.874015748031496,7.62,too_slow
+572,2021,90,Marius THORUD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.655,7.633587786259541,7.860000000000001,too_slow
+616,2022,108,Rolandas KRIUGZDA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6961111111111111,7.182761372705507,8.353333333333333,too_slow
+620,2022,227,Sara DESROCHERS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6677777777777778,7.487520798668885,8.013333333333334,too_slow
+625,2022,140,Mark MURAKAMI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6536111111111111,7.64980875478113,7.843333333333334,too_slow
+626,2022,254,Maria KJELME,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6411111111111111,7.798960138648181,7.6933333333333325,too_slow
+666,2022,7,Hans Frode ANDERSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6277777777777778,7.964601769911504,7.533333333333333,too_slow
+671,2022,281,Carlee TULETT,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.63,7.936507936507937,7.56,too_slow
+689,2022,256,June LIUM,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6330555555555556,7.898200965335673,7.596666666666667,too_slow
+708,2022,214,Michael WINDFELD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6341666666666667,7.884362680683312,7.609999999999999,too_slow
+710,2022,182,Emil SILVERBERG,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.65,7.692307692307692,7.8,too_slow
+714,2022,178,Andreas SCH√úRING,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6275,7.9681274900398416,7.529999999999999,too_slow
+715,2022,44,Mahmoud DIB,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6594444444444445,7.582139848357202,7.913333333333334,too_slow
+738,2022,106,Mark KEARNS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7208333333333333,6.936416184971098,8.65,too_slow
+743,2022,146,Christian OEHNER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7183333333333334,6.960556844547563,8.620000000000001,too_slow
+745,2022,244,Trine Jahr HEGDAHL,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.635,7.874015748031496,7.62,too_slow
+752,2022,134,Rune MESEL,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6325,7.905138339920949,7.589999999999999,too_slow
+765,2022,32,Geert BYTTEBIER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.8563888888888889,5.838469023678235,10.276666666666667,too_slow
+776,2022,276,Amber SNOOKS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6602777777777777,7.572570466975179,7.923333333333334,too_slow
+778,2022,174,Mark SADLER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7044444444444444,7.097791798107256,8.453333333333333,too_slow
+779,2022,155,Morten PEDERSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6594444444444445,7.582139848357202,7.913333333333334,too_slow
+784,2022,142,Ben NEIBURGER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6433333333333333,7.772020725388601,7.720000000000001,too_slow
+787,2022,128,Corey MCKENNA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,1.138611111111111,4.391314954867041,13.663333333333332,too_slow
+791,2022,288,Julie ZEITLINGER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.8330555555555555,6.002000666888963,9.996666666666666,too_slow
+792,2022,220,Stephenie B WINTER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7211111111111111,6.933744221879815,8.653333333333332,too_slow
+797,2022,82,Ian HIRD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6766666666666666,7.389162561576355,8.120000000000001,too_slow
+798,2022,69,Kurt GRAF,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7130555555555556,7.012076353720296,8.556666666666667,too_slow
+934,2024,232,J√∫lio C√©sar MARQUES,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6802777777777778,7.349938750510413,8.163333333333332,too_slow
+953,2024,78,Jeff NEUENSCHWANDER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6472222222222223,7.725321888412017,7.7666666666666675,too_slow
+963,2024,114,Ryan MORROW,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7552777777777778,6.620080912100036,9.063333333333334,too_slow
+967,2024,84,Nicole MUELLER,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6636111111111112,7.534533277521975,7.963333333333334,too_slow
+968,2024,171,Bj√∏rnar STRENDO,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6516666666666666,7.672634271099745,7.8199999999999985,too_slow
+973,2024,94,Valerie RICHARD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6591666666666667,7.585335018963337,7.909999999999999,too_slow
+975,2024,195,Trond PEDERSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6536111111111111,7.64980875478113,7.843333333333334,too_slow
+1007,2024,271,Alamanos VASILEIOS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6836111111111111,7.314099959366112,8.203333333333333,too_slow
+1011,2024,97,Francesca FORZONI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6644444444444444,7.5250836120401345,7.973333333333332,too_slow
+1016,2024,184,St√©phane COUDERC,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6266666666666667,7.978723404255319,7.5200000000000005,too_slow
+1017,2024,48,Can DATCA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6361111111111111,7.860262008733625,7.633333333333333,too_slow
+1021,2024,270,Thorsten FIRLUS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6483333333333333,7.712082262210797,7.779999999999999,too_slow
+1023,2024,87,Louise STAPLES,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7230555555555556,6.915097963887821,8.676666666666666,too_slow
+1024,2024,71,Sofie ISACSSON,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6508333333333334,7.682458386683738,7.8100000000000005,too_slow
+1026,2024,79,Richard FERNAND,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7372222222222222,6.782215523737754,8.846666666666668,too_slow
+1028,2024,261,Juhana NIEMINEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7111111111111111,7.03125,8.533333333333335,too_slow
+1029,2024,100,Vegard HARM,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.675,7.4074074074074066,8.1,too_slow
+1030,2024,245,Imtiaz ILAHI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7227777777777777,6.917755572636434,8.673333333333334,too_slow
+1031,2024,121,Kristi MAHADOCON,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6961111111111111,7.182761372705507,8.353333333333333,too_slow
+1032,2024,43,Anita RICHARDSON,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7222222222222222,6.923076923076923,8.666666666666668,too_slow
+1034,2024,246,Euan MACKENZIE,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6702777777777778,7.459593866556155,8.043333333333333,too_slow
+1035,2024,221,Thomas Fredvig ERICHSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6388888888888888,7.82608695652174,7.666666666666666,too_slow
+1036,2024,189,Kent-Ivar SOLLUND,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6413888888888889,7.795582503248159,7.696666666666667,too_slow
+1183,2025,146,Rafal ALASA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6327777777777778,7.9016681299385425,7.593333333333334,too_slow
+1237,2025,153,Durrin HYNES,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6766666666666666,7.389162561576355,8.120000000000001,too_slow
+1238,2025,52,Camilla WAGLAND,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6758333333333333,7.398273736128237,8.11,too_slow
+1247,2025,250,Rich LEWIS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6452777777777777,7.748600947051227,7.743333333333332,too_slow
+1252,2025,92,Eric MCELVENNY,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6352777777777778,7.870572802798425,7.623333333333333,too_slow
+1256,2025,196,G√∏ran BLAVIK,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6397222222222222,7.815892314372558,7.676666666666667,too_slow
+1259,2025,235,Mindaugas GARMUS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6308333333333334,7.926023778071334,7.57,too_slow
+1263,2025,139,Francois RAUX,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6316666666666667,7.915567282321899,7.580000000000001,too_slow
+1264,2025,195,Henry DOERKS,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6466666666666666,7.731958762886599,7.76,too_slow
+1270,2025,297,Matt WILSON,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6977777777777778,7.165605095541401,8.373333333333333,too_slow
+1272,2025,240,Neil BOPPERSON,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6519444444444444,7.6693651469961654,7.823333333333333,too_slow
+1273,2025,224,Mariola POWRO≈πNA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6738888888888889,7.41962077493817,8.086666666666666,too_slow
+1274,2025,203,Matteo BENEDETTI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6741666666666667,7.416563658838071,8.09,too_slow
+1275,2025,291,Arne SKAGSETH,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.695,7.194244604316547,8.34,too_slow
+1276,2025,88,Nicholas MCDONNELL,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6333333333333333,7.894736842105264,7.6,too_slow
+1277,2025,68,Viktor Emanuel SANDEN ESPEDAL,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6308333333333334,7.926023778071334,7.57,too_slow
+1278,2025,245,Paulina TATARA,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7366666666666667,6.787330316742081,8.84,too_slow
+1279,2025,185,Frank JOHANSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6377777777777778,7.839721254355401,7.653333333333333,too_slow
+1280,2025,251,Richard JANSEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6902777777777778,7.2434607645875255,8.283333333333333,too_slow
+1281,2025,239,Helen FARQUHAR,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7063888888888888,7.078254030672435,8.476666666666667,too_slow
+1282,2025,236,Mj SCHOONHOVEN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.8316666666666667,6.012024048096192,9.98,too_slow
+1283,2025,54,Gabriella SASI,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6497222222222222,7.695596408721676,7.796666666666667,too_slow
+1284,2025,55,Vadurel VINCENT,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7488888888888889,6.6765578635014835,8.986666666666668,too_slow
+1285,2025,111,Tommy STOR√òYGARD,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.6786111111111112,7.367990176013098,8.143333333333334,too_slow
+1286,2025,205,Jeanett BERGAN,bike,bike_11km_enter_gamlevegen_time,bike_16km_voringfossen_time,11.0,16.0,5.0,0.7161111111111111,6.982156710628394,8.593333333333334,too_slow
+186,2018,239,Erik ANKER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5227777777777778,7.651434643995749,7.841666666666667,too_slow
+197,2018,150,Mikael KATAJAINEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5288888888888889,7.563025210084034,7.933333333333333,too_slow
+206,2018,165,Marek CHRZANOWSKI,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5002777777777778,7.995558023320377,7.504166666666667,too_slow
+208,2018,64,Ane DAABACH ELVEMO,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5275,7.5829383886255926,7.9125,too_slow
+209,2018,205,Iain TODD,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5319444444444444,7.51958224543081,7.979166666666667,too_slow
+213,2018,33,Theresa BRYNILDSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5880555555555556,6.8020784128483704,8.820833333333333,too_slow
+214,2018,122,Prof. Dr. Tim-Nicolas KORF,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6719444444444445,5.952873088052915,10.079166666666667,too_slow
+215,2018,231,Franck VINCENT,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5111111111111111,7.82608695652174,7.666666666666666,too_slow
+216,2018,62,Brooke Bjorge SCHOHL,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.535,7.4766355140186915,8.025,too_slow
+221,2018,130,Peter TANDLICH,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5475,7.305936073059361,8.2125,too_slow
+224,2018,54,Hilde ACKENHAUSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5169444444444444,7.737775389575497,7.754166666666666,too_slow
+226,2018,84,Tobias HILLER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6386111111111111,6.2635928664636795,9.579166666666667,too_slow
+227,2018,38,Sari DAHLSTEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5061111111111111,7.903402854006587,7.591666666666666,too_slow
+228,2018,36,Seyda ERKAHRAMAN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6461111111111111,6.190885640584695,9.691666666666666,too_slow
+229,2018,275,Antonio Tj JIMENEZ,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5569444444444445,7.182044887780548,8.354166666666668,too_slow
+230,2018,181,Jose Mari CAGURANGAN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6711111111111111,5.960264900662252,10.066666666666666,too_slow
+231,2018,166,Magnus HELLID,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6052777777777778,6.608536025699862,9.079166666666667,too_slow
+232,2018,97,Stian ALEKSANDERSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6177777777777778,6.474820143884893,9.266666666666666,too_slow
+233,2018,290,Alexandre BORGES,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5166666666666667,7.741935483870967,7.750000000000001,too_slow
+234,2018,74,Yudiana FIANTO,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5494444444444444,7.280080889787665,8.241666666666665,too_slow
+416,2019,139,Monika POLKOWSKA,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5305555555555556,7.539267015706806,7.958333333333333,too_slow
+423,2019,178,Petter BJ√ñRKEB√ÑCK,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5194444444444445,7.7005347593582885,7.791666666666667,too_slow
+440,2019,188,Pawel BUGAJNY,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5227777777777778,7.651434643995749,7.841666666666667,too_slow
+444,2019,327,Arkadiusz PTAK,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5705555555555556,7.010710808179162,8.558333333333334,too_slow
+445,2019,347,Christian SCHNEIDER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5061111111111111,7.903402854006587,7.591666666666666,too_slow
+446,2019,137,Karem PANTIN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5566666666666666,7.185628742514971,8.35,too_slow
+447,2019,297,Igor MAJER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6102777777777778,6.554392353208921,9.154166666666667,too_slow
+450,2019,134,Louise MINCHIN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5258333333333334,7.606973058637084,7.887500000000001,too_slow
+456,2019,216,Marco EPIFANIO,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5544444444444444,7.214428857715431,8.316666666666666,too_slow
+457,2019,265,Neil JONES,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.61,6.557377049180328,9.15,too_slow
+464,2019,285,Kelly LANGLEY,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6513888888888889,6.140724946695096,9.770833333333334,too_slow
+466,2019,3,Katrin ELFBERG,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5397222222222222,7.411219763252702,8.095833333333333,too_slow
+467,2019,104,Kieran BALLARD TREMEER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5191666666666667,7.704654895666132,7.7875,too_slow
+471,2019,166,James BAYHACK,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5919444444444445,6.7573908962928195,8.879166666666668,too_slow
+472,2019,130,Eunice MACIAS,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6397222222222222,6.252713851498046,9.595833333333333,too_slow
+473,2019,184,Hans BOSMAN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5577777777777778,7.171314741035856,8.366666666666667,too_slow
+476,2019,132,Nina Nyg√•rd MAGNUSSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5180555555555556,7.721179624664878,7.770833333333334,too_slow
+480,2019,195,Christian CARSTENSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6969444444444445,5.739338381825428,10.454166666666667,too_slow
+485,2019,108,Alicia BLANCO,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5844444444444444,6.844106463878327,8.766666666666666,too_slow
+487,2019,141,Malin SJ√ñHOLM,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.7694444444444445,5.1985559566787005,11.541666666666668,too_slow
+493,2019,217,Lars ERS√ÑNG,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6777777777777778,5.9016393442622945,10.166666666666668,too_slow
+559,2021,97,Lukas GUTKNECHT,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5122222222222222,7.809110629067245,7.683333333333334,too_slow
+572,2021,90,Marius THORUD,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5866666666666667,6.818181818181818,8.8,too_slow
+625,2022,140,Mark MURAKAMI,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5411111111111111,7.392197125256674,8.116666666666667,too_slow
+696,2022,185,Lorn SMITH,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5636111111111111,7.097092163627403,8.454166666666666,too_slow
+705,2022,241,Malin HAMNERED,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5016666666666667,7.973421926910299,7.525,too_slow
+743,2022,146,Christian OEHNER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6786111111111112,5.894392140810479,10.179166666666667,too_slow
+756,2022,258,Helen LIVINGSTONE,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6008333333333333,6.657420249653259,9.0125,too_slow
+767,2022,116,Shih-Wei LIN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5444444444444444,7.346938775510205,8.166666666666666,too_slow
+768,2022,152,Longoni PAOLO,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5616666666666666,7.121661721068249,8.424999999999999,too_slow
+778,2022,174,Mark SADLER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6083333333333333,6.575342465753425,9.125,too_slow
+779,2022,155,Morten PEDERSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5516666666666666,7.2507552870090635,8.275,too_slow
+784,2022,142,Ben NEIBURGER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6058333333333333,6.6024759284731775,9.0875,too_slow
+787,2022,128,Corey MCKENNA,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5372222222222223,7.445708376421923,8.058333333333334,too_slow
+791,2022,288,Julie ZEITLINGER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6919444444444445,5.780810919309514,10.379166666666666,too_slow
+792,2022,220,Stephenie B WINTER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5236111111111111,7.639257294429708,7.854166666666667,too_slow
+793,2022,79,David HAWTHORNE,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5258333333333334,7.606973058637084,7.887500000000001,too_slow
+797,2022,82,Ian HIRD,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5130555555555556,7.796426637791011,7.695833333333334,too_slow
+798,2022,69,Kurt GRAF,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5155555555555555,7.758620689655173,7.733333333333333,too_slow
+909,2024,96,William NANJERO,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5275,7.5829383886255926,7.9125,too_slow
+942,2024,72,David FLINTOFT,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5083333333333333,7.868852459016394,7.625,too_slow
+973,2024,94,Valerie RICHARD,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5080555555555556,7.873154729360306,7.620833333333334,too_slow
+1008,2024,175,Uwe M√ñLLER,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5380555555555555,7.434176561693341,8.070833333333333,too_slow
+1020,2024,211,Jack BURNS,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5486111111111112,7.291139240506329,8.229166666666668,too_slow
+1026,2024,79,Richard FERNAND,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5063888888888889,7.899067471201317,7.595833333333333,too_slow
+1029,2024,100,Vegard HARM,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5255555555555556,7.6109936575052854,7.883333333333333,too_slow
+1030,2024,245,Imtiaz ILAHI,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5519444444444445,7.247106190236537,8.279166666666667,too_slow
+1031,2024,121,Kristi MAHADOCON,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5291666666666667,7.559055118110236,7.9375,too_slow
+1035,2024,221,Thomas Fredvig ERICHSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5244444444444445,7.627118644067796,7.866666666666667,too_slow
+1258,2025,14,Lena HALVARI,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5716666666666667,6.997084548104956,8.575,too_slow
+1267,2025,93,Zach COLLETT,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5372222222222223,7.445708376421923,8.058333333333334,too_slow
+1269,2025,56,Kirsty HETT,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5513888888888889,7.2544080604534,8.270833333333334,too_slow
+1270,2025,297,Matt WILSON,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6647222222222222,6.017551190973673,9.970833333333333,too_slow
+1271,2025,298,Neil JONES,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5836111111111111,6.853879105188006,8.754166666666666,too_slow
+1272,2025,240,Neil BOPPERSON,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5394444444444444,7.4150360453141095,8.091666666666665,too_slow
+1273,2025,224,Mariola POWRO≈πNA,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5013888888888889,7.977839335180056,7.520833333333333,too_slow
+1274,2025,203,Matteo BENEDETTI,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.505,7.920792079207921,7.575,too_slow
+1275,2025,291,Arne SKAGSETH,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5522222222222222,7.2434607645875255,8.283333333333333,too_slow
+1276,2025,88,Nicholas MCDONNELL,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5713888888888888,7.000486144871172,8.570833333333333,too_slow
+1278,2025,245,Paulina TATARA,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5408333333333334,7.395993836671802,8.1125,too_slow
+1280,2025,251,Richard JANSEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5602777777777778,7.139315815567675,8.404166666666667,too_slow
+1281,2025,239,Helen FARQUHAR,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5202777777777777,7.688200747463962,7.804166666666666,too_slow
+1282,2025,236,Mj SCHOONHOVEN,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6197222222222222,6.454504706409682,9.295833333333333,too_slow
+1283,2025,54,Gabriella SASI,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.5377777777777778,7.43801652892562,8.066666666666666,too_slow
+1284,2025,55,Vadurel VINCENT,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.6666666666666666,6.0,10.0,too_slow
+1285,2025,111,Tommy STOR√òYGARD,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.585,6.837606837606838,8.774999999999999,too_slow
+1288,2025,246,Stephen BRADY,bike,bike_90km_geilo_time,bike_94km_kikut_time,90.0,94.0,4.0,0.74,5.405405405405405,11.1,too_slow
+1283,2025,54,Gabriella SASI,bike,bike_101km_skurdalen_time,bike_113km_dagali_time,101.0,113.0,12.0,1.8594444444444445,6.453540484015536,9.297222222222222,too_slow
+230,2018,181,Jose Mari CAGURANGAN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.073888888888889,7.449560269011899,8.054166666666667,too_slow
+231,2018,166,Magnus HELLID,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0155555555555555,7.87746170678337,7.616666666666666,too_slow
+440,2019,188,Pawel BUGAJNY,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0772222222222223,7.426508509541,8.079166666666667,too_slow
+443,2019,127,Emma LAMBERT,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0205555555555557,7.838867719107239,7.654166666666668,too_slow
+447,2019,297,Igor MAJER,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0180555555555555,7.858117326057299,7.635416666666666,too_slow
+452,2019,353,Thor S√òDAL,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.2027777777777777,6.651270207852194,9.020833333333332,too_slow
+456,2019,216,Marco EPIFANIO,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.1927777777777777,6.707033069399162,8.945833333333333,too_slow
+457,2019,265,Neil JONES,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.1513888888888888,6.9481302774427025,8.635416666666666,too_slow
+464,2019,285,Kelly LANGLEY,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0447222222222223,7.657537888859345,7.835416666666667,too_slow
+467,2019,104,Kieran BALLARD TREMEER,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.1211111111111112,7.135777998017839,8.408333333333333,too_slow
+472,2019,130,Eunice MACIAS,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.1411111111111112,7.010710808179162,8.558333333333334,too_slow
+473,2019,184,Hans BOSMAN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0119444444444445,7.905572330496843,7.589583333333334,too_slow
+476,2019,132,Nina Nyg√•rd MAGNUSSEN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0822222222222222,7.392197125256674,8.116666666666667,too_slow
+480,2019,195,Christian CARSTENSEN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.131388888888889,7.070955069972992,8.485416666666667,too_slow
+485,2019,108,Alicia BLANCO,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.3677777777777778,5.848903330625507,10.258333333333333,too_slow
+791,2022,288,Julie ZEITLINGER,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0980555555555556,7.285605868960284,8.235416666666667,too_slow
+1028,2024,261,Juhana NIEMINEN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0333333333333334,7.741935483870967,7.750000000000001,too_slow
+1034,2024,246,Euan MACKENZIE,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0038888888888888,7.969009407858329,7.529166666666666,too_slow
+1251,2025,132,Rolf Kristian TANGEN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0894444444444444,7.343192248852627,8.170833333333333,too_slow
+1252,2025,92,Eric MCELVENNY,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0677777777777777,7.49219562955255,8.008333333333333,too_slow
+1270,2025,297,Matt WILSON,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.116111111111111,7.1677451468392235,8.370833333333334,too_slow
+1284,2025,55,Vadurel VINCENT,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.0752777777777778,7.439938000516662,8.064583333333333,too_slow
+1285,2025,111,Tommy STOR√òYGARD,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.116111111111111,7.1677451468392235,8.370833333333334,too_slow
+1286,2025,205,Jeanett BERGAN,bike,bike_134km_start_imingfjell_time,bike_142km_top_imingfjell_time,134.0,142.0,8.0,1.1380555555555556,7.029533805223334,8.535416666666666,too_slow
+0,2018,14,Allan HOVDA,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.39055555555555554,71.69274537695591,0.8369047619047619,too_fast
+1,2018,18,Kjell Magnus ANTONSEN,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.38027777777777777,73.63038714390066,0.8148809523809524,too_fast
+3,2018,13,Lars Christian VOLD,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.38305555555555554,73.09644670050761,0.8208333333333332,too_fast
+582,2022,25,Jon S√¶ver√•s BREIVOLD,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.3186111111111111,87.88142981691368,0.6827380952380953,too_fast
+583,2022,88,Allan HOVDA,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.3441666666666667,81.35593220338983,0.7375,too_fast
+584,2022,71,Kristian GRUE,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.3238888888888889,86.44939965694682,0.694047619047619,too_fast
+585,2022,203,Hans Christian TUNGESVIK,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.37694444444444447,74.28150331613854,0.8077380952380953,too_fast
+586,2022,1,Mikal IDEN,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.345,81.15942028985508,0.7392857142857142,too_fast
+589,2022,41,Michiel DE WILDE,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.36527777777777776,76.65399239543727,0.7827380952380951,too_fast
+593,2022,23,Timo BRACHT,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.3861111111111111,72.5179856115108,0.8273809523809524,too_fast
+598,2022,76,Johan HASSELMARK,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.3875,72.25806451612902,0.8303571428571429,too_fast
+1037,2025,21,Kristian GRUE,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.3402777777777778,82.28571428571428,0.7291666666666667,too_fast
+1038,2025,22,Hans Christian TUNGESVIK,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.37027777777777776,75.61890472618155,0.7934523809523809,too_fast
+1041,2025,86,Iver Anton KRONSTAD,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.39694444444444443,70.53883834849546,0.8505952380952381,too_fast
+1043,2025,44,Frode VIBERG JERMSTAD,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.39166666666666666,71.48936170212767,0.8392857142857143,too_fast
+1283,2025,54,Gabriella SASI,bike,bike_152km_end_imingfjell_time,bike_180km_finish_time,152.0,180.0,28.0,0.2777777777777778,100.8,0.5952380952380952,too_fast
+483,2019,281,Tim-Nicolas KORF,run,run_25km_zombie_hill_base_time,run_32_5km_langefonn_time,25.0,32.5,7.5,3.1619444444444444,2.371958183255732,25.295555555555556,too_slow
+34,2018,112,Roger CANHAM,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1325,2.2075055187637966,27.18,too_slow
+48,2018,219,Gr√©gory LE DRET,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6252777777777778,1.5381985985301658,39.00666666666667,too_slow
+51,2018,235,Ermes MELONI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1594444444444445,2.156205079060853,27.826666666666664,too_slow
+56,2018,169,Leonardo MELLO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4133333333333333,1.7688679245283019,33.92,too_slow
+57,2018,100,Sergey GOLOVIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2683333333333333,1.971090670170828,30.439999999999998,too_slow
+59,2018,88,Thorbj√∏rn NETTELAND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0711111111111111,2.3340248962655603,25.706666666666667,too_slow
+62,2018,186,Jonas HEDEBACK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.133888888888889,2.2048015678588926,27.21333333333333,too_slow
+67,2018,7,Morgan CHAFFIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1525,2.1691973969631233,27.660000000000004,too_slow
+75,2018,227,Fredrik KIND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1219444444444444,2.2282743253280515,26.926666666666666,too_slow
+80,2018,280,Andreas MIKKELSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.08,2.314814814814815,25.920000000000005,too_slow
+85,2018,289,Alexandre MARC,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.198611111111111,2.085747392815759,28.766666666666662,too_slow
+89,2018,120,P√•l KAMFJORD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.11,2.252252252252252,26.640000000000004,too_slow
+90,2018,102,Sebastien RAIBON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1158333333333332,2.2404779686333085,26.779999999999994,too_slow
+91,2018,159,Mathieu INFANTE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1330555555555555,2.2064231429271883,27.193333333333335,too_slow
+92,2018,295,Adrien REINWALT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1772222222222222,2.1236432279377064,28.25333333333333,too_slow
+93,2018,232,Florian OESER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3094444444444444,1.9092066185829444,31.426666666666666,too_slow
+94,2018,95,Stuart MARSHALL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1377777777777778,2.197265625,27.306666666666665,too_slow
+96,2018,156,Mattis MADSBU,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.068888888888889,2.3388773388773387,25.653333333333336,too_slow
+97,2018,254,Christoffer SYSE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1594444444444445,2.156205079060853,27.826666666666664,too_slow
+98,2018,109,Roman PROTSYK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1827777777777777,2.113668388914984,28.386666666666667,too_slow
+99,2018,183,Jonny GRIFFITHS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0458333333333334,2.390438247011952,25.1,too_slow
+100,2018,291,Alexander PRUDNIKOV,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1758333333333333,2.1261516654854713,28.22,too_slow
+101,2018,89,Thomas DEBRECENI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1994444444444445,2.084298286243631,28.78666666666667,too_slow
+103,2018,126,Philippe RAMBERT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1705555555555556,2.135738016136687,28.093333333333334,too_slow
+108,2018,288,Anatoly LESKOVETS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1108333333333333,2.250562640660165,26.660000000000004,too_slow
+111,2018,85,Timothy WILLIAMS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.333611111111111,1.8746094563632576,32.00666666666667,too_slow
+113,2018,252,Conrad GOERINGER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1683333333333332,2.139800285306705,28.04,too_slow
+115,2018,79,Vaillant ROMUALD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2247222222222223,2.0412792016330235,29.393333333333334,too_slow
+116,2018,293,Aleksandr MOCHALOV,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1311111111111112,2.2102161100196462,27.14666666666667,too_slow
+117,2018,161,Massa CHRISTOPHE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2725,1.9646365422396856,30.54,too_slow
+118,2018,272,Arnaud DESPIERRE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3833333333333333,1.8072289156626506,33.2,too_slow
+119,2018,86,Thorsten FIRLUS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2183333333333333,2.051983584131327,29.24,too_slow
+120,2018,87,Thorkell BRANDSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.356111111111111,1.843506759524785,32.54666666666667,too_slow
+121,2018,57,Francesca POLI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1163888888888889,2.2393630256282657,26.793333333333333,too_slow
+122,2018,51,Kaisa ILVESM√ÑKI-JAKOBSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0791666666666666,2.316602316602317,25.9,too_slow
+128,2018,283,Andre BRATLI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1480555555555556,2.1775949673360753,27.553333333333335,too_slow
+130,2018,177,Kenneth KRAGH,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4608333333333334,1.711351968054763,35.06,too_slow
+131,2018,190,Johannes BERGLER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3341666666666667,1.8738288569643973,32.019999999999996,too_slow
+132,2018,116,Ricardo CHEMMER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1705555555555556,2.135738016136687,28.093333333333334,too_slow
+133,2018,188,Jon PAIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1041666666666667,2.2641509433962264,26.5,too_slow
+134,2018,260,Charlie BROOKES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2466666666666666,2.0053475935828877,29.919999999999998,too_slow
+135,2018,80,Trond BLOMBERG,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6258333333333332,1.537672988211174,39.019999999999996,too_slow
+136,2018,117,R√©mi PAYRE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3358333333333334,1.8714909544603866,32.06,too_slow
+137,2018,178,Kanat KELSINBEKOV,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5544444444444445,1.608291636883488,37.306666666666665,too_slow
+140,2018,193,Joao POMBINHO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2952777777777778,1.9300879262277504,31.086666666666666,too_slow
+142,2018,273,Ariel HELLER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7766666666666666,1.4071294559099436,42.64,too_slow
+144,2018,75,Yoram LEVAV,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3647222222222222,1.8318746183594545,32.75333333333333,too_slow
+145,2018,240,Eric ROE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3866666666666667,1.8028846153846154,33.28,too_slow
+146,2018,47,Laura MALCOLM,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5461111111111112,1.6169601149838302,37.10666666666667,too_slow
+147,2018,125,Pierig BOURET,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7227777777777777,1.45114479200258,41.346666666666664,too_slow
+148,2018,113,Rob VANDERPOST,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4227777777777777,1.757126122608356,34.14666666666666,too_slow
+149,2018,73,Zhenhan LIU,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.8158333333333334,1.3767783386874712,43.58,too_slow
+150,2018,142,Odd-Heine PEDERSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.293611111111111,1.9325746188533393,31.046666666666663,too_slow
+151,2018,99,Snorre GUNNARSCHJ√Ö,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6458333333333333,1.518987341772152,39.5,too_slow
+152,2018,124,Pierre ROMANET,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1852777777777779,2.1092102179517225,28.44666666666667,too_slow
+153,2018,139,Onder ANILTURK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4491666666666667,1.7251293847038527,34.78,too_slow
+154,2018,39,Sandy HOLT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4294444444444445,1.7489312087057909,34.306666666666665,too_slow
+155,2018,60,Christine VINDENES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3366666666666667,1.8703241895261846,32.08,too_slow
+157,2018,294,Albert OUDE NIJHUIS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.281111111111111,1.9514310494362532,30.746666666666663,too_slow
+159,2018,277,Andreas SPAK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5377777777777777,1.6257225433526012,36.906666666666666,too_slow
+162,2018,271,Arne ASPEVOLL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3422222222222222,1.8625827814569538,32.21333333333333,too_slow
+278,2019,389,Anthony ZARRA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1408333333333334,2.191380569758948,27.380000000000003,too_slow
+291,2019,346,Andrew SCHLEIS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1925,2.0964360587002098,28.619999999999997,too_slow
+304,2019,291,Johnny LITTLE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1180555555555556,2.2360248447204967,26.833333333333332,too_slow
+307,2019,182,Nicolas BOISSONNEAU,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3283333333333334,1.8820577164366374,31.880000000000003,too_slow
+312,2019,199,Russell CORN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0522222222222222,2.3759239704329462,25.253333333333334,too_slow
+314,2019,312,Roo MURRAY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0930555555555554,2.287166454891995,26.23333333333333,too_slow
+316,2019,280,Michael KOEHLE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1091666666666666,2.2539444027047333,26.619999999999997,too_slow
+318,2019,196,Damien CHEVALLIER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1591666666666667,2.156721782890007,27.82,too_slow
+336,2019,311,"Robin I, MONSEN",run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0686111111111112,2.339485313231089,25.64666666666667,too_slow
+338,2019,383,Bruce WILSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0691666666666666,2.3382696804364773,25.659999999999997,too_slow
+339,2019,153,Petri AHTI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1263888888888889,2.219482120838471,27.03333333333333,too_slow
+343,2019,374,Jason VERBRACKEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1883333333333332,2.103786816269285,28.52,too_slow
+344,2019,290,Per LINDEBERG,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1755555555555555,2.126654064272212,28.21333333333333,too_slow
+345,2019,366,Warat TANGTIPHONGKUL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4994444444444444,1.6672841793256763,35.986666666666665,too_slow
+347,2019,212,Nicolas DIEPART,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.068888888888889,2.3388773388773387,25.653333333333336,too_slow
+350,2019,382,Rob WILHITE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0666666666666667,2.34375,25.6,too_slow
+351,2019,200,Edward CRAWFORD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4725,1.697792869269949,35.339999999999996,too_slow
+352,2019,267,Nicolas JOSEPH,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0777777777777777,2.3195876288659796,25.866666666666664,too_slow
+353,2019,352,Nils SL√ÖEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2441666666666666,2.0093770931011385,29.860000000000003,too_slow
+355,2019,110,Sofie BUER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.9561111111111111,1.2780460096563475,46.94666666666667,too_slow
+356,2019,163,Dagfinn ASKVIK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0419444444444443,2.399360170621168,25.006666666666664,too_slow
+357,2019,288,Ludovic LEVEQUE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3191666666666666,1.8951358180669615,31.659999999999997,too_slow
+358,2019,340,Rune RUGLAND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1152777777777778,2.2415940224159403,26.76666666666667,too_slow
+360,2019,120,Lena HALVARI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1469444444444445,2.1797045289416324,27.52666666666667,too_slow
+361,2019,334,Ole J√∏rgen R√òD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4733333333333334,1.6968325791855203,35.36,too_slow
+362,2019,358,James SPENCER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.556111111111111,1.6065690824705463,37.346666666666664,too_slow
+363,2019,380,Greg WHYTE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3427777777777778,1.8618121638394702,32.226666666666674,too_slow
+365,2019,336,Benjamin RONDREUX,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1566666666666667,2.1613832853025934,27.76,too_slow
+366,2019,306,Hans-Petter MELLERUD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1552777777777778,2.163981726376533,27.72666666666667,too_slow
+367,2019,144,Ingun VAGLID,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.115,2.242152466367713,26.76,too_slow
+368,2019,270,Anton KALETIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1925,2.0964360587002098,28.619999999999997,too_slow
+369,2019,356,Andreas SPAK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2544444444444445,1.9929140832595216,30.106666666666666,too_slow
+370,2019,225,David FRASER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1497222222222223,2.1744382701135536,27.593333333333334,too_slow
+371,2019,324,J√°nos PEP√ì,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1352777777777778,2.202104232933692,27.24666666666667,too_slow
+373,2019,269,Fathi JUNAIDI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1419444444444444,2.1892483580637316,27.406666666666666,too_slow
+374,2019,235,Bobby GRANGIER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4013888888888888,1.78394449950446,33.63333333333333,too_slow
+375,2019,204,Vojtech DAVID,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2494444444444444,2.0008892841262784,29.986666666666668,too_slow
+376,2019,337,Nicolas ROSELLO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1252777777777778,2.2216736608244876,27.006666666666668,too_slow
+377,2019,118,Linda GRANDT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1577777777777778,2.1593090211132435,27.78666666666667,too_slow
+378,2019,133,Niina MAISNIEMI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1216666666666666,2.2288261515601784,26.919999999999998,too_slow
+379,2019,205,Maarten DE REU,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4925,1.6750418760469012,35.82,too_slow
+380,2019,253,Henrik Emil H√òYERHOLT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2602777777777778,1.9836896627727572,30.24666666666667,too_slow
+381,2019,121,Liv Marit HARALDSRUD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.166388888888889,2.143367468444868,27.993333333333332,too_slow
+382,2019,368,Beno√Æt THOMAS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3794444444444445,1.8123238018525976,33.10666666666667,too_slow
+383,2019,329,Max RAUER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6766666666666667,1.4910536779324055,40.24,too_slow
+384,2019,181,Ulf BOHMAN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6719444444444445,1.4952649941850806,40.126666666666665,too_slow
+385,2019,117,Filomena GOMES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6102777777777777,1.5525271692254616,38.64666666666666,too_slow
+386,2019,237,Snorre GUNNARSCHJ√Ö,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.396111111111111,1.7906884202148827,33.50666666666667,too_slow
+387,2019,371,Peter TOTH,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4647222222222223,1.7068082685378343,35.153333333333336,too_slow
+388,2019,326,Bartosz POTYRALA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2827777777777778,1.9488956258120398,30.78666666666667,too_slow
+389,2019,373,Alain VAUTIER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7275,1.447178002894356,41.46,too_slow
+390,2019,266,Erik J√òRSTAD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.265,1.9762845849802373,30.359999999999996,too_slow
+391,2019,176,Dominic BERTIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4252777777777779,1.7540440459949327,34.20666666666666,too_slow
+392,2019,274,Carsten KJ√ÜR,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4572222222222222,1.715592832634388,34.973333333333336,too_slow
+393,2019,350,Henrik SKAGERLIND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0941666666666667,2.2848438690022848,26.26,too_slow
+536,2021,67,Olivier CORTES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1966666666666668,2.0891364902506964,28.720000000000006,too_slow
+541,2021,33,Mark WHITE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1005555555555555,2.2715800100959114,26.413333333333334,too_slow
+544,2021,79,Rune SUNDLING,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0422222222222222,2.398720682302772,25.013333333333332,too_slow
+546,2021,5,Rikke HAAGENSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2052777777777777,2.074210647614658,28.926666666666666,too_slow
+576,2021,30,Lindseth HANS VIDAR,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1883333333333332,2.103786816269285,28.52,too_slow
+580,2021,54,Andres DIEZ,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1152777777777778,2.2415940224159403,26.76666666666667,too_slow
+731,2022,219,Michael ZANNIS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1063888888888889,2.2596033140848606,26.55333333333333,too_slow
+736,2022,259,Svenja MANN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0472222222222223,2.3872679045092835,25.133333333333333,too_slow
+758,2022,229,Melissa DOWELL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0591666666666666,2.3603461841070024,25.419999999999998,too_slow
+763,2022,179,Jan SCH√úTT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0766666666666667,2.321981424148607,25.839999999999996,too_slow
+767,2022,116,Shih-Wei LIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0752777777777778,2.324980625161457,25.806666666666665,too_slow
+770,2022,215,Felix WOLF,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1541666666666666,2.1660649819494586,27.7,too_slow
+773,2022,17,Adrian BERRY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.073611111111111,2.3285899094437257,25.766666666666662,too_slow
+774,2022,35,Vladimir CERNY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0811111111111111,2.3124357656731758,25.94666666666667,too_slow
+779,2022,155,Morten PEDERSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1402777777777777,2.192448233861145,27.366666666666664,too_slow
+783,2022,61,Olivier GARCIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0441666666666667,2.3942537909018355,25.06,too_slow
+785,2022,166,Eivind RIKE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0869444444444445,2.3000255558395093,26.086666666666666,too_slow
+790,2022,123,Todd MANION,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2866666666666666,1.9430051813471503,30.880000000000003,too_slow
+795,2022,201,Hans-Petter MELLERUD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1219444444444444,2.2282743253280515,26.926666666666666,too_slow
+796,2022,33,Alan CARDWELL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2294444444444443,2.033438770899232,29.506666666666668,too_slow
+810,2024,226,Chris WOOD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1216666666666666,2.2288261515601784,26.919999999999998,too_slow
+819,2024,27,Cheng Tai WU,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.123888888888889,2.2244191794364805,26.973333333333336,too_slow
+827,2024,23,Patrik ERICSSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0758333333333334,2.3237800154918666,25.820000000000004,too_slow
+831,2024,4,Claire WELLER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1616666666666666,2.1520803443328553,27.880000000000003,too_slow
+833,2024,220,Andersen ERIK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.128611111111111,2.215111986217081,27.086666666666662,too_slow
+835,2024,265,Evert-Jan VAN DASSELAAR,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1194444444444445,2.2332506203473943,26.866666666666667,too_slow
+837,2024,6,Sonja TAJSICH,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1847222222222222,2.1101992966002343,28.43333333333333,too_slow
+839,2024,93,Audrey NALIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1194444444444445,2.2332506203473943,26.866666666666667,too_slow
+840,2024,30,Jones DAVID,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1069444444444445,2.258469259723965,26.56666666666667,too_slow
+841,2024,194,Christian RAKNES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0652777777777778,2.346805736636245,25.566666666666666,too_slow
+842,2024,176,Seven MITTELST√ÑDT,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1894444444444445,2.101821578701541,28.54666666666667,too_slow
+844,2024,106,Mikko LEHMUSKOSKI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1355555555555557,2.201565557729941,27.253333333333337,too_slow
+845,2024,177,Patrick LONGHIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3002777777777779,1.922666096987823,31.206666666666667,too_slow
+846,2024,63,Peter GARDNER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1475,2.178649237472767,27.54,too_slow
+847,2024,192,√òystein SELLEVOLD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0694444444444444,2.3376623376623376,25.666666666666668,too_slow
+849,2024,257,Rob MCLEAN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0816666666666668,2.311248073959938,25.96,too_slow
+851,2024,11,Li Yun CHEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.178611111111111,2.1211407023332547,28.28666666666667,too_slow
+852,2024,223,Bart MENNINK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.385,1.8050541516245486,33.239999999999995,too_slow
+853,2024,10,Carolina GRANFORS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0752777777777778,2.324980625161457,25.806666666666665,too_slow
+855,2024,15,Marni SUMBAL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1405555555555555,2.1919142717973696,27.373333333333335,too_slow
+857,2024,241,David KINNAIR,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.22,2.0491803278688523,29.28,too_slow
+858,2024,200,Didier MAYENZET,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0811111111111111,2.3124357656731758,25.94666666666667,too_slow
+859,2024,65,Ann √Öse STAVA HELGEVOLD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.0788888888888888,2.3171987641606595,25.893333333333327,too_slow
+861,2024,77,Rachael BUTCHER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1263888888888889,2.219482120838471,27.03333333333333,too_slow
+862,2024,222,Lars Henrik BJ√òRNEBOE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1394444444444445,2.1940516821062896,27.34666666666667,too_slow
+863,2024,129,Henrik KNUTSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2208333333333334,2.04778156996587,29.3,too_slow
+864,2024,20,Tara MIRANDA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1322222222222222,2.2080471050049066,27.173333333333336,too_slow
+865,2024,252,Carlos ECHEVERRIA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1388888888888888,2.1951219512195124,27.333333333333332,too_slow
+866,2024,186,Arthur VINSSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.271111111111111,1.9667832167832169,30.506666666666668,too_slow
+869,2024,199,Johan FALKENBERG,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2422222222222221,2.012522361359571,29.813333333333333,too_slow
+870,2024,154,"Erik G, JENSEN",run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1752777777777779,2.1271567005436065,28.206666666666667,too_slow
+871,2024,155,S√∏lve Magnus SKOGLAND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1819444444444445,2.1151586368977675,28.366666666666667,too_slow
+872,2024,39,Sarah TIMMIS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3422222222222222,1.8625827814569538,32.21333333333333,too_slow
+873,2024,74,Bart KUIJTEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1780555555555556,2.1221410044800755,28.273333333333333,too_slow
+876,2024,139,Tomasz MIKA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.176111111111111,2.1256495040151155,28.226666666666667,too_slow
+877,2024,66,Lennart M√ÜLAND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1644444444444444,2.1469465648854964,27.946666666666665,too_slow
+878,2024,26,Ren√© VERHEIJ,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.525,1.639344262295082,36.6,too_slow
+879,2024,131,Anders PALMBERG,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1613888888888888,2.1525950729490555,27.873333333333328,too_slow
+880,2024,172,Stephen COLLINS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2627777777777778,1.9797624285085789,30.306666666666665,too_slow
+881,2024,225,Darren SHEARER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2127777777777777,2.061383417315621,29.106666666666666,too_slow
+883,2024,180,Remi AUJAMES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4291666666666667,1.749271137026239,34.3,too_slow
+884,2024,14,Nadya VORONCHENKO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5927777777777778,1.5695849319846529,38.226666666666674,too_slow
+886,2024,67,Solgunn BERSTAD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2266666666666666,2.0380434782608696,29.439999999999998,too_slow
+887,2024,150,Paolo AIROLDI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1172222222222221,2.237692690203879,26.813333333333333,too_slow
+888,2024,227,Alexander LOUDON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.448611111111111,1.725790987535954,34.766666666666666,too_slow
+889,2024,243,Jason KERANEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5322222222222222,1.6316171138506164,36.773333333333326,too_slow
+892,2024,19,Martine HOAAS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3647222222222222,1.8318746183594545,32.75333333333333,too_slow
+893,2024,34,Alexandre FORTIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3977777777777778,1.7885532591414943,33.54666666666667,too_slow
+894,2024,12,Judyta KAJSTURA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4644444444444444,1.7071320182094083,35.14666666666666,too_slow
+895,2024,142,Tony SCHR√ñDER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3086111111111112,1.9104224156230099,31.406666666666666,too_slow
+896,2024,167,Kristian √òSTLIE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4119444444444444,1.7706079087153257,33.88666666666667,too_slow
+898,2024,272,Niklas HOFF SEKKELSTEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.275,1.9607843137254903,30.6,too_slow
+899,2024,104,Kim ULDAHL PEDERSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.515,1.6501650165016504,36.36,too_slow
+900,2024,205,Sverre MIDLANG,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1777777777777778,2.1226415094339623,28.26666666666667,too_slow
+902,2024,174,John BYRNE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.261388888888889,1.9819423034573882,30.273333333333333,too_slow
+903,2024,31,Jason VERBRACKEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.1516666666666666,2.170767004341534,27.639999999999997,too_slow
+904,2024,9,Olivia DIETZEL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.263611111111111,1.9784568036931196,30.326666666666664,too_slow
+906,2024,37,Giulio MOLINARI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2408333333333332,2.014775016789792,29.779999999999994,too_slow
+907,2024,280,Jacob LEVINSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.383888888888889,1.8065034122842232,33.21333333333333,too_slow
+908,2024,111,Linn KARLSVIK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2125,2.061855670103093,29.1,too_slow
+910,2024,82,Svenja MANN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6625,1.5037593984962405,39.9,too_slow
+911,2024,133,Martin FORSSELL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.375,1.8181818181818181,33.0,too_slow
+912,2024,149,Giulio DUBBIOSO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3877777777777778,1.801441152922338,33.306666666666665,too_slow
+913,2024,247,Wolfgang MAIR,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6119444444444444,1.5509219369291747,38.68666666666667,too_slow
+915,2024,137,Fernando LOPEZ,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4613888888888888,1.7107013875689032,35.07333333333334,too_slow
+916,2024,57,Andreas GUSTAVSSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4841666666666666,1.6844469399213926,35.62,too_slow
+917,2024,254,Thibaut GHELFO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3544444444444443,1.84577522559475,32.50666666666667,too_slow
+922,2024,134,Anders KITTILSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3788888888888888,1.8130539887187753,33.093333333333334,too_slow
+923,2024,101,Lydwien WILBERS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2625,1.9801980198019802,30.3,too_slow
+926,2024,50,Francois GROBLER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3458333333333334,1.8575851393188854,32.3,too_slow
+927,2024,277,Trond ANDERSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4313888888888888,1.7465554046186689,34.35333333333333,too_slow
+931,2024,40,Jan Hugo SVENDSEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2227777777777777,2.044525215810995,29.346666666666664,too_slow
+932,2024,269,Yannick CANTIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.2216666666666667,2.0463847203274215,29.32,too_slow
+935,2024,18,Madeline MARGEVICIUS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3677777777777778,1.8277822908204713,32.82666666666667,too_slow
+936,2024,22,Ross CROMBIE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4661111111111111,1.705191360363774,35.18666666666667,too_slow
+937,2024,278,David CHAPMAN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3444444444444446,1.8595041322314048,32.266666666666666,too_slow
+940,2024,55,Alberto L√ìPEZ PINO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4716666666666667,1.6987542468856172,35.32,too_slow
+941,2024,255,Mark RIMMER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7727777777777778,1.4102162331557506,42.54666666666667,too_slow
+943,2024,117,Malin HAMNERED,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5347222222222223,1.6289592760180995,36.833333333333336,too_slow
+945,2024,76,Aaron KENDLE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5897222222222223,1.57260178228202,38.153333333333336,too_slow
+946,2024,119,Cecilie CARLSSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4866666666666666,1.681614349775785,35.67999999999999,too_slow
+948,2024,212,Robert BACON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.573611111111111,1.588702559576346,37.766666666666666,too_slow
+949,2024,244,Mike JONES,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7761111111111112,1.4075695964967156,42.62666666666667,too_slow
+950,2024,123,Bastien GUILBAUD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5608333333333333,1.601708489054992,37.459999999999994,too_slow
+951,2024,240,Andrew SKEA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.341388888888889,1.8637399047421825,32.193333333333335,too_slow
+954,2024,263,Chien Yi LI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6755555555555555,1.4920424403183026,40.21333333333333,too_slow
+955,2024,183,Maxime VAUFLEURY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.393888888888889,1.7935432443204462,33.45333333333333,too_slow
+956,2024,140,Toto CARBONELL PUJOL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6544444444444444,1.511081262592344,39.70666666666666,too_slow
+957,2024,181,Charles S√âGARD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4719444444444445,1.6984336667295716,35.32666666666667,too_slow
+959,2024,231,Sampaio PABLO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.8736111111111111,1.3343217197924389,44.96666666666667,too_slow
+966,2024,126,Matziaris NIKOLAS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5680555555555555,1.5943312666076175,37.63333333333333,too_slow
+970,2024,279,Ian MOORE,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4772222222222222,1.6923655509590072,35.45333333333333,too_slow
+971,2024,230,Bruno GARCIA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6455555555555557,1.5192437542201214,39.49333333333333,too_slow
+972,2024,163,Manuel BIANCHI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3875,1.8018018018018018,33.3,too_slow
+974,2024,80,Massimo TIBERI,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5872222222222223,1.5750787539376967,38.093333333333334,too_slow
+976,2024,108,Berjan BOLKS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4880555555555555,1.6800448011946987,35.71333333333333,too_slow
+978,2024,124,Thibault CARFANTAN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6541666666666666,1.5113350125944585,39.7,too_slow
+979,2024,166,Alessandro CARCANO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4455555555555555,1.7294388931591085,34.693333333333335,too_slow
+980,2024,213,Richard SCHRIJVER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4119444444444444,1.7706079087153257,33.88666666666667,too_slow
+981,2024,70,Marco TRAINA,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5130555555555556,1.6522856618322013,36.31333333333333,too_slow
+983,2024,17,Nicole MORGAN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4152777777777779,1.7664376840039253,33.96666666666667,too_slow
+987,2024,92,Kuan Yi YEH,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6919444444444445,1.4775898867181088,40.60666666666667,too_slow
+988,2024,179,Louis VILLAIN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4355555555555555,1.7414860681114552,34.45333333333333,too_slow
+991,2024,73,Val√©rie DIRREN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5341666666666667,1.6295491580662682,36.82,too_slow
+992,2024,141,Jos√© Joaqu√≠n LARA COBANO,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5386111111111112,1.6248420292471566,36.92666666666666,too_slow
+993,2024,135,Andreas SPAK,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5952777777777778,1.5671251958906496,38.28666666666667,too_slow
+995,2024,219,Espen JENSEHAUGEN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5841666666666667,1.5781167806417675,38.019999999999996,too_slow
+999,2024,16,Johanna H√ÖLAND,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7069444444444444,1.4646053702196908,40.96666666666666,too_slow
+1000,2024,214,Bart VAN LINDER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.3097222222222222,1.9088016967126193,31.43333333333333,too_slow
+1001,2024,153,Dmitrijus KIRJACKIS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.9508333333333334,1.2815036309269543,46.82000000000001,too_slow
+1002,2024,143,Nathan HONNAY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.4002777777777777,1.7853600476096014,33.60666666666667,too_slow
+1003,2024,145,Marius THORUD,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.6105555555555555,1.552259399793032,38.65333333333333,too_slow
+1004,2024,233,Daniel STENDALL,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7344444444444445,1.4413837283792441,41.626666666666665,too_slow
+1005,2024,210,Ben FLYNN,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7738888888888888,1.4093329157532102,42.57333333333334,too_slow
+1006,2024,209,David SCHULTHEIS,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.7397222222222222,1.4370110170844643,41.75333333333333,too_slow
+1008,2024,175,Uwe M√ñLLER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,2.026388888888889,1.233721727210418,48.63333333333334,too_slow
+1009,2024,61,Pascal DE COESSEMAEKER,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.718888888888889,1.4544279250161603,41.25333333333334,too_slow
+1013,2024,248,Kevin MAY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.9069444444444446,1.3109978150036417,45.766666666666666,too_slow
+1015,2024,267,Ancel GREGORY,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,1.5694444444444444,1.592920353982301,37.66666666666667,too_slow
+1019,2024,122,Iain DAWSON,run,run_37_5km_stavsro_cut_off_time,run_40km_right_before_mt_gaustatoppen_time,37.5,40.0,2.5,2.042777777777778,1.2238237693772096,49.026666666666664,too_slow
