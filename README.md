@@ -9,6 +9,8 @@ The current redesign goal is pragmatic:
 - make future race years safer to integrate
 - improve UI consistency without a risky rewrite
 
+The repository now also contains a parallel React migration in `frontend/` so the product can move away from Streamlit without throwing away the current working analytics.
+
 ## Repository layout
 
 ```text
@@ -24,6 +26,7 @@ Norseman_Bachelor_Data Kopie/
 
 docs/
   ADDING_RACE_YEAR.md
+  REACT_MIGRATION.md
 
 scripts/
   validate_dashboard_assets.py
@@ -59,6 +62,14 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 
 ```bash
 python3 -m streamlit run 'Norseman_Bachelor_Dashboard_only Kopie 2/dashboard/main.py'
+```
+
+### Start the React migration app
+
+```bash
+cd frontend
+npm install
+npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 ## Current architecture decisions
@@ -117,6 +128,21 @@ Reason:
 - `layout.py` already expected a style file, but none existed
 - a real CSS baseline raises product quality quickly without rewriting every module
 
+### 5. Migrate from Streamlit to React in parallel
+
+The new React workspace is documented in [docs/REACT_MIGRATION.md](docs/REACT_MIGRATION.md).
+
+The migration deliberately starts as a parallel frontend:
+
+- Streamlit remains the safe baseline
+- React becomes the new presentation layer
+- Plotly remains the charting language so diagrams keep the same analytical look
+
+Reason:
+
+- the user-facing product goal now prioritizes a fresher, more flexible frontend
+- replacing charts and frontend architecture at the same time would add unnecessary risk
+
 ## Data and year integration
 
 Use [docs/ADDING_RACE_YEAR.md](docs/ADDING_RACE_YEAR.md) as the current reference workflow.
@@ -143,7 +169,8 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The app is still Streamlit-first; a deeper product-grade frontend architecture is intentionally deferred until the data/model contracts are cleaner.
+- The React frontend currently covers only the first migrated overview slice; the remaining pages are still queued for porting.
+- The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files
 

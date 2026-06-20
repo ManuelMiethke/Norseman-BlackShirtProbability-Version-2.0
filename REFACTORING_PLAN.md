@@ -9,6 +9,9 @@
 - `completed` P0.4 Remove redundant loaders and repeated preprocessing on render path
 - `completed` P0.6 Document current new-year workflow
 - `completed` P0.7 Add tests for configuration and data-contract validation
+- `completed` P0.R1 Scaffold parallel React frontend
+- `completed` P0.R2 Port the first overview slice to React with Plotly preserved
+- `in_progress` P1.R3 Define the React-first migration path for the remaining dashboard pages
 - `pending` all other tasks unless noted otherwise
 
 ## Repository Analysis
@@ -239,6 +242,40 @@
 - Dependencies: P0.6
 - Acceptance criterion: repository includes startup instructions, architecture overview, data structure, new year workflow, new race workflow and known limitations
 
+### React Migration
+
+#### P0.R1 Scaffold parallel React frontend
+
+- Status: `completed`
+- Benefit: creates a safer path away from Streamlit without breaking the existing app
+- Risk: low
+- Dependencies: P0.1, P0.2
+- Acceptance criterion: repository contains a standalone React workspace with routing, shared layout and working local startup
+
+#### P0.R2 Port the first overview slice to React with Plotly preserved
+
+- Status: `completed`
+- Benefit: proves that the frontend can move to React while keeping the existing chart language and race semantics
+- Risk: low
+- Dependencies: P0.R1
+- Acceptance criterion: React overview route renders shared year/group filters, participant summary cards and at least one migrated Plotly chart section
+
+#### P1.R3 Port remaining pages to React through shared computation adapters
+
+- Status: `in_progress`
+- Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
+- Risk: medium
+- Dependencies: P1.1, P1.2, P0.R2
+- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters
+
+#### P1.R4 Introduce a frontend-oriented data contract
+
+- Status: `pending`
+- Benefit: reduces browser parsing overhead and improves React load performance
+- Risk: medium
+- Dependencies: P0.R2, P1.4
+- Acceptance criterion: React frontend no longer depends on broad CSV parsing for every route and instead consumes slimmer route-oriented assets or an API contract
+
 ### Deployment and Configuration
 
 #### P1.12 Add explicit runtime/dependency configuration
@@ -266,6 +303,8 @@
 5. P0.4 Remove redundant loaders and repeated preprocessing
 6. P0.6 Document current new-year workflow
 7. P0.7 Tests for config and data-contract validation
+8. P0.R1 Scaffold parallel React frontend
+9. P0.R2 Port the first overview slice to React
 
 ## Completed in This Iteration
 
@@ -278,16 +317,19 @@
 - Removed the remaining direct `pd.read_csv(...)` calls from dashboard runtime modules by delegating through the shared data layer.
 - Added `dashboard/core/validators.py`, `scripts/validate_dashboard_assets.py` and automated tests in `tests/`.
 - Added `docs/ADDING_RACE_YEAR.md` and `README.md` to document architecture, startup, validation and open points.
+- Added a new `frontend/` React + Vite workspace that reuses the packaged dashboard assets directly.
+- Ported the first React overview slice, including participant summary cards and `Distance vs. Time Relations` Plotly donuts.
+- Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
-## Next P0 Focus
+## Next Focus
 
-- Continue P0.4 by moving more modules off duplicated loader/filter logic.
+- Continue P1.R3 by migrating the remaining overview charts and then `Pacing & Course` into React.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
-- Begin P1.2 by splitting oversized modules into data, metrics and render responsibilities.
-- Begin P1.11/P1.12 by formalizing environment and dependency setup.
+- Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
+- Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.
 
 ## Deferred but Intentionally Preserved
 
 - Existing dashboard content and analytics stay in place unless a change clearly improves maintainability or correctness.
 - Raw data and exploratory thesis-era scripts remain non-destructively preserved during the first refactoring wave.
-- No large architecture rewrite or dependency expansion is planned in the first pass.
+- Streamlit stays available as the safety baseline until the React migration covers the remaining routes.

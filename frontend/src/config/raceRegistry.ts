@@ -1,0 +1,76 @@
+export type GroupOption = "All" | "Top 10" | "Black Shirt" | "White Shirt" | "DNF";
+
+export type RaceYearConfig = {
+  year: number;
+  cutoffRunKm: number;
+  cutoffSplitKey: string;
+  finishDistanceKm: number;
+  startersAfterSwim: number;
+  notes: string[];
+};
+
+export const GROUP_OPTIONS: GroupOption[] = [
+  "All",
+  "Top 10",
+  "Black Shirt",
+  "White Shirt",
+  "DNF",
+];
+
+export const RACE_YEAR_REGISTRY: Record<number, RaceYearConfig> = {
+  2018: {
+    year: 2018,
+    cutoffRunKm: 32.5,
+    cutoffSplitKey: "run_32_5km_langefonn",
+    finishDistanceKm: 216.3,
+    startersAfterSwim: 242,
+    notes: ["32.5 km Black/White decision year"],
+  },
+  2019: {
+    year: 2019,
+    cutoffRunKm: 32.5,
+    cutoffSplitKey: "run_32_5km_langefonn",
+    finishDistanceKm: 216.3,
+    startersAfterSwim: 261,
+    notes: ["32.5 km Black/White decision year"],
+  },
+  2021: {
+    year: 2021,
+    cutoffRunKm: 32.5,
+    cutoffSplitKey: "run_32_5km_langefonn",
+    finishDistanceKm: 216.3,
+    startersAfterSwim: 97,
+    notes: ["32.5 km Black/White decision year"],
+  },
+  2022: {
+    year: 2022,
+    cutoffRunKm: 32.5,
+    cutoffSplitKey: "run_32_5km_langefonn",
+    finishDistanceKm: 216.3,
+    startersAfterSwim: 233,
+    notes: [
+      "32.5 km Black/White decision year",
+      "Shorter finish profile than 2024/2025.",
+    ],
+  },
+  2024: {
+    year: 2024,
+    cutoffRunKm: 37.5,
+    cutoffSplitKey: "run_37_5km_stavsro_cut_off",
+    finishDistanceKm: 221.3,
+    startersAfterSwim: 255,
+    notes: ["37.5 km Black/White decision year"],
+  },
+  2025: {
+    year: 2025,
+    cutoffRunKm: 37.5,
+    cutoffSplitKey: "run_37_5km_stavsro_cut_off",
+    finishDistanceKm: 221.3,
+    startersAfterSwim: 253,
+    notes: ["37.5 km Black/White decision year"],
+  },
+};
+
+export const KNOWN_YEARS = Object.keys(RACE_YEAR_REGISTRY)
+  .map((year) => Number(year))
+  .sort((left, right) => right - left);

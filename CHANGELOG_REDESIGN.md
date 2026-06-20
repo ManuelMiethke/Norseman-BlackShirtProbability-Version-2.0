@@ -13,8 +13,10 @@
 - Added `dashboard/assets/styles.css` as the first real design-system baseline for the Streamlit UI.
 - Added `scripts/validate_dashboard_assets.py` as a repeatable validation entrypoint.
 - Added `docs/ADDING_RACE_YEAR.md` to document the current safe workflow for integrating a new year.
+- Added `docs/REACT_MIGRATION.md` to define the new React-first frontend direction.
 - Added root `README.md` with startup, architecture summary and open points.
 - Added automated tests for dashboard config and data contracts under `tests/`.
+- Added a new `frontend/` React + Vite workspace with routed pages, shared filters and Plotly support.
 
 ### Verified
 
@@ -29,6 +31,8 @@
 - Verified post-refactor Streamlit startup again after the new config/data/UI layer was introduced.
 - Verified `python3 scripts/validate_dashboard_assets.py` passes.
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` passes.
+- Verified the React app builds successfully with `npm run build`.
+- Verified the React app renders locally on `http://127.0.0.1:5173/overview`.
 
 ### Notes
 
@@ -42,8 +46,14 @@
 - Reworked header/footer/layout to use centralized metadata and relative asset references.
 - Removed the runtime absolute CSV path in `modules/timerelations.py` and delegated it to the shared data layer.
 - Delegated the remaining module-level CSV loading helpers in `modelaccuracy.py` and `weatherspeed.py` to the shared data layer.
+- Introduced a parallel React frontend instead of extending Streamlit further for the new UI direction.
+- Ported the first overview route to React while preserving Plotly-based diagram behavior for `Distance vs. Time Relations`.
 
 ### Fixed
 
 - Eliminated the broken runtime logo path pattern that previously depended on the launch directory.
 - Eliminated direct module-level runtime CSV reads in the dashboard layer.
+
+### Notes
+
+- The React build currently emits a large bundle warning because Plotly is heavy; bundle/data chunking remains a follow-up optimization.
