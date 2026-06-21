@@ -11,6 +11,8 @@
 - Added `frontend/src/hooks/useModelData.ts` to load the packaged model-evaluation CSV per route/module in React.
 - Added `frontend/src/lib/modelAccuracy.ts` to port the original `modelaccuracy.py` chart logic to React.
 - Added `frontend/src/components/predictions/ModelAccuracySection.tsx` and `frontend/src/pages/ModelPredictionsPage.tsx` for the first real `Model Predictions` migration slice.
+- Added `frontend/src/lib/blackShirtProbability.ts` to port the original grouped probability plot from `blackshirt_prob.py` to React.
+- Added `frontend/src/components/predictions/BlackShirtProbabilitySection.tsx` for the second and final `Model Predictions` slice.
 
 ### Verified
 
@@ -27,6 +29,10 @@
 - Verified `python3 scripts/validate_dashboard_assets.py` still passes after introducing the React model-data hook.
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the model-accuracy slice.
 - Verified `http://127.0.0.1:5173/model-predictions` loads in the in-app browser and renders the new accuracy section without console warnings/errors.
+- Verified the React app still builds successfully after adding the grouped probability section and completing the route.
+- Verified `python3 scripts/validate_dashboard_assets.py` still passes after the full `Model Predictions` route migration.
+- Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the probability slice.
+- Verified the reloaded `http://127.0.0.1:5173/model-predictions` route renders both prediction sections without browser console warnings/errors.
 
 ### Changed
 
@@ -35,6 +41,7 @@
 - Extended the React long-data contract with `segment_time_s` so the pacing route can reuse the original split-delta semantics from Streamlit.
 - Expanded the React `Pacing & Course` route with the original pacing heatmap and completed the route end to end in React.
 - Replaced the React `Model Predictions` placeholder with a real page and ported the original model-accuracy chart with preserved test-set filtering and course-profile overlay semantics.
+- Expanded the React `Model Predictions` route with the original grouped Black-Shirt probability plot and completed the route end to end in React.
 
 ## 2026-06-20
 

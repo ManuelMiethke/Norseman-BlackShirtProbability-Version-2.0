@@ -35,7 +35,7 @@ The repository now contains a parallel React frontend in `frontend/`.
 - The `Pacing & Course` route now also includes the original accumulated race-progress chart.
 - The `Pacing & Course` route now also includes the original leg-wise pace-distribution module with its stat tables and Zombie-Hill toggle.
 - The `Pacing & Course` route now also includes the original pacing heatmap and therefore covers the full original Streamlit route end to end.
-- The `Model Predictions` route now starts with the original timing-station model-accuracy chart.
+- The `Model Predictions` route now covers the full original Streamlit route end to end, including the timing-station model-accuracy chart and the grouped Black-Shirt probability plot.
 - Remaining pages are scaffolded as migration targets.
 
 ## Start the React app
@@ -50,9 +50,8 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 ## Recommended migration order
 
-1. Remaining `Model Predictions` module (`blackshirt_prob`)
-2. Tools page
-3. Slimmer frontend-oriented data contract for route-specific assets
+1. Tools page
+2. Slimmer frontend-oriented data contract for route-specific assets
 
 ## Important constraint
 
