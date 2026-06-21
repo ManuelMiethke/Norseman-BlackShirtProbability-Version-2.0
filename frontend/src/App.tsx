@@ -5,6 +5,7 @@ import { DashboardProvider } from "@/state/DashboardContext";
 import { OverviewPage } from "@/pages/OverviewPage";
 import { MigrationPage } from "@/pages/MigrationPage";
 import { PacingCoursePage } from "@/pages/PacingCoursePage";
+import { ModelPredictionsPage } from "@/pages/ModelPredictionsPage";
 
 export function App() {
   return (
@@ -14,15 +15,7 @@ export function App() {
           <Route path="/" element={<Navigate to="/overview" replace />} />
           <Route path="/overview" element={<OverviewPage />} />
           <Route path="/pacing-course" element={<PacingCoursePage />} />
-          <Route
-            path="/model-predictions"
-            element={
-              <MigrationPage
-                title="Model Predictions"
-                description="The model probability and accuracy charts will be ported with the same Plotly semantics after the shared filter and chart adapters are extracted."
-              />
-            }
-          />
+          <Route path="/model-predictions" element={<ModelPredictionsPage />} />
           <Route
             path="/tools"
             element={

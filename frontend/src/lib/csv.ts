@@ -2,6 +2,7 @@ import Papa from "papaparse";
 
 let wideDataPromise: Promise<Record<string, unknown>[]> | null = null;
 let longDataPromise: Promise<Record<string, unknown>[]> | null = null;
+let modelDataPromise: Promise<Record<string, unknown>[]> | null = null;
 let courseProfilePromise: Promise<Record<string, unknown>[]> | null = null;
 
 function parseCsv(url: string): Promise<Record<string, unknown>[]> {
@@ -35,6 +36,13 @@ export async function loadLongCsv() {
     longDataPromise = parseCsv("/nxtri_data_all_years_long_ready_featured.csv");
   }
   return longDataPromise;
+}
+
+export async function loadModelCsv() {
+  if (!modelDataPromise) {
+    modelDataPromise = parseCsv("/xgb_black_probs_long_with_errors.csv");
+  }
+  return modelDataPromise;
 }
 
 export async function loadCourseProfileCsv() {

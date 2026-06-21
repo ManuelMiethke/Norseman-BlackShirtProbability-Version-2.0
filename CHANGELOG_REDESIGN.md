@@ -8,6 +8,9 @@
 - Added `frontend/src/components/pacing/PaceDistributionSection.tsx` for the third real `Pacing & Course` migration slice.
 - Added `frontend/src/lib/pacingHeatmap.ts` to port the original `heatmap.py` pacing heatmap logic to React.
 - Added `frontend/src/components/pacing/PacingHeatmapSection.tsx` for the final `Pacing & Course` migration slice.
+- Added `frontend/src/hooks/useModelData.ts` to load the packaged model-evaluation CSV per route/module in React.
+- Added `frontend/src/lib/modelAccuracy.ts` to port the original `modelaccuracy.py` chart logic to React.
+- Added `frontend/src/components/predictions/ModelAccuracySection.tsx` and `frontend/src/pages/ModelPredictionsPage.tsx` for the first real `Model Predictions` migration slice.
 
 ### Verified
 
@@ -20,6 +23,10 @@
 - Verified `python3 scripts/validate_dashboard_assets.py` still passes after the long-data contract extension for `segment_time_s`.
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the pacing heatmap slice.
 - Verified the reloaded `http://127.0.0.1:5173/pacing-course` route renders the new `Pacing Heatmap` section without console warnings/errors in the in-app browser.
+- Verified the React app still builds successfully after adding the first `Model Predictions` slice.
+- Verified `python3 scripts/validate_dashboard_assets.py` still passes after introducing the React model-data hook.
+- Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the model-accuracy slice.
+- Verified `http://127.0.0.1:5173/model-predictions` loads in the in-app browser and renders the new accuracy section without console warnings/errors.
 
 ### Changed
 
@@ -27,6 +34,7 @@
 - Expanded the React `Pacing & Course` route with the original pace-distribution boxplots, preserved stats semantics and a retained Zombie-Hill toggle.
 - Extended the React long-data contract with `segment_time_s` so the pacing route can reuse the original split-delta semantics from Streamlit.
 - Expanded the React `Pacing & Course` route with the original pacing heatmap and completed the route end to end in React.
+- Replaced the React `Model Predictions` placeholder with a real page and ported the original model-accuracy chart with preserved test-set filtering and course-profile overlay semantics.
 
 ## 2026-06-20
 

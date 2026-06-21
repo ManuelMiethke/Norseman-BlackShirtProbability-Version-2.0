@@ -39,6 +39,26 @@ export type LongRow = {
   weather_emoji?: string;
 };
 
+export type ModelRow = {
+  year: number;
+  bib: number;
+  name: string;
+  finish_type: string;
+  split_key: string;
+  leg: string;
+  race_distance_km?: number;
+  cum_time_seconds?: number;
+  segment_speed_kmh?: number;
+  split_rank?: number;
+  split_rank_relative?: number;
+  y_true?: number;
+  p_black?: number;
+  y_pred?: number;
+  is_error?: number;
+  error_type?: string;
+  set?: string;
+};
+
 export type CourseProfileRow = {
   distance_km: number;
   elev_norseman_m?: number;
