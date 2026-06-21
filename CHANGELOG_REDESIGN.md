@@ -15,6 +15,8 @@
 - Added `frontend/src/components/predictions/BlackShirtProbabilitySection.tsx` for the second and final `Model Predictions` slice.
 - Added `frontend/src/lib/catchup.ts` to port the original `catchup.py` estimator logic to React-side business logic.
 - Added `frontend/src/components/tools/CatchupSection.tsx` and `frontend/src/pages/ToolsPage.tsx` for the first real `Tools` migration slice.
+- Added `frontend/src/lib/empiricalPace.ts` to port the planning core of `empirical_pace.py` into reusable React-side business logic.
+- Added `frontend/src/components/tools/EmpiricalPaceSection.tsx` for the second `Tools` migration slice.
 
 ### Verified
 
@@ -39,6 +41,11 @@
 - Verified `python3 scripts/validate_dashboard_assets.py` still passes after introducing the catch-up logic layer.
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the catch-up slice.
 - Verified `http://127.0.0.1:5173/tools` loads in the in-app browser and renders the new catch-up section without console warnings/errors.
+- Verified the React app still builds successfully after adding the empirical pace planner core slice.
+- Verified `python3 scripts/validate_dashboard_assets.py` still passes after introducing the empirical pacing planner logic layer.
+- Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the empirical pace planner slice.
+- Verified the reloaded `http://127.0.0.1:5173/tools` route renders the new empirical pacing section without browser console warnings/errors.
+- Verified the empirical pacing planner controls update the overview table in the browser and that `Explore mode` unlocks total time and reveals the expert-label toggle.
 
 ### Changed
 
@@ -49,6 +56,7 @@
 - Replaced the React `Model Predictions` placeholder with a real page and ported the original model-accuracy chart with preserved test-set filtering and course-profile overlay semantics.
 - Expanded the React `Model Predictions` route with the original grouped Black-Shirt probability plot and completed the route end to end in React.
 - Replaced the React `Tools` placeholder with a real page and ported the original catch-up estimator with preserved neighborhood-probability and required-pace logic.
+- Expanded the React `Tools` route with the original empirical pacing planner core, including discipline-preference controls, fixed/explore-mode behavior and the preserved overview table semantics from Streamlit.
 
 ## 2026-06-20
 

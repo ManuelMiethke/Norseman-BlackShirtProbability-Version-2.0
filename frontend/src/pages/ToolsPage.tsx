@@ -1,6 +1,7 @@
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
 import { CatchupSection } from "@/components/tools/CatchupSection";
+import { EmpiricalPaceSection } from "@/components/tools/EmpiricalPaceSection";
 
 export function ToolsPage() {
   return (
@@ -10,18 +11,20 @@ export function ToolsPage() {
           <span className="page-hero__eyebrow">Tools</span>
           <h1>React tools migration</h1>
           <p>
-            This route now starts with the original catch-up estimator in React. The
-            heavier empirical pacing planner stays queued behind it so the tools page
-            can move in controlled slices.
+            This route now includes the catch-up estimator plus the interactive core of
+            the empirical pacing planner. Only the detailed empirical course/speed
+            figure is still queued behind them so the tools page can move in controlled
+            slices.
           </p>
         </div>
         <div className="page-hero__badge">
           <strong>Phase 4</strong>
-          <span>Catch-up added</span>
+          <span>Planner core added</span>
         </div>
       </section>
 
       <CatchupSection />
+      <EmpiricalPaceSection />
 
       <SectionCard
         title="Next Tools Module"
@@ -30,7 +33,7 @@ export function ToolsPage() {
         <div className="section-stack">
           <StateBlock
             title="Queued next"
-            description="`empirical_pace` is still pending. The route now has the original odds/required-pace estimator, leaving the empirical pacing planner as the last major Streamlit-only tool."
+            description="The remaining work is now inside the empirical pacing module itself: the detailed course-elevation and recommended-speed chart is still pending. The catch-up estimator and the planning controls/table are already ported."
           />
         </div>
       </SectionCard>

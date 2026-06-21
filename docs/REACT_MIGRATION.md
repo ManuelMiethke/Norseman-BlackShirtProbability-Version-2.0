@@ -36,8 +36,8 @@ The repository now contains a parallel React frontend in `frontend/`.
 - The `Pacing & Course` route now also includes the original leg-wise pace-distribution module with its stat tables and Zombie-Hill toggle.
 - The `Pacing & Course` route now also includes the original pacing heatmap and therefore covers the full original Streamlit route end to end.
 - The `Model Predictions` route now covers the full original Streamlit route end to end, including the timing-station model-accuracy chart and the grouped Black-Shirt probability plot.
-- The `Tools` route now starts with the original catch-up estimator for Black-Shirt odds and required pace.
-- Remaining pages are scaffolded as migration targets.
+- The `Tools` route now includes the original catch-up estimator plus the empirical pacing planner core with fixed/explore-mode behavior, expert labels and the overview table.
+- The last route-level gap is now the detailed empirical pacing chart inside the `Tools` route.
 
 ## Start the React app
 
@@ -51,7 +51,7 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 ## Recommended migration order
 
-1. Remaining `Tools` module (`empirical_pace`)
+1. Remaining detailed empirical pacing visualization inside `empirical_pace`
 2. Slimmer frontend-oriented data contract for route-specific assets
 
 ## Important constraint

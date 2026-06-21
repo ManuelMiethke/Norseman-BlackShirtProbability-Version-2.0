@@ -22,7 +22,9 @@
 - `completed` P0.R11 Port the first Model Predictions slice to React
 - `completed` P0.R12 Port the probability module and complete the route
 - `completed` P0.R13 Port the first Tools slice to React
-- `in_progress` P1.R3 Port remaining pages to React through shared computation adapters
+- `completed` P0.R14 Port the empirical pace planner core to React
+- `in_progress` P0.R15 Port the empirical pace detail chart and complete the route
+- `pending` P1.R3 Consolidate React migration adapters after route completion
 - `pending` all other tasks unless noted otherwise
 
 ## Repository Analysis
@@ -359,13 +361,29 @@
 - Dependencies: P0.R12
 - Acceptance criterion: React `Tools` route renders the original catch-up estimator from `catchup.py` with the same year-aware historical scope, probability neighborhood logic and required-pace calculation semantics as Streamlit
 
-#### P1.R3 Port remaining pages to React through shared computation adapters
+#### P0.R14 Port the empirical pace planner core to React
+
+- Status: `completed`
+- Benefit: ports most of the remaining `empirical_pace` planner logic into reusable React-side business logic while keeping the final visualization slice isolated
+- Risk: low
+- Dependencies: P0.R13
+- Acceptance criterion: React `Tools` route renders the original empirical pacing planner controls, fixed/explore-mode semantics, expert labels and overview table from `empirical_pace.py`
+
+#### P0.R15 Port the empirical pace detail chart and complete the route
 
 - Status: `in_progress`
-- Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
+- Benefit: completes the last Streamlit-only route element and preserves the original course-aware empirical pacing visualization
 - Risk: medium
-- Dependencies: P1.1, P1.2, P0.R13
-- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, continuing with the remaining `empirical_pace` tool and later frontend-facing data-contract slimming
+- Dependencies: P0.R14
+- Acceptance criterion: React `Tools` route renders the original empirical pacing detail figure with the same course profile, segment-speed guidance and control semantics as Streamlit
+
+#### P1.R3 Consolidate React migration adapters after route completion
+
+- Status: `pending`
+- Benefit: reduces duplicated route-local computation layers and prepares the React app for post-Streamlit cleanup
+- Risk: medium
+- Dependencies: P1.1, P1.2, P0.R15
+- Acceptance criterion: migrated React routes reuse shared data/filter helpers and duplicated frontend-only computation adapters are consolidated without changing route behavior
 
 #### P1.R4 Introduce a frontend-oriented data contract
 
@@ -415,6 +433,8 @@
 18. P0.R11 Port the first Model Predictions slice to React
 19. P0.R12 Port the probability module and complete the route
 20. P0.R13 Port the first Tools slice to React
+21. P0.R14 Port the empirical pace planner core to React
+22. P0.R15 Port the empirical pace detail chart and complete the route
 
 ## Completed in This Iteration
 
@@ -442,11 +462,12 @@
 - Ported the first `Model Predictions` slice to React with the original timing-station accuracy chart and a dedicated packaged-model data hook.
 - Ported the original grouped Black-Shirt probability plot to React and completed the full `Model Predictions` route in the new frontend.
 - Ported the first `Tools` slice to React with the original catch-up estimator and a dedicated React-side calculation layer for its probability and pacing logic.
+- Ported the empirical pacing planner core to React with preserved fixed/explore-mode behavior, expert performance labels and the original overview table semantics.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P1.R3 by migrating the remaining `empirical_pace` module so the `Tools` route can be completed in React.
+- Continue P0.R15 by migrating the remaining empirical pace detail chart so the `Tools` route can be completed in React.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.
