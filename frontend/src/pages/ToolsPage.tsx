@@ -11,15 +11,14 @@ export function ToolsPage() {
           <span className="page-hero__eyebrow">Tools</span>
           <h1>React tools migration</h1>
           <p>
-            This route now includes the catch-up estimator plus the interactive core of
-            the empirical pacing planner. Only the detailed empirical course/speed
-            figure is still queued behind them so the tools page can move in controlled
-            slices.
+            This route now includes both original Streamlit tools in React: the
+            catch-up estimator and the full empirical pacing planner with its detailed
+            course/speed figure.
           </p>
         </div>
         <div className="page-hero__badge">
           <strong>Phase 4</strong>
-          <span>Planner core added</span>
+          <span>Tools route complete</span>
         </div>
       </section>
 
@@ -27,13 +26,13 @@ export function ToolsPage() {
       <EmpiricalPaceSection />
 
       <SectionCard
-        title="Next Tools Module"
-        description="The remaining Streamlit analysis on this route is more complex, but it can now build on the same shared React shell and model-data hook."
+        title="Tools Route Status"
+        description="The original Streamlit `Tools` route is now covered end to end in React. Remaining work shifts back to shared architecture, data-contract and maintainability tasks."
       >
         <div className="section-stack">
           <StateBlock
-            title="Queued next"
-            description="The remaining work is now inside the empirical pacing module itself: the detailed course-elevation and recommended-speed chart is still pending. The catch-up estimator and the planning controls/table are already ported."
+            title="Route complete"
+            description="Both `catchup.py` and `empirical_pace.py` are now available in React. The next steps are no longer route gaps but cross-cutting cleanup: shared filter helpers, slimmer frontend-facing assets and further module decomposition."
           />
         </div>
       </SectionCard>

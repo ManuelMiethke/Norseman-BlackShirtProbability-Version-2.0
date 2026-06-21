@@ -144,7 +144,7 @@ The migration deliberately starts as a parallel frontend:
 - the React overview route now covers the full original Overview analytics set: participation KPIs, distance-vs-time donuts, the cross-year median comparison, `Who Are We Racing?`, rank progression and time distributions
 - the React `Pacing & Course` route now covers the full original route: `Course, Weather & Speed`, accumulated race progress, pace-distribution boxplots/stat tables and the pacing heatmap
 - the React `Model Predictions` route now covers the full original route: timing-station model accuracy plus grouped Black-Shirt probability trajectories
-- the React `Tools` route now includes the original catch-up estimator plus the empirical pacing planner core; only the detailed empirical pacing chart remains Streamlit-only on that route
+- the React `Tools` route now covers the full original route: the catch-up estimator plus the complete empirical pacing planner including its detailed course/speed figure
 
 Reason:
 
@@ -170,7 +170,7 @@ As of this redesign iteration:
 - dashboard asset validation passes
 - unit tests for config/data contracts pass
 - the four main Streamlit pages instantiate successfully via `streamlit.testing.v1.AppTest`
-- the React app builds successfully after adding the empirical pacing planner core to the `Tools` route
+- the React app builds successfully after completing the full `Tools` route migration
 
 ## Open points
 
@@ -178,7 +178,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend now covers the original Overview route, the full original `Pacing & Course` route, the full original `Model Predictions` route and most of the `Tools` route; the remaining migration work is concentrated in the detailed empirical pacing chart from `empirical_pace`.
+- The React frontend now covers the original Overview route, the full original `Pacing & Course` route, the full original `Model Predictions` route and the full original `Tools` route.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

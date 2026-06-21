@@ -25,6 +25,7 @@ export type LongRow = {
   name: string;
   finish_type: string;
   overall_rank?: number;
+  leg?: string;
   split_key: string;
   station_name?: string;
   split_rank?: number;

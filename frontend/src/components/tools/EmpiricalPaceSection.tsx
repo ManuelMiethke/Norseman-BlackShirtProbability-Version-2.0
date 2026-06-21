@@ -1,13 +1,18 @@
 import { useState } from "react";
 
+import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { useCourseProfileData } from "@/hooks/useCourseProfileData";
+import { useLongData } from "@/hooks/useLongData";
 import {
+  buildEmpiricalDetailChart,
   buildEmpiricalPlanModel,
   EMPIRICAL_PREF_OPTIONS,
   TRAINING_LABELS_SHORT,
   type EmpiricalPref,
 } from "@/lib/empiricalPace";
+import { useDashboard } from "@/state/DashboardContext";
 
 function preferenceLabel(
   pref: EmpiricalPref,
@@ -21,6 +26,9 @@ function preferenceLabel(
 }
 
 export function EmpiricalPaceSection() {
+  const longData = useLongData();
+  const courseProfileData = useCourseProfileData();
+  const { selectedYear } = useDashboard();
   const [exploreMode, setExploreMode] = useState(false);
   const [expertMode, setExpertMode] = useState(false);
   const [swimPref, setSwimPref] = useState<EmpiricalPref>("p50");
@@ -33,19 +41,34 @@ export function EmpiricalPaceSection() {
     runPref,
     exploreMode,
   });
+  const detailChart =
+    !longData.isLoading &&
+    !courseProfileData.isLoading &&
+    !longData.error &&
+    !courseProfileData.error &&
+    longData.rows.length > 0 &&
+    courseProfileData.rows.length > 0
+      ? buildEmpiricalDetailChart(
+          longData.rows,
+          courseProfileData.rows,
+          model.legTimes,
+          selectedYear,
+        )
+      : null;
 
   return (
     <SectionCard
       title="13:51 Black Shirt Empirical Pacing"
-      description="This React section ports the planning core of the original empirical pacing tool: a Black-Shirt-derived leg distribution, interactive discipline preferences and the resulting target overview table."
+      description="This React section ports the original empirical pacing tool end to end: a Black-Shirt-derived leg distribution, interactive discipline preferences, the overview table and the detailed course/speed figure."
     >
       <div className="section-stack">
         <div className="section-note">
-          <strong>Current scope</strong>
+          <strong>Scope</strong>
           <span>
-            This slice preserves the planner logic and overview table first. The
-            detailed course-elevation and recommended-speed figure stays queued as the
-            final part of the original Streamlit module.
+            The empirical blueprint is always based on Black-Shirt medians from the
+            37.5 km cut-off years 2024 and 2025. If the global year filter is set to
+            2024 or 2025, the detail figure narrows its empirical median to that year;
+            otherwise it keeps the combined two-year baseline, matching Streamlit.
           </span>
         </div>
 
@@ -168,10 +191,65 @@ export function EmpiricalPaceSection() {
           </div>
         </div>
 
-        <StateBlock
-          title="Remaining empirical pace slice"
-          description="The detailed course profile plus recommended-speed figure is still pending. The planner logic and overview table are now React-native, which reduces the remaining work to the visualization layer."
-        />
+        <div className="table-panel">
+          <div className="table-panel__header">
+            <div>
+              <h4>Detailed pacing profile</h4>
+              <p>
+                Course elevation stays in the background while the orange step line
+                shows the recommended speed blueprint to the 37.5 km Black-Shirt
+                decision point.
+              </p>
+            </div>
+          </div>
+
+          {longData.isLoading || courseProfileData.isLoading ? (
+            <StateBlock
+              title="Loading pacing profile"
+              description="Preparing split medians from the long race data and the packaged course profile."
+            />
+          ) : null}
+
+          {longData.error ? (
+            <StateBlock
+              title="Long-data load failed"
+              description={longData.error}
+              tone="error"
+            />
+          ) : null}
+
+          {courseProfileData.error ? (
+            <StateBlock
+              title="Course-profile load failed"
+              description={courseProfileData.error}
+              tone="error"
+            />
+          ) : null}
+
+          {!longData.isLoading &&
+          !courseProfileData.isLoading &&
+          !longData.error &&
+          !courseProfileData.error &&
+          !detailChart ? (
+            <StateBlock
+              title="No pacing profile available"
+              description="The packaged split or course datasets are empty after validation, so the empirical detail figure cannot be rendered."
+              tone="warning"
+            />
+          ) : null}
+
+          {!longData.isLoading &&
+          !courseProfileData.isLoading &&
+          !longData.error &&
+          !courseProfileData.error &&
+          detailChart ? (
+            <PlotlyChart
+              data={detailChart.data}
+              layout={detailChart.layout}
+              className="plot-card--xl"
+            />
+          ) : null}
+        </div>
       </div>
     </SectionCard>
   );

@@ -19,6 +19,7 @@ function toLongRow(record: Record<string, unknown>): LongRow {
       record.overall_rank === undefined || record.overall_rank === null || record.overall_rank === ""
         ? undefined
         : Number(record.overall_rank),
+    leg: record.leg ? String(record.leg).toLowerCase() : undefined,
     split_key: String(record.split_key ?? ""),
     station_name: record.station_name ? String(record.station_name) : undefined,
     split_rank:

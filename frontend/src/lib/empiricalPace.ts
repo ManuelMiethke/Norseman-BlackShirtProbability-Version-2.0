@@ -1,3 +1,7 @@
+import type { Data, Layout } from "plotly.js";
+
+import type { CourseProfileRow, LongRow } from "@/types/data";
+
 const TARGET_TOTAL_SECS = 13 * 3600 + 51 * 60;
 const PREF_OPTIONS = ["p10", "p25", "p50", "p75", "p90"] as const;
 
@@ -18,8 +22,13 @@ const BASELINE_LEG_SECS = {
 } as const;
 
 const SWIM_DIST_M = 3800;
+const SWIM_DIST_KM = SWIM_DIST_M / 1000;
 const BIKE_DIST_KM = 180;
 const RUN_DIST_KM = 42.2;
+const RUN_DECISION_DIST_KM = 37.5;
+const RUN_DECISION_COURSE_KM = SWIM_DIST_KM + BIKE_DIST_KM + RUN_DECISION_DIST_KM;
+const COURSE_MAX_KM = 221.3;
+const CUTOFF_37_5_YEARS = new Set([2024, 2025]);
 const RUN_FRESH_MARATHON_EQUIV_SECS_BY_PREF: Record<EmpiricalPref, number> = {
   p90: 2 * 3600 + 45 * 60,
   p75: 3 * 3600 + 10 * 60,
@@ -59,6 +68,17 @@ export type EmpiricalPlanModel = {
   bikeExpertLabels: Record<EmpiricalPref, string>;
   runExpertLabels: Record<EmpiricalPref, string>;
 };
+
+type EmpiricalSegment = {
+  leg: "swim" | "bike" | "run";
+  startKm: number;
+  endKm: number;
+  segDistKm: number;
+  baseSpeedKmh: number;
+  speedKmh: number;
+};
+
+type YearOption = number | "All";
 
 function formatHms(seconds: number) {
   const rounded = Math.round(seconds);
@@ -106,6 +126,34 @@ function prefToFactor(pref: string) {
   return PREF_FACTORS[normalizePref(pref)];
 }
 
+function normalizeFinishType(value: unknown) {
+  return String(value ?? "").trim().toLowerCase();
+}
+
+function isBlackFinishType(value: unknown) {
+  return normalizeFinishType(value).includes("black");
+}
+
+function median(values: number[]) {
+  if (values.length === 0) {
+    return Number.NaN;
+  }
+
+  const sorted = [...values].sort((left, right) => left - right);
+  const middle = Math.floor(sorted.length / 2);
+
+  if (sorted.length % 2 === 1) {
+    return sorted[middle] ?? Number.NaN;
+  }
+
+  const left = sorted[middle - 1];
+  const right = sorted[middle];
+  if (left === undefined || right === undefined) {
+    return Number.NaN;
+  }
+  return (left + right) / 2;
+}
+
 export const EMPIRICAL_PREF_OPTIONS = PREF_OPTIONS;
 
 export const TRAINING_LABELS_SHORT: Record<EmpiricalPref, string> = {
@@ -146,6 +194,13 @@ function runMarathonLabelWithPace(pref: EmpiricalPref) {
 
 function bikeWkgLabelFromPref(pref: EmpiricalPref) {
   return `${BIKE_FTP_WKG_BY_PREF[pref].toFixed(1)} W/kg`;
+}
+
+function effectiveCutoffYears(selectedYear: YearOption) {
+  if (selectedYear !== "All" && CUTOFF_37_5_YEARS.has(selectedYear)) {
+    return new Set([selectedYear]);
+  }
+  return CUTOFF_37_5_YEARS;
 }
 
 function scaleLegsToTarget(legTimes: EmpiricalLegTimes) {
@@ -207,6 +262,293 @@ function buildOverview(legTimes: EmpiricalLegTimes): EmpiricalOverviewRow {
     timeAtDecision: formatHms(
       legTimes.swim + legTimes.t1 + legTimes.bike + legTimes.t2 + legTimes.run,
     ),
+  };
+}
+
+function buildBlackShirtSegmentPacing(
+  longRows: LongRow[],
+  legTimes: EmpiricalLegTimes,
+  selectedYear: YearOption,
+): EmpiricalSegment[] {
+  const cutoffYears = effectiveCutoffYears(selectedYear);
+  const filteredRows = longRows.filter((row) => {
+    if (!cutoffYears.has(row.year)) {
+      return false;
+    }
+    if (!isBlackFinishType(row.finish_type)) {
+      return false;
+    }
+    if (row.leg !== "swim" && row.leg !== "bike" && row.leg !== "run") {
+      return false;
+    }
+    if (!Number.isFinite(row.segment_speed_kmh) || !Number.isFinite(row.race_distance_km)) {
+      return false;
+    }
+    const speed = row.segment_speed_kmh ?? Number.NaN;
+    return speed >= 1 && speed <= 80;
+  });
+
+  const grouped = new Map<string, number[]>();
+  for (const row of filteredRows) {
+    const speed = row.segment_speed_kmh;
+    const raceDistance = row.race_distance_km;
+    const leg = row.leg;
+    if (
+      speed === undefined ||
+      raceDistance === undefined ||
+      (leg !== "swim" && leg !== "bike" && leg !== "run")
+    ) {
+      continue;
+    }
+    const key = `${leg}:${raceDistance}`;
+    const values = grouped.get(key) ?? [];
+    values.push(speed);
+    grouped.set(key, values);
+  }
+
+  const legOffsets = {
+    swim: 0,
+    bike: SWIM_DIST_KM,
+    run: SWIM_DIST_KM + BIKE_DIST_KM,
+  } satisfies Record<EmpiricalSegment["leg"], number>;
+
+  const legTimeSecs = {
+    swim: 0,
+    bike: 0,
+    run: 0,
+  } satisfies Record<EmpiricalSegment["leg"], number>;
+
+  const segments: Omit<EmpiricalSegment, "speedKmh">[] = [];
+
+  (["swim", "bike", "run"] as const).forEach((leg) => {
+    const medians = [...grouped.entries()]
+      .map(([key, values]) => {
+        const [groupLeg, distanceText] = key.split(":");
+        return {
+          leg: groupLeg,
+          raceDistanceKm: Number(distanceText),
+          medianSpeedKmh: median(values),
+        };
+      })
+      .filter(
+        (entry) =>
+          entry.leg === leg &&
+          Number.isFinite(entry.raceDistanceKm) &&
+          Number.isFinite(entry.medianSpeedKmh),
+      )
+      .sort((left, right) => left.raceDistanceKm - right.raceDistanceKm);
+
+    let previousKm = legOffsets[leg];
+
+    for (const entry of medians) {
+      let currentKm = entry.raceDistanceKm;
+
+      if (leg === "run") {
+        if (previousKm >= RUN_DECISION_COURSE_KM) {
+          break;
+        }
+        currentKm = Math.min(currentKm, RUN_DECISION_COURSE_KM);
+      }
+
+      const segmentDistanceKm = currentKm - previousKm;
+      if (segmentDistanceKm <= 0) {
+        previousKm = currentKm;
+        continue;
+      }
+
+      const baseSpeedKmh = entry.medianSpeedKmh;
+      const timeSecs = (segmentDistanceKm / baseSpeedKmh) * 3600;
+      legTimeSecs[leg] += timeSecs;
+
+      segments.push({
+        leg,
+        startKm: previousKm,
+        endKm: currentKm,
+        segDistKm: segmentDistanceKm,
+        baseSpeedKmh,
+      });
+
+      previousKm = currentKm;
+    }
+  });
+
+  const targetSecs = {
+    swim: legTimes.swim,
+    bike: legTimes.bike,
+    run: legTimes.run * (RUN_DECISION_DIST_KM / RUN_DIST_KM),
+  } satisfies Record<EmpiricalSegment["leg"], number>;
+
+  const scaleFactors = {
+    swim: legTimeSecs.swim > 0 ? legTimeSecs.swim / targetSecs.swim : 1,
+    bike: legTimeSecs.bike > 0 ? legTimeSecs.bike / targetSecs.bike : 1,
+    run: legTimeSecs.run > 0 ? legTimeSecs.run / targetSecs.run : 1,
+  } satisfies Record<EmpiricalSegment["leg"], number>;
+
+  return segments.map((segment) => ({
+    ...segment,
+    speedKmh: segment.baseSpeedKmh * scaleFactors[segment.leg],
+  }));
+}
+
+export function buildEmpiricalDetailChart(
+  longRows: LongRow[],
+  courseRows: CourseProfileRow[],
+  legTimes: EmpiricalLegTimes,
+  selectedYear: YearOption,
+): {
+  data: Data[];
+  layout: Partial<Layout>;
+} {
+  const segmentRows = buildBlackShirtSegmentPacing(longRows, legTimes, selectedYear);
+
+  const xSpeed: Array<number | null> = [];
+  const ySpeed: Array<number | null> = [];
+  for (const row of segmentRows) {
+    xSpeed.push(row.startKm, row.endKm, null);
+    ySpeed.push(row.speedKmh, row.speedKmh, null);
+  }
+
+  const plottedCourseRows = courseRows.filter(
+    (row) =>
+      row.distance_km <= COURSE_MAX_KM &&
+      row.elev_norseman_m !== undefined &&
+      Number.isFinite(row.elev_norseman_m),
+  );
+  const elevationX = plottedCourseRows.map((row) => row.distance_km);
+  const elevationY = plottedCourseRows.map((row) => row.elev_norseman_m ?? 0);
+
+  const shapes: NonNullable<Layout["shapes"]> = [];
+  if (elevationX.length > 1) {
+    const pathParts = [`M ${elevationX[0]},${elevationY[0]}`];
+    for (let index = 1; index < elevationX.length; index += 1) {
+      pathParts.push(`L ${elevationX[index]},${elevationY[index]}`);
+    }
+    const lastX = elevationX[elevationX.length - 1];
+    const firstX = elevationX[0];
+    if (lastX !== undefined && firstX !== undefined) {
+      pathParts.push(`L ${lastX},0`, `L ${firstX},0`, "Z");
+      shapes.push({
+        type: "path",
+        path: pathParts.join(" "),
+        xref: "x",
+        yref: "y2",
+        fillcolor: "rgba(31, 111, 178, 0.18)",
+        line: { color: "rgba(31, 111, 178, 0.60)", width: 2 },
+        layer: "below",
+      });
+    }
+  }
+
+  const splitPositions = [...new Set(longRows.map((row) => row.race_distance_km))]
+    .filter(
+      (value): value is number =>
+        value !== undefined &&
+        Number.isFinite(value) &&
+        value >= 0 &&
+        value <= COURSE_MAX_KM,
+    )
+    .sort((left, right) => left - right);
+  splitPositions.forEach((position) => {
+    shapes.push({
+      type: "line",
+      xref: "x",
+      yref: "paper",
+      x0: position,
+      x1: position,
+      y0: 0,
+      y1: 1,
+      line: { color: "rgba(220,220,220,0.4)", width: 1, dash: "dot" },
+      layer: "below",
+    });
+  });
+
+  shapes.push({
+    type: "line",
+    xref: "x",
+    yref: "paper",
+    x0: RUN_DECISION_COURSE_KM,
+    x1: RUN_DECISION_COURSE_KM,
+    y0: 0,
+    y1: 1,
+    line: { color: "white", width: 1, dash: "dash" },
+    layer: "above",
+  });
+
+  const courseMaxTick = Number(COURSE_MAX_KM.toFixed(1));
+
+  return {
+    data: [
+      {
+        type: "scatter",
+        x: elevationX,
+        y: elevationY,
+        yaxis: "y2",
+        mode: "lines",
+        name: "Course elevation",
+        line: { width: 0, color: "rgba(31, 111, 178, 0)" },
+        hoverinfo: "skip",
+        showlegend: false,
+      },
+      {
+        type: "scatter",
+        x: xSpeed,
+        y: ySpeed,
+        mode: "lines",
+        name: "Recommended speed (km/h)",
+        line: { width: 5, color: "orange" },
+        hovertemplate: "Speed: %{y:.1f} km/h<extra></extra>",
+        connectgaps: false,
+      },
+    ],
+    layout: {
+      paper_bgcolor: "#7A7A7A",
+      plot_bgcolor: "#7A7A7A",
+      font: { color: "white", family: "IBM Plex Sans, sans-serif" },
+      margin: { l: 40, r: 40, t: 40, b: 40 },
+      legend: {
+        orientation: "h",
+        yanchor: "bottom",
+        y: 1.02,
+        xanchor: "right",
+        x: 1,
+      },
+      annotations: [
+        {
+          x: RUN_DECISION_COURSE_KM,
+          y: 1,
+          xref: "x",
+          yref: "paper",
+          text: "Black Shirt decision (37.5 km run)",
+          showarrow: false,
+          yshift: 16,
+          xanchor: "center",
+          font: { color: "white", size: 12 },
+        },
+      ],
+      shapes,
+      xaxis: {
+        title: { text: "Distance (km)" },
+        range: [0, COURSE_MAX_KM],
+        tickmode: "array",
+        tickvals: [0, 50, 100, 150, 200, COURSE_MAX_KM],
+        ticktext: ["0", "50", "100", "150", "200", `${courseMaxTick}`],
+        gridcolor: "rgba(0,0,0,0.15)",
+        zerolinecolor: "rgba(0,0,0,0.15)",
+      },
+      yaxis: {
+        title: { text: "Speed (km/h)" },
+        gridcolor: "rgba(0,0,0,0.15)",
+        zerolinecolor: "rgba(0,0,0,0.15)",
+      },
+      yaxis2: {
+        title: { text: "Elevation (m)" },
+        overlaying: "y",
+        side: "right",
+        gridcolor: "rgba(0,0,0,0)",
+        zerolinecolor: "rgba(0,0,0,0.15)",
+        rangemode: "tozero",
+      },
+    },
   };
 }
 

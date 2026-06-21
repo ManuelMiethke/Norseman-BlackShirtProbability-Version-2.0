@@ -46,6 +46,10 @@
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the empirical pace planner slice.
 - Verified the reloaded `http://127.0.0.1:5173/tools` route renders the new empirical pacing section without browser console warnings/errors.
 - Verified the empirical pacing planner controls update the overview table in the browser and that `Explore mode` unlocks total time and reveals the expert-label toggle.
+- Verified the React app still builds successfully after adding the detailed empirical pacing figure and completing the route.
+- Verified `python3 scripts/validate_dashboard_assets.py` still passes after extending the React long-data contract with `leg`.
+- Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the full empirical pacing migration.
+- Verified the reloaded `http://127.0.0.1:5173/tools` route renders the completed `Tools` page, including the detailed pacing profile Plotly chart, without browser console warnings/errors.
 
 ### Changed
 
@@ -57,6 +61,7 @@
 - Expanded the React `Model Predictions` route with the original grouped Black-Shirt probability plot and completed the route end to end in React.
 - Replaced the React `Tools` placeholder with a real page and ported the original catch-up estimator with preserved neighborhood-probability and required-pace logic.
 - Expanded the React `Tools` route with the original empirical pacing planner core, including discipline-preference controls, fixed/explore-mode behavior and the preserved overview table semantics from Streamlit.
+- Expanded the React `Tools` route with the original empirical pacing detail figure, including the course-elevation backdrop, recommended speed profile and 37.5 km decision-line semantics, completing the full route in React.
 
 ## 2026-06-20
 

@@ -23,8 +23,7 @@
 - `completed` P0.R12 Port the probability module and complete the route
 - `completed` P0.R13 Port the first Tools slice to React
 - `completed` P0.R14 Port the empirical pace planner core to React
-- `in_progress` P0.R15 Port the empirical pace detail chart and complete the route
-- `pending` P1.R3 Consolidate React migration adapters after route completion
+- `completed` P0.R15 Port the empirical pace detail chart and complete the route
 - `pending` all other tasks unless noted otherwise
 
 ## Repository Analysis
@@ -371,7 +370,7 @@
 
 #### P0.R15 Port the empirical pace detail chart and complete the route
 
-- Status: `in_progress`
+- Status: `completed`
 - Benefit: completes the last Streamlit-only route element and preserves the original course-aware empirical pacing visualization
 - Risk: medium
 - Dependencies: P0.R14
@@ -463,12 +462,13 @@
 - Ported the original grouped Black-Shirt probability plot to React and completed the full `Model Predictions` route in the new frontend.
 - Ported the first `Tools` slice to React with the original catch-up estimator and a dedicated React-side calculation layer for its probability and pacing logic.
 - Ported the empirical pacing planner core to React with preserved fixed/explore-mode behavior, expert performance labels and the original overview table semantics.
+- Ported the detailed empirical pacing figure to React with course-profile background, Black-Shirt split medians and the original 37.5 km decision-line semantics, completing the `Tools` route.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P0.R15 by migrating the remaining empirical pace detail chart so the `Tools` route can be completed in React.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
+- Begin P1.R3 by consolidating duplicated React-side computation adapters now that all original routes are covered.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.
 
