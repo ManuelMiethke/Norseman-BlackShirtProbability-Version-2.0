@@ -26,8 +26,11 @@ function toWideRow(record: Record<string, unknown>): WideRow {
         : Number(record.overall_rank),
     overall_time: record.overall_time ? String(record.overall_time) : undefined,
     swim_time: record.swim_time ? String(record.swim_time) : undefined,
+    t1_time: record.t1_time ? String(record.t1_time) : undefined,
     bike_time: record.bike_time ? String(record.bike_time) : undefined,
+    t2_time: record.t2_time ? String(record.t2_time) : undefined,
     run_time: record.run_time ? String(record.run_time) : undefined,
+    zombie_hill_time: record.zombie_hill_time ? String(record.zombie_hill_time) : undefined,
     run_start_time: record.run_start_time ? String(record.run_start_time) : undefined,
     run_32_5km_langefonn_time: record.run_32_5km_langefonn_time
       ? String(record.run_32_5km_langefonn_time)

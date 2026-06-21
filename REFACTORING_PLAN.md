@@ -17,6 +17,7 @@
 - `completed` P0.R6 Port the overview histogram block and complete the original Overview route in React
 - `completed` P0.R7 Port the first Pacing & Course slice to React
 - `completed` P0.R8 Port the accumulated race-progress chart to React
+- `completed` P0.R9 Port the pace-distribution module to React
 - `in_progress` P1.R3 Port remaining pages to React through shared computation adapters
 - `pending` all other tasks unless noted otherwise
 
@@ -314,13 +315,21 @@
 - Dependencies: P0.R7
 - Acceptance criterion: React `Pacing & Course` route renders the original accumulated race-progress chart with the same year/group filtering and leg-separated distance axis semantics as Streamlit
 
+#### P0.R9 Port the pace-distribution module to React
+
+- Status: `completed`
+- Benefit: removes another large Streamlit-only pacing block while preserving the original boxplot/stat-table analysis and improving the presentation around it
+- Risk: medium
+- Dependencies: P0.R8
+- Acceptance criterion: React `Pacing & Course` route renders the original leg-wise pace boxplots, Zombie-Hill toggle and group-aware summary tables from `pacetabelle.py` with the same year/filter semantics as Streamlit
+
 #### P1.R3 Port remaining pages to React through shared computation adapters
 
 - Status: `in_progress`
 - Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
 - Risk: medium
-- Dependencies: P1.1, P1.2, P0.R8
-- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, continuing with the remaining `Pacing & Course` modules (`pacetabelle`, `heatmap`)
+- Dependencies: P1.1, P1.2, P0.R9
+- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, continuing with the remaining `Pacing & Course` heatmap plus `Model Predictions` and `Tools`
 
 #### P1.R4 Introduce a frontend-oriented data contract
 
@@ -365,6 +374,7 @@
 13. P0.R6 Port the overview histogram block and complete the original Overview route in React
 14. P0.R7 Port the first Pacing & Course slice to React
 15. P0.R8 Port the accumulated race-progress chart to React
+16. P0.R9 Port the pace-distribution module to React
 
 ## Completed in This Iteration
 
@@ -387,11 +397,12 @@
 - Ported the original overview histogram block to React and completed the full set of original Overview analytics in the new frontend.
 - Ported the first `Pacing & Course` slice by replacing the placeholder route with a real page and the original `Course, Weather & Speed` chart.
 - Ported the original accumulated race-progress chart to React and attached it to the same `Pacing & Course` route.
+- Ported the original `pacetabelle` module to React as a leg-wise pace-distribution section with collapsible stat tables and a retained Zombie-Hill toggle.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P1.R3 inside `Pacing & Course` by migrating `pacetabelle` and `heatmap`.
+- Continue P1.R3 inside `Pacing & Course` by migrating the remaining `heatmap` module.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.

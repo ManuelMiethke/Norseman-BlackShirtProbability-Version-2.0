@@ -1,0 +1,224 @@
+import { Fragment, useState } from "react";
+
+import { PlotlyChart } from "@/components/common/PlotlyChart";
+import { SectionCard } from "@/components/common/SectionCard";
+import { StateBlock } from "@/components/common/StateBlock";
+import {
+  buildPaceDistributionModel,
+  type PaceLegModel,
+  type PaceStatsCell,
+} from "@/lib/pacingDistributions";
+import { useDashboard } from "@/state/DashboardContext";
+
+function toneFromGroup(group: PaceStatsCell["group"]) {
+  if (group === "Top 10") {
+    return "top10";
+  }
+  if (group === "Black Shirt") {
+    return "black";
+  }
+  return "white";
+}
+
+function PaceCellGroup({
+  cell,
+  showSecondary,
+}: {
+  cell: PaceStatsCell;
+  showSecondary: boolean;
+}) {
+  const tone = toneFromGroup(cell.group);
+
+  return (
+    <>
+      <td className={`pace-table__group--${tone}`}>{cell.time || "—"}</td>
+      {showSecondary ? (
+        <td className={`pace-table__group--${tone}`}>
+          {cell.secondaryLines.length > 0 ? (
+            <div className="pace-table__stack">
+              {cell.secondaryLines.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </div>
+          ) : (
+            "—"
+          )}
+        </td>
+      ) : null}
+    </>
+  );
+}
+
+function PaceLegPanel({ leg }: { leg: PaceLegModel }) {
+  const hasSecondaryColumn = leg.table.secondaryLabel !== null;
+
+  return (
+    <article className="pacing-leg-panel">
+      <PlotlyChart
+        data={leg.figure.data}
+        layout={leg.figure.layout}
+        className="plot-card--pace"
+      />
+
+      <details className="disclosure-panel">
+        <summary>
+          <span>Median / Std / Min / Max</span>
+          <span className="disclosure-panel__chevron">⌄</span>
+        </summary>
+
+        <div className="disclosure-panel__body">
+          {leg.table.emptyMessage ? (
+            <div className="section-note">
+              <strong>Stats unavailable</strong>
+              <span>{leg.table.emptyMessage}</span>
+            </div>
+          ) : (
+            <div className="table-scroll">
+              <table className="pace-table">
+                <thead>
+                  <tr>
+                    <th rowSpan={2}>Metric</th>
+                    {leg.table.groups.map((group) => (
+                      <th
+                        key={group.key}
+                        colSpan={hasSecondaryColumn ? 2 : 1}
+                        className={`pace-table__group pace-table__group--${group.tone}`}
+                      >
+                        {group.key}
+                      </th>
+                    ))}
+                  </tr>
+                  <tr>
+                    {leg.table.groups.map((group) => (
+                      <Fragment key={`${leg.id}-${group.key}`}>
+                        <th className={`pace-table__subhead pace-table__group--${group.tone}`}>
+                          Time
+                        </th>
+                        {hasSecondaryColumn ? (
+                          <th className={`pace-table__subhead pace-table__group--${group.tone}`}>
+                            {leg.table.secondaryLabel}
+                          </th>
+                        ) : null}
+                      </Fragment>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {leg.table.rows.map((row) => (
+                    <tr key={row.metric}>
+                      <td className="pace-table__metric">{row.metric}</td>
+                      {row.cells.map((cell) => (
+                        <PaceCellGroup
+                          key={`${row.metric}-${cell.group}`}
+                          cell={cell}
+                          showSecondary={hasSecondaryColumn}
+                        />
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </details>
+    </article>
+  );
+}
+
+export function PaceDistributionSection() {
+  const {
+    rows,
+    selectedYear,
+    selectedGroup,
+    isLoading,
+    error,
+  } = useDashboard();
+  const [showZombieHill, setShowZombieHill] = useState(false);
+
+  if (isLoading) {
+    return (
+      <SectionCard
+        title="Pace Distributions"
+        description="This React section preserves the original leg-wise pace boxplots and summary tables from the Streamlit pacing module."
+      >
+        <StateBlock
+          title="Loading pace distributions"
+          description="Preparing leg-wise timing distributions from the packaged wide race dataset."
+        />
+      </SectionCard>
+    );
+  }
+
+  if (error) {
+    return (
+      <SectionCard
+        title="Pace Distributions"
+        description="This React section preserves the original leg-wise pace boxplots and summary tables from the Streamlit pacing module."
+      >
+        <StateBlock
+          title="Pace data load failed"
+          description={error}
+          tone="error"
+        />
+      </SectionCard>
+    );
+  }
+
+  const model = buildPaceDistributionModel(rows, selectedYear, selectedGroup);
+
+  return (
+    <SectionCard
+      title="Pace Distributions"
+      description="The original pacing boxplots now run in React: each leg keeps the Top 10, Black Shirt and White Shirt distribution comparison plus the summary stats table underneath."
+    >
+      <div className="section-stack">
+        <div className="section-note">
+          <strong>Filter behavior</strong>
+          <span>
+            The year filter is applied directly. Like the original Streamlit module,
+            the boxplots always compare Top 10, Black Shirt and White Shirt finishers,
+            while the global group filter only changes the summary-table columns and
+            keeps DNF athletes excluded.
+          </span>
+        </div>
+
+        <div className="section-controls">
+          <label className="toggle-pill">
+            <input
+              type="checkbox"
+              checked={showZombieHill}
+              onChange={(event) => setShowZombieHill(event.target.checked)}
+            />
+            <span>Include Zombie Hill split</span>
+          </label>
+        </div>
+
+        {model.warning ? (
+          <StateBlock
+            title="Pace filter note"
+            description={model.warning}
+            tone="warning"
+          />
+        ) : null}
+
+        {model.primaryLegs.length > 0 ? (
+          <div className="pacing-grid">
+            {model.primaryLegs.map((leg) => (
+              <PaceLegPanel key={leg.id} leg={leg} />
+            ))}
+            {showZombieHill && model.zombieHill ? (
+              <PaceLegPanel leg={model.zombieHill} />
+            ) : null}
+          </div>
+        ) : (
+          <StateBlock
+            title="No pace charts"
+            description="No usable leg timing data is available for the current filter selection."
+            tone="warning"
+          />
+        )}
+      </div>
+    </SectionCard>
+  );
+}

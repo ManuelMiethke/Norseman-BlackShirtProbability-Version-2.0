@@ -435,6 +435,10 @@ select {
   min-height: 650px;
 }
 
+.plot-card--pace {
+  min-height: 320px;
+}
+
 .plot-card__loading {
   display: grid;
   place-items: center;
@@ -540,6 +544,115 @@ select {
   overflow-x: auto;
 }
 
+.pacing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.pacing-leg-panel {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.disclosure-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  background: rgba(6, 12, 18, 0.55);
+  overflow: hidden;
+}
+
+.disclosure-panel summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.disclosure-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure-panel__chevron {
+  color: var(--muted);
+  transition: transform 140ms ease;
+}
+
+.disclosure-panel[open] .disclosure-panel__chevron {
+  transform: rotate(180deg);
+}
+
+.disclosure-panel[open] summary {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.disclosure-panel__body {
+  padding: 1rem;
+}
+
+.pace-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+}
+
+.pace-table th,
+.pace-table td {
+  padding: 0.8rem 0.9rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pace-table th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.pace-table__metric {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pace-table__subhead {
+  white-space: nowrap;
+}
+
+.pace-table__group {
+  text-align: center;
+}
+
+.pace-table__group--top10 {
+  background: rgba(213, 255, 90, 0.8);
+  color: #08111a;
+}
+
+.pace-table__group--black {
+  background: rgba(0, 0, 0, 0.78);
+  color: var(--text);
+}
+
+.pace-table__group--white {
+  background: rgba(255, 255, 255, 0.92);
+  color: #08111a;
+}
+
+.pace-table__stack {
+  display: grid;
+  gap: 0.2rem;
+}
+
 .data-table th,
 .data-table td {
   padding: 0.8rem 0.9rem;
@@ -562,6 +675,10 @@ select {
 @media (max-width: 1200px) {
   .plot-grid--3,
   .plot-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pacing-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -626,6 +743,10 @@ select {
   .plot-grid--2,
   .plot-grid--3,
   .plot-grid--4 {
+    grid-template-columns: 1fr;
+  }
+
+  .pacing-grid {
     grid-template-columns: 1fr;
   }
 }
