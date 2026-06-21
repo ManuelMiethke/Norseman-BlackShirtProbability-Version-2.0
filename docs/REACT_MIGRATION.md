@@ -31,6 +31,7 @@ The repository now contains a parallel React frontend in `frontend/`.
 - A shared React-side filter helper layer now covers year and finisher-group filtering for migrated modules.
 - A route-local long-data hook now supports long split consumers without pushing that payload into global dashboard context.
 - The React overview route now covers the original Streamlit Overview page end to end.
+- The `Pacing & Course` route now has its first real React slice with the original combined `Course, Weather & Speed` chart.
 - Remaining pages are scaffolded as migration targets.
 
 ## Start the React app
@@ -45,7 +46,7 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 ## Recommended migration order
 
-1. Pacing & Course page
+1. Remaining `Pacing & Course` modules (`accumulated`, `pacetabelle`, `heatmap`)
 2. Model Predictions page
 3. Tools page
 4. Slimmer frontend-oriented data contract for route-specific assets

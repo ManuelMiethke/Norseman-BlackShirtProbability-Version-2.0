@@ -23,7 +23,20 @@ export type LongRow = {
   finish_type: string;
   overall_rank?: number;
   split_key: string;
+  station_name?: string;
   split_rank?: number;
+  split_distance_km?: number;
   race_distance_km?: number;
+  segment_speed_kmh?: number;
   cum_time_seconds?: number;
+  temperature_2m?: number;
+  wind_direction_10m?: number;
+  wind_effect?: string;
+  weather_emoji?: string;
+};
+
+export type CourseProfileRow = {
+  distance_km: number;
+  elev_norseman_m?: number;
+  elev_hawaii_m?: number;
 };

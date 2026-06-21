@@ -74,6 +74,8 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 The main migrated route is available at `http://127.0.0.1:5173/overview`.
 
+The first migrated `Pacing & Course` route is available at `http://127.0.0.1:5173/pacing-course`.
+
 ## Current architecture decisions
 
 ### 1. Shared configuration first, not a rewrite
@@ -173,7 +175,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend now covers the original Overview route; the remaining migration work is concentrated in the other pages (`Pacing & Course`, `Model Predictions`, `Tools`).
+- The React frontend now covers the original Overview route and the first `Pacing & Course` slice; the remaining migration work is concentrated in the rest of `Pacing & Course`, plus `Model Predictions` and `Tools`.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

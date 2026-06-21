@@ -15,6 +15,7 @@
 - `completed` P0.R4 Add a route-local long-data hook and port `Who Are We Racing?`
 - `completed` P0.R5 Port the rank-progression overview modules to React
 - `completed` P0.R6 Port the overview histogram block and complete the original Overview route in React
+- `completed` P0.R7 Port the first Pacing & Course slice to React
 - `in_progress` P1.R3 Port remaining pages to React through shared computation adapters
 - `pending` all other tasks unless noted otherwise
 
@@ -296,13 +297,21 @@
 - Dependencies: P0.R5
 - Acceptance criterion: React overview route renders the original time-distribution block with absolute, relative and bike-scale modes, plus the same group-aware Top-10 overlay semantics used in Streamlit
 
+#### P0.R7 Port the first Pacing & Course slice to React
+
+- Status: `completed`
+- Benefit: starts the next route with its largest combined chart and establishes the data contracts needed for weather, course profile and segment-speed overlays
+- Risk: medium
+- Dependencies: P0.R6
+- Acceptance criterion: React `Pacing & Course` route renders the combined `Course, Weather & Speed` chart using the packaged long dataset and course profile CSV, preserving year fallback and group-aware speed overlays
+
 #### P1.R3 Port remaining pages to React through shared computation adapters
 
 - Status: `in_progress`
 - Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
 - Risk: medium
-- Dependencies: P1.1, P1.2, P0.R6
-- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, starting with `Pacing & Course`
+- Dependencies: P1.1, P1.2, P0.R7
+- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, continuing with the remaining `Pacing & Course` modules (`accumulated`, `pacetabelle`, `heatmap`)
 
 #### P1.R4 Introduce a frontend-oriented data contract
 
@@ -345,6 +354,7 @@
 11. P0.R4 Add a route-local long-data hook and port `Who Are We Racing?`
 12. P0.R5 Port the rank-progression overview modules to React
 13. P0.R6 Port the overview histogram block and complete the original Overview route in React
+14. P0.R7 Port the first Pacing & Course slice to React
 
 ## Completed in This Iteration
 
@@ -365,11 +375,12 @@
 - Ported `Who Are We Racing?` to React, including the yearly outcome stack and the empirical Black Shirt frontier summary.
 - Ported the Top-10 and all-athlete rank-progression modules into one React section backed by shared long split logic.
 - Ported the original overview histogram block to React and completed the full set of original Overview analytics in the new frontend.
+- Ported the first `Pacing & Course` slice by replacing the placeholder route with a real page and the original `Course, Weather & Speed` chart.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P1.R3 by moving from the now complete React Overview route into `Pacing & Course`.
+- Continue P1.R3 inside `Pacing & Course` by migrating `accumulated`, `pacetabelle` and `heatmap`.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.

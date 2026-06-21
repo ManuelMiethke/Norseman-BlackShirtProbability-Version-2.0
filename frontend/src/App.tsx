@@ -4,6 +4,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { DashboardProvider } from "@/state/DashboardContext";
 import { OverviewPage } from "@/pages/OverviewPage";
 import { MigrationPage } from "@/pages/MigrationPage";
+import { PacingCoursePage } from "@/pages/PacingCoursePage";
 
 export function App() {
   return (
@@ -12,15 +13,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/overview" replace />} />
           <Route path="/overview" element={<OverviewPage />} />
-          <Route
-            path="/pacing-course"
-            element={
-              <MigrationPage
-                title="Pacing & Course"
-                description="The React port will preserve the existing course, weather and pacing charts next. The Plotly-based chart layer and shared data hooks are already in place."
-              />
-            }
-          />
+          <Route path="/pacing-course" element={<PacingCoursePage />} />
           <Route
             path="/model-predictions"
             element={

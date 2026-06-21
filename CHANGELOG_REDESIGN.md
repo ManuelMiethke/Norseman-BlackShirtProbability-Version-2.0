@@ -27,6 +27,9 @@
 - Added `frontend/src/components/overview/RankProgressionSection.tsx` to render the combined React rank progression section.
 - Added `frontend/src/lib/histograms.ts` to port the overview time-distribution logic with absolute, relative and bike-scale modes.
 - Added `frontend/src/components/overview/HistogramsSection.tsx` for the React time-distribution block.
+- Added `frontend/src/hooks/useCourseProfileData.ts` to load the packaged course profile CSV in the React app.
+- Added `frontend/src/lib/courseWeatherSpeed.ts` to port the combined course profile, weather and segment-speed logic from `weatherspeed.py`.
+- Added `frontend/src/components/pacing/CourseWeatherSpeedSection.tsx` and `frontend/src/pages/PacingCoursePage.tsx` for the first real `Pacing & Course` migration slice.
 
 ### Verified
 
@@ -53,6 +56,9 @@
 - Verified the React app still builds successfully after adding the histogram slice.
 - Verified dashboard asset validation still passes after the histogram slice was added.
 - Verified Python tests still pass after the histogram slice was added.
+- Verified the React app still builds successfully after replacing the `Pacing & Course` placeholder with the first real page slice.
+- Verified dashboard asset validation still passes after the first `Pacing & Course` slice.
+- Verified Python tests still pass after the first `Pacing & Course` slice.
 
 ### Notes
 
@@ -76,6 +82,7 @@
 - Expanded the React overview route with the original `Who Are We Racing?` outcome stack and empirical frontier summary.
 - Expanded the React overview route with a combined rank progression section covering the original Top-10 and all-athlete cut-off views.
 - Expanded the React overview route with the original overview histogram block and completed the React coverage of the original Overview page.
+- Replaced the React `Pacing & Course` placeholder with a real page and ported the original combined `Course, Weather & Speed` chart.
 
 ### Fixed
 
