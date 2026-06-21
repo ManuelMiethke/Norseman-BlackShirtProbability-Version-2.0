@@ -439,6 +439,10 @@ select {
   min-height: 320px;
 }
 
+.plot-card--heatmap {
+  min-height: 900px;
+}
+
 .plot-card__loading {
   display: grid;
   place-items: center;

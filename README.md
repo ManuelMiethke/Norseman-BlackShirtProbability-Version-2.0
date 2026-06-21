@@ -142,7 +142,7 @@ The migration deliberately starts as a parallel frontend:
 - React becomes the new presentation layer
 - Plotly remains the charting language so diagrams keep the same analytical look
 - the React overview route now covers the full original Overview analytics set: participation KPIs, distance-vs-time donuts, the cross-year median comparison, `Who Are We Racing?`, rank progression and time distributions
-- the React `Pacing & Course` route now covers `Course, Weather & Speed`, accumulated race progress and the original pace-distribution boxplots/stat tables
+- the React `Pacing & Course` route now covers the full original route: `Course, Weather & Speed`, accumulated race progress, pace-distribution boxplots/stat tables and the pacing heatmap
 
 Reason:
 
@@ -168,7 +168,7 @@ As of this redesign iteration:
 - dashboard asset validation passes
 - unit tests for config/data contracts pass
 - the four main Streamlit pages instantiate successfully via `streamlit.testing.v1.AppTest`
-- the React app builds successfully after the expanded `Pacing & Course` migration slices
+- the React app builds successfully after completing the full `Pacing & Course` route migration
 
 ## Open points
 
@@ -176,7 +176,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend now covers the original Overview route plus three `Pacing & Course` sections; the remaining migration work is concentrated in `heatmap`, `Model Predictions` and `Tools`.
+- The React frontend now covers the original Overview route and the full original `Pacing & Course` route; the remaining migration work is concentrated in `Model Predictions` and `Tools`.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

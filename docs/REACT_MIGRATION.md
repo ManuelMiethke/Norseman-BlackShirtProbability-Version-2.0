@@ -34,6 +34,7 @@ The repository now contains a parallel React frontend in `frontend/`.
 - The `Pacing & Course` route now has its first real React slice with the original combined `Course, Weather & Speed` chart.
 - The `Pacing & Course` route now also includes the original accumulated race-progress chart.
 - The `Pacing & Course` route now also includes the original leg-wise pace-distribution module with its stat tables and Zombie-Hill toggle.
+- The `Pacing & Course` route now also includes the original pacing heatmap and therefore covers the full original Streamlit route end to end.
 - Remaining pages are scaffolded as migration targets.
 
 ## Start the React app
@@ -48,10 +49,9 @@ npm run dev -- --host 127.0.0.1 --port 5173
 
 ## Recommended migration order
 
-1. Remaining `Pacing & Course` module (`heatmap`)
-2. Model Predictions page
-3. Tools page
-4. Slimmer frontend-oriented data contract for route-specific assets
+1. Model Predictions page
+2. Tools page
+3. Slimmer frontend-oriented data contract for route-specific assets
 
 ## Important constraint
 

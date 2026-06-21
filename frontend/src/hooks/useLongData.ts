@@ -43,6 +43,12 @@ function toLongRow(record: Record<string, unknown>): LongRow {
       record.segment_speed_kmh === ""
         ? undefined
         : Number(record.segment_speed_kmh),
+    segment_time_s:
+      record.segment_time_s === undefined ||
+      record.segment_time_s === null ||
+      record.segment_time_s === ""
+        ? undefined
+        : Number(record.segment_time_s),
     cum_time_seconds:
       record.cum_time_seconds === undefined ||
       record.cum_time_seconds === null ||

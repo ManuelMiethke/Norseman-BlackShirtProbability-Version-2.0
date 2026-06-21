@@ -6,6 +6,8 @@
 
 - Added `frontend/src/lib/pacingDistributions.ts` to port the original `pacetabelle.py` pacing-distribution logic to React.
 - Added `frontend/src/components/pacing/PaceDistributionSection.tsx` for the third real `Pacing & Course` migration slice.
+- Added `frontend/src/lib/pacingHeatmap.ts` to port the original `heatmap.py` pacing heatmap logic to React.
+- Added `frontend/src/components/pacing/PacingHeatmapSection.tsx` for the final `Pacing & Course` migration slice.
 
 ### Verified
 
@@ -14,11 +16,17 @@
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the new pacing-distribution slice.
 - Verified the React dev server starts locally on `http://127.0.0.1:5173/` outside the sandbox after port-binding approval.
 - Verified the migrated `http://127.0.0.1:5173/pacing-course` route loads in the in-app browser and renders without browser console warnings/errors after the new section was added.
+- Verified the React app still builds successfully after adding the pacing heatmap and completing the route.
+- Verified `python3 scripts/validate_dashboard_assets.py` still passes after the long-data contract extension for `segment_time_s`.
+- Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the pacing heatmap slice.
+- Verified the reloaded `http://127.0.0.1:5173/pacing-course` route renders the new `Pacing Heatmap` section without console warnings/errors in the in-app browser.
 
 ### Changed
 
 - Extended the React wide-data contract with `t1_time`, `t2_time` and `zombie_hill_time` so the pacing route can consume the original leg-wise timing summaries directly.
 - Expanded the React `Pacing & Course` route with the original pace-distribution boxplots, preserved stats semantics and a retained Zombie-Hill toggle.
+- Extended the React long-data contract with `segment_time_s` so the pacing route can reuse the original split-delta semantics from Streamlit.
+- Expanded the React `Pacing & Course` route with the original pacing heatmap and completed the route end to end in React.
 
 ## 2026-06-20
 

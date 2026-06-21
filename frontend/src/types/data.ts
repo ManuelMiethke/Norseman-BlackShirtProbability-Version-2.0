@@ -31,6 +31,7 @@ export type LongRow = {
   split_distance_km?: number;
   race_distance_km?: number;
   segment_speed_kmh?: number;
+  segment_time_s?: number;
   cum_time_seconds?: number;
   temperature_2m?: number;
   wind_direction_10m?: number;
