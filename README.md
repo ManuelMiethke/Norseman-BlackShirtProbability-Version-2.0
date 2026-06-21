@@ -175,7 +175,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend now covers the original Overview route and the first `Pacing & Course` slice; the remaining migration work is concentrated in the rest of `Pacing & Course`, plus `Model Predictions` and `Tools`.
+- The React frontend now covers the original Overview route plus two `Pacing & Course` sections; the remaining migration work is concentrated in `pacetabelle`, `heatmap`, `Model Predictions` and `Tools`.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

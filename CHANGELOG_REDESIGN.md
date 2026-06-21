@@ -30,6 +30,8 @@
 - Added `frontend/src/hooks/useCourseProfileData.ts` to load the packaged course profile CSV in the React app.
 - Added `frontend/src/lib/courseWeatherSpeed.ts` to port the combined course profile, weather and segment-speed logic from `weatherspeed.py`.
 - Added `frontend/src/components/pacing/CourseWeatherSpeedSection.tsx` and `frontend/src/pages/PacingCoursePage.tsx` for the first real `Pacing & Course` migration slice.
+- Added `frontend/src/lib/pacingAccumulated.ts` to port the accumulated race-progress logic from `accumulated.py`.
+- Added `frontend/src/components/pacing/AccumulatedProgressSection.tsx` for the second real `Pacing & Course` slice.
 
 ### Verified
 
@@ -59,6 +61,9 @@
 - Verified the React app still builds successfully after replacing the `Pacing & Course` placeholder with the first real page slice.
 - Verified dashboard asset validation still passes after the first `Pacing & Course` slice.
 - Verified Python tests still pass after the first `Pacing & Course` slice.
+- Verified the React app still builds successfully after adding the accumulated-progress slice to `Pacing & Course`.
+- Verified dashboard asset validation still passes after the accumulated-progress slice.
+- Verified Python tests still pass after the accumulated-progress slice.
 
 ### Notes
 
@@ -83,6 +88,7 @@
 - Expanded the React overview route with a combined rank progression section covering the original Top-10 and all-athlete cut-off views.
 - Expanded the React overview route with the original overview histogram block and completed the React coverage of the original Overview page.
 - Replaced the React `Pacing & Course` placeholder with a real page and ported the original combined `Course, Weather & Speed` chart.
+- Expanded the React `Pacing & Course` page with the original accumulated race-progress chart.
 
 ### Fixed
 
