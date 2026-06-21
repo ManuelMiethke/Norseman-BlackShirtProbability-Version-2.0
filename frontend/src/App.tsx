@@ -6,6 +6,7 @@ import { OverviewPage } from "@/pages/OverviewPage";
 import { MigrationPage } from "@/pages/MigrationPage";
 import { PacingCoursePage } from "@/pages/PacingCoursePage";
 import { ModelPredictionsPage } from "@/pages/ModelPredictionsPage";
+import { ToolsPage } from "@/pages/ToolsPage";
 
 export function App() {
   return (
@@ -16,15 +17,7 @@ export function App() {
           <Route path="/overview" element={<OverviewPage />} />
           <Route path="/pacing-course" element={<PacingCoursePage />} />
           <Route path="/model-predictions" element={<ModelPredictionsPage />} />
-          <Route
-            path="/tools"
-            element={
-              <MigrationPage
-                title="Tools"
-                description="The empirical pace planner and catch-up estimator are queued for migration after the overview analytics and shared computation layer are stabilized."
-              />
-            }
-          />
+          <Route path="/tools" element={<ToolsPage />} />
         </Routes>
       </AppShell>
     </DashboardProvider>

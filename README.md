@@ -144,6 +144,7 @@ The migration deliberately starts as a parallel frontend:
 - the React overview route now covers the full original Overview analytics set: participation KPIs, distance-vs-time donuts, the cross-year median comparison, `Who Are We Racing?`, rank progression and time distributions
 - the React `Pacing & Course` route now covers the full original route: `Course, Weather & Speed`, accumulated race progress, pace-distribution boxplots/stat tables and the pacing heatmap
 - the React `Model Predictions` route now covers the full original route: timing-station model accuracy plus grouped Black-Shirt probability trajectories
+- the React `Tools` route now starts with the original catch-up estimator for Black-Shirt odds and required pace to Stavsro
 
 Reason:
 
@@ -177,7 +178,7 @@ As of this redesign iteration:
 - The repository still lacks a final dependency manifest.
 - Many analytical modules still mix business logic and rendering in large files.
 - Group and cutoff logic is improved centrally but not yet fully deduplicated across every module.
-- The React frontend now covers the original Overview route, the full original `Pacing & Course` route and the full original `Model Predictions` route; the remaining migration work is concentrated in `Tools`.
+- The React frontend now covers the original Overview route, the full original `Pacing & Course` route, the full original `Model Predictions` route and the first `Tools` slice; the remaining migration work is concentrated in `empirical_pace`.
 - The new React app still reads packaged static assets directly; a slimmer frontend-oriented data contract is a next step.
 
 ## Related project files

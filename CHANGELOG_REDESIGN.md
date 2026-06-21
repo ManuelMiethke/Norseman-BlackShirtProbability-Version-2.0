@@ -13,6 +13,8 @@
 - Added `frontend/src/components/predictions/ModelAccuracySection.tsx` and `frontend/src/pages/ModelPredictionsPage.tsx` for the first real `Model Predictions` migration slice.
 - Added `frontend/src/lib/blackShirtProbability.ts` to port the original grouped probability plot from `blackshirt_prob.py` to React.
 - Added `frontend/src/components/predictions/BlackShirtProbabilitySection.tsx` for the second and final `Model Predictions` slice.
+- Added `frontend/src/lib/catchup.ts` to port the original `catchup.py` estimator logic to React-side business logic.
+- Added `frontend/src/components/tools/CatchupSection.tsx` and `frontend/src/pages/ToolsPage.tsx` for the first real `Tools` migration slice.
 
 ### Verified
 
@@ -33,6 +35,10 @@
 - Verified `python3 scripts/validate_dashboard_assets.py` still passes after the full `Model Predictions` route migration.
 - Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the probability slice.
 - Verified the reloaded `http://127.0.0.1:5173/model-predictions` route renders both prediction sections without browser console warnings/errors.
+- Verified the React app still builds successfully after adding the first `Tools` slice.
+- Verified `python3 scripts/validate_dashboard_assets.py` still passes after introducing the catch-up logic layer.
+- Verified `python3 -m unittest discover -s tests -p 'test_*.py'` still passes after the catch-up slice.
+- Verified `http://127.0.0.1:5173/tools` loads in the in-app browser and renders the new catch-up section without console warnings/errors.
 
 ### Changed
 
@@ -42,6 +48,7 @@
 - Expanded the React `Pacing & Course` route with the original pacing heatmap and completed the route end to end in React.
 - Replaced the React `Model Predictions` placeholder with a real page and ported the original model-accuracy chart with preserved test-set filtering and course-profile overlay semantics.
 - Expanded the React `Model Predictions` route with the original grouped Black-Shirt probability plot and completed the route end to end in React.
+- Replaced the React `Tools` placeholder with a real page and ported the original catch-up estimator with preserved neighborhood-probability and required-pace logic.
 
 ## 2026-06-20
 

@@ -21,6 +21,7 @@
 - `completed` P0.R10 Port the pacing heatmap and complete the route
 - `completed` P0.R11 Port the first Model Predictions slice to React
 - `completed` P0.R12 Port the probability module and complete the route
+- `completed` P0.R13 Port the first Tools slice to React
 - `in_progress` P1.R3 Port remaining pages to React through shared computation adapters
 - `pending` all other tasks unless noted otherwise
 
@@ -350,13 +351,21 @@
 - Dependencies: P0.R11
 - Acceptance criterion: React `Model Predictions` route renders the original `blackshirt_prob.py` grouped probability trajectories with preserved year/group behavior, Top-10 split-out logic and leg-separated x-axis semantics
 
+#### P0.R13 Port the first Tools slice to React
+
+- Status: `completed`
+- Benefit: starts the last remaining Streamlit route with the smaller interactive tool and isolates its calculations into reusable React-side business logic
+- Risk: low
+- Dependencies: P0.R12
+- Acceptance criterion: React `Tools` route renders the original catch-up estimator from `catchup.py` with the same year-aware historical scope, probability neighborhood logic and required-pace calculation semantics as Streamlit
+
 #### P1.R3 Port remaining pages to React through shared computation adapters
 
 - Status: `in_progress`
 - Benefit: enables full frontend replacement without rebuilding every analysis module ad hoc
 - Risk: medium
-- Dependencies: P1.1, P1.2, P0.R12
-- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, continuing with the `Tools` route and later frontend-facing data-contract slimming
+- Dependencies: P1.1, P1.2, P0.R13
+- Acceptance criterion: remaining dashboard pages are migrated to React using shared data/filter helpers and Plotly-compatible chart adapters, continuing with the remaining `empirical_pace` tool and later frontend-facing data-contract slimming
 
 #### P1.R4 Introduce a frontend-oriented data contract
 
@@ -405,6 +414,7 @@
 17. P0.R10 Port the pacing heatmap and complete the route
 18. P0.R11 Port the first Model Predictions slice to React
 19. P0.R12 Port the probability module and complete the route
+20. P0.R13 Port the first Tools slice to React
 
 ## Completed in This Iteration
 
@@ -431,11 +441,12 @@
 - Ported the original pacing heatmap to React and completed the full `Pacing & Course` route in the new frontend.
 - Ported the first `Model Predictions` slice to React with the original timing-station accuracy chart and a dedicated packaged-model data hook.
 - Ported the original grouped Black-Shirt probability plot to React and completed the full `Model Predictions` route in the new frontend.
+- Ported the first `Tools` slice to React with the original catch-up estimator and a dedicated React-side calculation layer for its probability and pacing logic.
 - Added `docs/REACT_MIGRATION.md` to document the React-first migration path away from Streamlit.
 
 ## Next Focus
 
-- Continue P1.R3 by migrating the `Tools` route now that `Overview`, `Pacing & Course` and `Model Predictions` are complete in React.
+- Continue P1.R3 by migrating the remaining `empirical_pace` module so the `Tools` route can be completed in React.
 - Begin P1.1 by extracting shared filter and grouping utilities from the larger modules.
 - Begin P1.R4 by preparing slimmer frontend-facing data artifacts for the React app.
 - Continue P1.11/P1.12 by formalizing runtime and dependency setup across both frontend tracks.
