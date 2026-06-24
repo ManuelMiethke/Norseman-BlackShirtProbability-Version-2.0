@@ -46,10 +46,10 @@ export function HistogramsSection() {
                 }
                 onClick={() => setScaleMode(option)}
               >
-              {option}
-            </button>
-          ))}
-        </div>
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
 
         {warning ? (

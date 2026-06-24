@@ -7,7 +7,7 @@ import { useLongData } from "@/hooks/useLongData";
 import { buildRankProgressionModel } from "@/lib/rankProgression";
 import { useDashboard } from "@/state/DashboardContext";
 
-const MODE_OPTIONS = ["Top 10 finishers", "All athletes to cut-off"] as const;
+const MODE_OPTIONS = ["Top 10 finishers", "Places 140-180", "All athletes to cut-off"] as const;
 
 export function RankProgressionSection() {
   const { rows, isLoading, error } = useLongData();

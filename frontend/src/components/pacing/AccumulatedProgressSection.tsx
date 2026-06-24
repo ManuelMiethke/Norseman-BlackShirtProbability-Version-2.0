@@ -53,7 +53,7 @@ export function AccumulatedProgressSection() {
           <PlotlyChart
             data={figure.data}
             layout={figure.layout}
-            className="plot-card--xl"
+            className="plot-card--hero"
           />
         ) : null}
       </div>

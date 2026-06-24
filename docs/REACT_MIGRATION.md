@@ -26,7 +26,7 @@ The repository now contains a parallel React frontend in `frontend/`.
   - `Distance vs. Time Relations` Plotly donut charts
   - `Year Comparison` with `Time Overview`, `Compared to 2025` and `Trend` modes
 - `Who Are We Racing?` is now also ported from the long split dataset.
-- `Rank Progression` is now also ported as a combined React section for Top-10 finishers and all athletes to the cut-off.
+- `Rank Progression` is now also ported as a combined React section for Top-10 finishers, the 140-180 rank window and all athletes to the cut-off.
 - `Time Distributions` is now also ported with the original absolute, relative and bike-scale modes.
 - A shared React-side filter helper layer now covers year and finisher-group filtering for migrated modules.
 - A route-local long-data hook now supports long split consumers without pushing that payload into global dashboard context.
@@ -35,7 +35,7 @@ The repository now contains a parallel React frontend in `frontend/`.
 - The `Pacing & Course` route now also includes the original accumulated race-progress chart.
 - The `Pacing & Course` route now also includes the original leg-wise pace-distribution module with its stat tables and Zombie-Hill toggle.
 - The `Pacing & Course` route now also includes the original pacing heatmap and therefore covers the full original Streamlit route end to end.
-- The `Model Predictions` route now covers the full original Streamlit route end to end, including the timing-station model-accuracy chart and the grouped Black-Shirt probability plot.
+- The `Model Predictions` route now covers the full original Streamlit route end to end, including the timing-station model-accuracy chart, the grouped Black-Shirt probability plot, the frontier-pace section and the probability surface view.
 - The `Tools` route now covers the full original Streamlit route end to end, including the catch-up estimator plus the complete empirical pacing planner with its detailed course/speed chart.
 
 ## Start the React app
@@ -47,6 +47,13 @@ cd frontend
 npm install
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
+
+## Original module mapping
+
+- `Overview`: `participants`, `timerelations`, `jahres_vergleiche`, `histograms`, `rangverlauf_top10`, `rangverlauf_140_180`, `rangverlauf_gesamt`, `whoareweracing`
+- `Pacing & Course`: `weatherspeed`, `accumulated`, `pacetabelle`, `heatmap`
+- `Model Predictions`: `modelaccuracy`, `blackshirt_prob`, `frontier_pace`, `probability_3d`
+- `Tools`: `empirical_pace`, `catchup`
 
 ## Recommended migration order
 

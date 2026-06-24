@@ -5,12 +5,14 @@ import { StateBlock } from "@/components/common/StateBlock";
 
 function RatioBar({
   segments,
+  className,
 }: {
   segments: Array<{ label: string; value: number; color: string }>;
+  className?: string;
 }) {
   const total = segments.reduce((sum, item) => sum + item.value, 0) || 1;
   return (
-    <div className="ratio-bar">
+    <div className={className ? `ratio-bar ${className}` : "ratio-bar"}>
       {segments.map((segment) => (
         <div
           key={segment.label}
@@ -26,7 +28,7 @@ function RatioBar({
   );
 }
 
-function MiniKpi({
+function SummaryMetric({
   label,
   value,
 }: {
@@ -34,10 +36,27 @@ function MiniKpi({
   value: string;
 }) {
   return (
-    <article className="mini-kpi">
-      <span>{label}</span>
+    <article className="participation-summary__metric">
       <strong>{value}</strong>
+      <span>{label}</span>
     </article>
+  );
+}
+
+function SplitLabel({
+  label,
+  value,
+  align = "left",
+}: {
+  label: string;
+  value: string;
+  align?: "left" | "right";
+}) {
+  return (
+    <div className={align === "right" ? "participation-split participation-split--right" : "participation-split"}>
+      <strong>{value}</strong>
+      <span>{label}</span>
+    </div>
   );
 }
 
@@ -72,14 +91,37 @@ export function ParticipantsSection() {
   return (
     <SectionCard title="Participation" className={cardClassName}>
       <div className="section-stack">
-        <div className="mini-kpi-grid">
-          <MiniKpi label="Athletes" value={stats.totalParticipants.toLocaleString()} />
-          <MiniKpi label="Countries" value={stats.participatingCountries.toLocaleString()} />
-          <MiniKpi label="Black" value={`${stats.finishPercentages.black.toFixed(1)}%`} />
-          <MiniKpi label="Women" value={`${stats.genderPercentages.women.toFixed(1)}%`} />
+        <div className="participation-summary">
+          <SummaryMetric label="Total participants" value={stats.totalParticipants.toLocaleString()} />
+          <div className="participation-summary__divider" />
+          <SummaryMetric label="Participating countries" value={stats.participatingCountries.toLocaleString()} />
         </div>
 
-        <article className="metric-card">
+        <article className="metric-card metric-card--wide">
+          <div className="metric-card__header">
+            <h4>Gender</h4>
+          </div>
+          <RatioBar
+            className="ratio-bar--gender"
+            segments={[
+              { label: "Men", value: stats.genderCounts.men, color: "#4d82e8" },
+              { label: "Women", value: stats.genderCounts.women, color: "#ec6bbb" },
+            ]}
+          />
+          <div className="participation-gender">
+            <SplitLabel
+              label="Men"
+              value={`${stats.genderCounts.men} (${stats.genderPercentages.men.toFixed(1)}%)`}
+            />
+            <SplitLabel
+              label="Women"
+              value={`${stats.genderCounts.women} (${stats.genderPercentages.women.toFixed(1)}%)`}
+              align="right"
+            />
+          </div>
+        </article>
+
+        <article className="metric-card metric-card--wide">
           <div className="metric-card__header">
             <h4>Outcomes</h4>
             <span>Race mix</span>
@@ -91,10 +133,20 @@ export function ParticipantsSection() {
               { label: "DNF", value: stats.finishCounts.dnf, color: "#ef4444" },
             ]}
           />
-          <div className="metric-card__split metric-card__split--three">
-            <span>Black {stats.finishPercentages.black.toFixed(1)}%</span>
-            <span>White {stats.finishPercentages.white.toFixed(1)}%</span>
-            <span>DNF {stats.finishPercentages.dnf.toFixed(1)}%</span>
+          <div className="metric-card__split metric-card__split--three participation-outcomes">
+            <SplitLabel
+              label="Black"
+              value={`${stats.finishCounts.black} (${stats.finishPercentages.black.toFixed(1)}%)`}
+            />
+            <SplitLabel
+              label="White"
+              value={`${stats.finishCounts.white} (${stats.finishPercentages.white.toFixed(1)}%)`}
+              align="right"
+            />
+            <SplitLabel
+              label="DNF"
+              value={`${stats.finishCounts.dnf} (${stats.finishPercentages.dnf.toFixed(1)}%)`}
+            />
           </div>
         </article>
       </div>

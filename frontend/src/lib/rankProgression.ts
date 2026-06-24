@@ -30,7 +30,7 @@ type PlotFigure = {
   layout: Partial<Layout>;
 };
 
-type RankMode = "Top 10 finishers" | "All athletes to cut-off";
+type RankMode = "Top 10 finishers" | "Places 140-180" | "All athletes to cut-off";
 
 type RankRow = {
   bib: number;
@@ -456,6 +456,168 @@ function buildTop10Figure(rows: RankRow[], year: number, focusTop10: boolean): P
   return { data, layout };
 }
 
+function rankBandColor(finishType: string): string {
+  return isBlackFinishType(finishType) ? "#000000" : "#FFFFFF";
+}
+
+function buildRankBandFigure(rows: RankRow[], year: number): PlotFigure | null {
+  const structure = raceStructureForYear(year);
+  if (!structure) {
+    return null;
+  }
+
+  const rankMin = 140;
+  const rankMax = 180;
+  const clipped = rows
+    .filter((row) => row.raceDistanceKm <= structure.runEnd)
+    .sort((left, right) => {
+      if (left.bib !== right.bib) {
+        return left.bib - right.bib;
+      }
+      return left.raceDistanceKm - right.raceDistanceKm;
+    });
+
+  if (clipped.length === 0) {
+    return null;
+  }
+
+  const athleteMeta = [...new Map(
+    clipped.map((row) => [
+      row.bib,
+      {
+        bib: row.bib,
+        name: row.name,
+        finishType: row.finishType,
+        overallRankValue: row.overallRankValue,
+      },
+    ]),
+  ).values()];
+
+  const finisherAthletes = athleteMeta
+    .filter(
+      (row) =>
+        row.overallRankValue !== null &&
+        row.overallRankValue >= rankMin &&
+        row.overallRankValue <= rankMax,
+    )
+    .sort(
+      (left, right) =>
+        (left.overallRankValue ?? Number.POSITIVE_INFINITY) -
+        (right.overallRankValue ?? Number.POSITIVE_INFINITY),
+    );
+
+  const inWindowBibs = new Set(
+    clipped
+      .filter((row) => row.splitRank >= rankMin && row.splitRank <= rankMax)
+      .map((row) => row.bib),
+  );
+  const finisherBibs = new Set(finisherAthletes.map((row) => row.bib));
+  const intermediateOnlyAthletes = athleteMeta
+    .filter((row) => inWindowBibs.has(row.bib) && !finisherBibs.has(row.bib))
+    .sort((left, right) => left.bib - right.bib);
+
+  if (finisherAthletes.length === 0 && intermediateOnlyAthletes.length === 0) {
+    return null;
+  }
+
+  const data: Data[] = [];
+
+  const pushBandSegments = (
+    athlete: {
+      bib: number;
+      name: string;
+      finishType: string;
+      overallRankValue: number | null;
+    },
+    lineWidth: number,
+    markerSize: number,
+  ) => {
+    const athleteRows = clipped
+      .filter((row) => row.bib === athlete.bib)
+      .sort((left, right) => left.raceDistanceKm - right.raceDistanceKm)
+      .map((row) => ({
+        ...row,
+        inRange: row.splitRank >= rankMin && row.splitRank <= rankMax,
+      }));
+    const labelPrefix = athlete.overallRankValue !== null ? `${athlete.overallRankValue}. ` : "";
+    const label = athlete.name.trim().length > 0 ? `${labelPrefix}${athlete.name} (#${athlete.bib})` : `${labelPrefix}#${athlete.bib}`;
+    const color = rankBandColor(athlete.finishType);
+
+    contiguousSegments(athleteRows).forEach((segment) => {
+      data.push({
+        type: "scatter",
+        mode: "lines+markers",
+        x: segment.map((row) => row.raceDistanceKm),
+        y: segment.map((row) => row.splitRank),
+        name: label,
+        showlegend: false,
+        line: { width: lineWidth, color },
+        marker: { size: markerSize, color },
+        hovertemplate: `${label}<br>km %{x:.1f}<br>rank %{y}<extra></extra>`,
+      });
+    });
+  };
+
+  intermediateOnlyAthletes.forEach((athlete) => pushBandSegments(athlete, 1.5, 4));
+  finisherAthletes.forEach((athlete) => pushBandSegments(athlete, 3, 8));
+
+  const tickValues: number[] = [];
+  for (let value = 0; value <= Math.floor(structure.runEnd / 25) * 25; value += 25) {
+    tickValues.push(value);
+  }
+  if (!tickValues.includes(structure.runEnd)) {
+    tickValues.push(structure.runEnd);
+  }
+
+  const layout: Partial<Layout> = {
+    ...buildSharedLayout(550),
+    showlegend: false,
+    xaxis: {
+      title: { text: "Race Distance (km)", font: { size: 25 } },
+      range: [0, structure.runEnd],
+      tickmode: "array",
+      tickvals: tickValues,
+      ticktext: tickValues.map((value) => (Number.isInteger(value) ? String(value) : value.toFixed(1))),
+      showgrid: true,
+      gridcolor: "#555555",
+      zeroline: false,
+    },
+    yaxis: {
+      title: { text: "Rank", font: { size: 25 } },
+      autorange: false,
+      range: [rankMax + 0.5, rankMin - 0.5],
+      tickmode: "linear",
+      dtick: 2,
+      gridcolor: "#555555",
+      zeroline: false,
+    },
+    shapes: [
+      {
+        type: "line",
+        x0: structure.swimEnd,
+        x1: structure.swimEnd,
+        y0: 0,
+        y1: 1,
+        xref: "x",
+        yref: "paper",
+        line: { color: "#AAAAAA", width: 1, dash: "dot" },
+      },
+      {
+        type: "line",
+        x0: structure.bikeEnd,
+        x1: structure.bikeEnd,
+        y0: 0,
+        y1: 1,
+        xref: "x",
+        yref: "paper",
+        line: { color: "#AAAAAA", width: 1, dash: "dot" },
+      },
+    ],
+  };
+
+  return { data, layout };
+}
+
 function buildAllAthletesFigure(
   rows: RankRow[],
   year: number,
@@ -596,6 +758,29 @@ function buildAllAthletesFigure(
   return { data, layout };
 }
 
+function rankModeDescription(
+  mode: RankMode,
+  selectedYear: number | null,
+  selectedGroup: GroupOption,
+  structure: RaceStructure | null,
+): string {
+  if (mode === "Top 10 finishers") {
+    return selectedYear === null
+      ? "Top 10 progression follows the final top finishers through the race and can optionally emphasize only the phases where athletes hold a Top 10 rank."
+      : `Top 10 progression for ${selectedYear} uses the finish-distance course view and ignores the global group filter.`;
+  }
+
+  if (mode === "Places 140-180") {
+    return selectedYear === null
+      ? "The 140-180 rank-band view isolates athletes who finish in, or temporarily pass through, the mid-pack decision window."
+      : `The 140-180 rank-band view for ${selectedYear} isolates the mid-pack decision window and ignores the global group filter to match the original module.`;
+  }
+
+  return selectedYear === null
+    ? "All-athlete progression follows rank over distance up to the Black/White decision cut-off and respects the global group filter."
+    : `All-athlete progression for ${selectedYear} ends at the ${structure?.runKm ?? "year-specific"} km decision cut-off and currently applies the group filter "${selectedGroup}".`;
+}
+
 export function buildRankProgressionModel(
   rows: LongRow[],
   selectedYear: number | "All",
@@ -606,11 +791,11 @@ export function buildRankProgressionModel(
   if (selectedYear === "All") {
     return {
       figure: null,
-      warning: "Please select a single year to view rank progression.",
-      description:
-        mode === "Top 10 finishers"
-          ? "Top 10 progression follows the final top finishers through the race and can optionally emphasize only the phases where athletes hold a Top 10 rank."
-          : "All-athlete progression follows rank over distance up to the Black/White decision cut-off and respects the global group filter.",
+      warning:
+        mode === "Places 140-180"
+          ? "Please select a single year to view ranks 140-180."
+          : "Please select a single year to view rank progression.",
+      description: rankModeDescription(mode, null, selectedGroup, null),
     };
   }
 
@@ -619,38 +804,33 @@ export function buildRankProgressionModel(
     return {
       figure: null,
       warning: `No rank progression data is available for ${selectedYear}.`,
-      description:
-        mode === "Top 10 finishers"
-          ? "Top 10 progression follows the final top finishers through the race and can optionally emphasize only the phases where athletes hold a Top 10 rank."
-          : "All-athlete progression follows rank over distance up to the Black/White decision cut-off and respects the global group filter.",
+      description: rankModeDescription(mode, null, selectedGroup, null),
     };
   }
 
   const figure =
     mode === "Top 10 finishers"
       ? buildTop10Figure(normalizedRows, selectedYear, focusTop10)
-      : buildAllAthletesFigure(normalizedRows, selectedYear, selectedGroup);
+      : mode === "Places 140-180"
+        ? buildRankBandFigure(normalizedRows, selectedYear)
+        : buildAllAthletesFigure(normalizedRows, selectedYear, selectedGroup);
 
   if (!figure) {
     return {
       figure: null,
-      warning: "The selected rank progression view could not be generated from the packaged split data.",
-      description:
-        mode === "Top 10 finishers"
-          ? "Top 10 progression follows the final top finishers through the race and can optionally emphasize only the phases where athletes hold a Top 10 rank."
-          : "All-athlete progression follows rank over distance up to the Black/White decision cut-off and respects the global group filter.",
+      warning:
+        mode === "Places 140-180"
+          ? `No athletes entered the 140-180 rank window in ${selectedYear}.`
+          : "The selected rank progression view could not be generated from the packaged split data.",
+      description: rankModeDescription(mode, null, selectedGroup, null),
     };
   }
 
   const structure = raceStructureForYear(selectedYear);
-  const description =
-    mode === "Top 10 finishers"
-      ? `Top 10 progression for ${selectedYear} uses the finish-distance course view and ignores the global group filter.`
-      : `All-athlete progression for ${selectedYear} ends at the ${structure?.runKm ?? "year-specific"} km decision cut-off and currently applies the group filter "${selectedGroup}".`;
 
   return {
     figure,
     warning: null,
-    description,
+    description: rankModeDescription(mode, selectedYear, selectedGroup, structure),
   };
 }

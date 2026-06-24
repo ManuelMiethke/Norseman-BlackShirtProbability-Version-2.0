@@ -65,7 +65,7 @@ export function CourseWeatherSpeedSection() {
           <PlotlyChart
             data={figure.data}
             layout={figure.layout}
-            className="plot-card--xl"
+            className="plot-card--panorama"
           />
         ) : null}
       </div>

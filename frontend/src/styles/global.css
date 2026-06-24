@@ -371,6 +371,10 @@ select {
   min-height: 18px;
 }
 
+.ratio-bar--gender {
+  min-height: 28px;
+}
+
 .metric-card__split {
   display: flex;
   justify-content: space-between;
@@ -1115,6 +1119,21 @@ body {
   min-height: 280px;
 }
 
+.plot-card--hero {
+  height: 340px;
+  min-height: 340px;
+}
+
+.plot-card--panorama {
+  height: 420px;
+  min-height: 420px;
+}
+
+.plot-card--3d {
+  height: 460px;
+  min-height: 460px;
+}
+
 .plot-card--pace {
   height: 180px;
   min-height: 180px;
@@ -1194,6 +1213,84 @@ body {
 
 .country-chip__flag {
   font-size: 1.4rem;
+}
+
+.participation-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.participation-summary__metric {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.participation-summary__metric strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.4vw, 3.15rem);
+  line-height: 1;
+}
+
+.participation-summary__metric span {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.participation-summary__divider {
+  width: 1px;
+  height: 62px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.participation-gender {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+  width: 100%;
+}
+
+.participation-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  width: 100%;
+}
+
+.participation-split {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.participation-split--right {
+  text-align: right;
+  justify-items: end;
+}
+
+.participation-split strong {
+  font-family: var(--font-display);
+  font-size: clamp(0.92rem, 1.8vw, 1.22rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.participation-split span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
 }
 
 .mini-kpi-grid {
