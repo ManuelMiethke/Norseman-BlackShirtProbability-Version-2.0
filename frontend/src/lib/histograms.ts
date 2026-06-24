@@ -313,10 +313,12 @@ function buildHistogramFigure(
       title: { text: title, y: 0.92, x: 0.01, xanchor: "left" },
       barmode: "overlay",
       legend: {
-        y: 1.22,
-        x: 0.99,
-        xanchor: "right",
-        yanchor: "top",
+        orientation: "h",
+        y: 1.16,
+        x: 0,
+        xanchor: "left",
+        yanchor: "bottom",
+        font: { size: 12, color: "#eef5fb" },
       },
       xaxis: {
         title: { text: xAxisTitle, font: { size: 14, color: "#ffffff" } },

@@ -11,13 +11,10 @@ export function BlackShirtProbabilitySection() {
 
   if (modelData.isLoading) {
     return (
-      <SectionCard
-        title="Black Shirt Probability"
-        description="This React section preserves the original probability trajectories for Black-Shirt success across the course."
-      >
+      <SectionCard title="Black Shirt Probability">
         <StateBlock
-          title="Loading probability trajectories"
-          description="Preparing athlete-level Black-Shirt probabilities from the packaged model test set."
+          title="Loading"
+          description="Preparing probability curves."
         />
       </SectionCard>
     );
@@ -25,12 +22,9 @@ export function BlackShirtProbabilitySection() {
 
   if (modelData.error) {
     return (
-      <SectionCard
-        title="Black Shirt Probability"
-        description="This React section preserves the original probability trajectories for Black-Shirt success across the course."
-      >
+      <SectionCard title="Black Shirt Probability">
         <StateBlock
-          title="Probability data load failed"
+          title="Load failed"
           description={modelData.error}
           tone="error"
         />
@@ -45,24 +39,11 @@ export function BlackShirtProbabilitySection() {
   );
 
   return (
-    <SectionCard
-      title="Black Shirt Probability over the Norseman Course"
-      description="Thin traces show individual athletes, while dashed and dotted overlays preserve the original median and mean probability trajectories for each displayed finisher group."
-    >
+    <SectionCard title="Black Shirt Probability">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Group semantics</strong>
-          <span>
-            In multi-group mode, Top 10 athletes are split out into their own panel,
-            while the Black-Shirt panel keeps only the remaining Black-Shirt finishers.
-            The dedicated Black-Shirt filter still includes Top 10 Black-Shirt athletes,
-            matching the original Streamlit behavior.
-          </span>
-        </div>
-
         {model.warning ? (
           <StateBlock
-            title="Probability filter note"
+            title="Note"
             description={model.warning}
             tone="warning"
           />
@@ -76,8 +57,8 @@ export function BlackShirtProbabilitySection() {
           />
         ) : (
           <StateBlock
-            title="No probability chart available"
-            description="No Black-Shirt probability data is available for the current filter selection."
+            title="No data"
+            description="No probability data for this filter."
             tone="warning"
           />
         )}

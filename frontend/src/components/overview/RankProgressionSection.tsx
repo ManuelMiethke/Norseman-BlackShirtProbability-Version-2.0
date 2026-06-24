@@ -14,16 +14,14 @@ export function RankProgressionSection() {
   const { selectedYear, selectedGroup } = useDashboard();
   const [mode, setMode] = useState<(typeof MODE_OPTIONS)[number]>("Top 10 finishers");
   const [focusTop10, setFocusTop10] = useState(true);
+  const cardClassName = "overview-card overview-card--rank";
 
   if (isLoading) {
     return (
-      <SectionCard
-        title="Rank Progression"
-        description="This React section follows athlete positions over the course using the packaged long split dataset."
-      >
+      <SectionCard title="Rank Progression" className={cardClassName}>
         <StateBlock
-          title="Loading rank history"
-          description="Preparing split-by-split athlete positions for the selected year."
+          title="Loading"
+          description="Preparing rank history."
         />
       </SectionCard>
     );
@@ -31,12 +29,9 @@ export function RankProgressionSection() {
 
   if (error) {
     return (
-      <SectionCard
-        title="Rank Progression"
-        description="This React section follows athlete positions over the course using the packaged long split dataset."
-      >
+      <SectionCard title="Rank Progression" className={cardClassName}>
         <StateBlock
-          title="Split dataset load failed"
+          title="Load failed"
           description={error}
           tone="error"
         />
@@ -44,7 +39,7 @@ export function RankProgressionSection() {
     );
   }
 
-  const { figure, warning, description } = buildRankProgressionModel(
+  const { figure, warning } = buildRankProgressionModel(
     rows,
     selectedYear,
     selectedGroup,
@@ -53,12 +48,9 @@ export function RankProgressionSection() {
   );
 
   return (
-    <SectionCard
-      title="Rank Progression"
-      description="This combines the original Top 10 and all-athlete race-position charts into one React section while preserving the underlying rank-by-distance logic."
-    >
+    <SectionCard title="Rank Progression" className={cardClassName}>
       <div className="section-stack">
-        <div className="section-controls section-controls--stacked">
+        <div className="section-controls">
           <div className="segmented-control" role="tablist" aria-label="Rank progression mode">
             {MODE_OPTIONS.map((option) => (
               <button
@@ -83,19 +75,14 @@ export function RankProgressionSection() {
                 checked={focusTop10}
                 onChange={(event) => setFocusTop10(event.target.checked)}
               />
-              <span>Focus on Top 10 places only</span>
+              <span>Top 10 only</span>
             </label>
           ) : null}
         </div>
 
-        <div className="section-note">
-          <strong>Race-position context</strong>
-          <span>{description}</span>
-        </div>
-
         {warning ? (
           <StateBlock
-            title="Rank progression unavailable"
+            title="Note"
             description={warning}
             tone="warning"
           />
@@ -105,7 +92,7 @@ export function RankProgressionSection() {
           <PlotlyChart
             data={figure.data}
             layout={figure.layout}
-            className="plot-card--xl"
+            className="plot-card--focus"
           />
         ) : null}
       </div>

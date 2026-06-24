@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
-
+import { useCsvRows, type CsvRowsState } from "@/hooks/useCsvRows";
 import { loadLongCsv } from "@/lib/csv";
+import { anonymizeAthleteName } from "@/lib/privacy";
 import type { LongRow } from "@/types/data";
 
-type LongDataState = {
-  rows: LongRow[];
-  isLoading: boolean;
-  error: string | null;
-};
+type LongDataState = CsvRowsState<LongRow>;
 
 function toLongRow(record: Record<string, unknown>): LongRow {
   return {
     year: Number(record.year),
     bib: Number(record.bib),
-    name: String(record.name ?? ""),
+    name: anonymizeAthleteName(Number(record.bib), Number(record.year)),
     finish_type: String(record.finish_type ?? ""),
     overall_rank:
       record.overall_rank === undefined || record.overall_rank === null || record.overall_rank === ""
@@ -73,48 +69,15 @@ function toLongRow(record: Record<string, unknown>): LongRow {
   };
 }
 
+function isValidLongRow(row: LongRow) {
+  return Number.isFinite(row.year) && Number.isFinite(row.bib) && row.split_key.length > 0;
+}
+
 export function useLongData(): LongDataState {
-  const [state, setState] = useState<LongDataState>({
-    rows: [],
-    isLoading: true,
-    error: null,
+  return useCsvRows({
+    loader: loadLongCsv,
+    mapRow: toLongRow,
+    filter: isValidLongRow,
+    errorMessage: "Failed to load split data.",
   });
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    loadLongCsv()
-      .then((records) => {
-        if (isCancelled) {
-          return;
-        }
-
-        const rows = records
-          .map(toLongRow)
-          .filter((row) => Number.isFinite(row.year) && Number.isFinite(row.bib) && row.split_key.length > 0);
-
-        setState({
-          rows,
-          isLoading: false,
-          error: null,
-        });
-      })
-      .catch((error: unknown) => {
-        if (isCancelled) {
-          return;
-        }
-
-        setState({
-          rows: [],
-          isLoading: false,
-          error: error instanceof Error ? error.message : "Failed to load split data.",
-        });
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  return state;
 }

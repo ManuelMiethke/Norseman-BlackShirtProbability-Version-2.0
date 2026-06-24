@@ -13,42 +13,29 @@ const navigation = [
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
-      <aside className="app-sidebar">
-        <div className="app-sidebar__brand">
-          <div className="app-sidebar__eyebrow">React Migration</div>
-          <h1>Norseman Performance Dashboard</h1>
-          <p>
-            A React-first frontend that keeps the existing race analytics and Plotly chart language while moving away from Streamlit.
-          </p>
-        </div>
-
-        <nav className="app-sidebar__nav" aria-label="Primary">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                isActive ? "app-sidebar__link app-sidebar__link--active" : "app-sidebar__link"
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="app-sidebar__footer">
-          <img
-            src="/logos/black-shirt_icon.jpg"
-            alt="Black shirt icon"
-            width={88}
-            height={88}
-          />
-          <span>Shared race assets are served directly from the existing dashboard package.</span>
-        </div>
-      </aside>
-
       <div className="app-main">
-        <FilterToolbar />
+        <header className="app-topbar">
+          <div className="app-topbar__brand">
+            <h1>Norseman Black Shirt Prediction</h1>
+          </div>
+
+          <nav className="app-topbar__nav" aria-label="Primary">
+            {navigation.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  isActive ? "app-topbar__link app-topbar__link--active" : "app-topbar__link"
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <FilterToolbar />
+        </header>
+
         <main className="app-content">{children}</main>
       </div>
     </div>

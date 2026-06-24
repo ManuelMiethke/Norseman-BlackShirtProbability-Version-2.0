@@ -1,13 +1,8 @@
-import { useEffect, useState } from "react";
-
+import { useCsvRows, type CsvRowsState } from "@/hooks/useCsvRows";
 import { loadCourseProfileCsv } from "@/lib/csv";
 import type { CourseProfileRow } from "@/types/data";
 
-type CourseProfileState = {
-  rows: CourseProfileRow[];
-  isLoading: boolean;
-  error: string | null;
-};
+type CourseProfileState = CsvRowsState<CourseProfileRow>;
 
 function toCourseProfileRow(record: Record<string, unknown>): CourseProfileRow {
   return {
@@ -23,49 +18,20 @@ function toCourseProfileRow(record: Record<string, unknown>): CourseProfileRow {
   };
 }
 
+function isValidCourseProfileRow(row: CourseProfileRow) {
+  return Number.isFinite(row.distance_km);
+}
+
+function sortCourseProfileRows(left: CourseProfileRow, right: CourseProfileRow) {
+  return left.distance_km - right.distance_km;
+}
+
 export function useCourseProfileData(): CourseProfileState {
-  const [state, setState] = useState<CourseProfileState>({
-    rows: [],
-    isLoading: true,
-    error: null,
+  return useCsvRows({
+    loader: loadCourseProfileCsv,
+    mapRow: toCourseProfileRow,
+    filter: isValidCourseProfileRow,
+    sort: sortCourseProfileRows,
+    errorMessage: "Failed to load course profile data.",
   });
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    loadCourseProfileCsv()
-      .then((records) => {
-        if (isCancelled) {
-          return;
-        }
-
-        const rows = records
-          .map(toCourseProfileRow)
-          .filter((row) => Number.isFinite(row.distance_km))
-          .sort((left, right) => left.distance_km - right.distance_km);
-
-        setState({
-          rows,
-          isLoading: false,
-          error: null,
-        });
-      })
-      .catch((error: unknown) => {
-        if (isCancelled) {
-          return;
-        }
-
-        setState({
-          rows: [],
-          isLoading: false,
-          error: error instanceof Error ? error.message : "Failed to load course profile data.",
-        });
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  return state;
 }

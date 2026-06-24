@@ -1,7 +1,12 @@
 import type { GroupOption } from "@/config/raceRegistry";
-import type { WideRow } from "@/types/data";
 
 type YearOption = number | "All";
+type FinishLike = { finish_type: unknown };
+type RankLike = { overall_rank?: unknown };
+type YearLike = { year: unknown };
+type AthleteLike = { year: unknown; bib: unknown };
+
+export type ExclusiveGroup = Exclude<GroupOption, "All"> | "Other";
 
 function normalizeRank(value: unknown): number | null {
   const rank = typeof value === "number" ? value : Number(value ?? Number.NaN);
@@ -24,11 +29,22 @@ export function isDnfFinishType(value: unknown): boolean {
   return normalizeFinishType(value).includes("dnf");
 }
 
-export function isCompleteFinisher(row: Pick<WideRow, "finish_type">): boolean {
+export function isTop10Rank(value: unknown): boolean {
+  const rank = normalizeRank(value);
+  return rank !== null && rank <= 10;
+}
+
+export function isCompleteFinisher(row: FinishLike): boolean {
   return isBlackFinishType(row.finish_type) || isWhiteFinishType(row.finish_type);
 }
 
-export function filterRowsByYear(rows: WideRow[], selectedYear: YearOption): WideRow[] {
+export function athleteKey<T extends AthleteLike>(row: T, includeYear = true): string {
+  const bib = Number(row.bib);
+  const year = Number(row.year);
+  return includeYear ? `${year}:${bib}` : String(bib);
+}
+
+export function filterRowsByYear<T extends YearLike>(rows: T[], selectedYear: YearOption): T[] {
   if (selectedYear === "All") {
     return rows;
   }
@@ -36,7 +52,36 @@ export function filterRowsByYear(rows: WideRow[], selectedYear: YearOption): Wid
   return rows.filter((row) => Number(row.year) === selectedYear);
 }
 
-export function matchesGroup(row: WideRow, group: GroupOption): boolean {
+export function classifyFinishGroup(
+  row: FinishLike & RankLike,
+  options?: { dnfBeforeTop10?: boolean },
+): ExclusiveGroup {
+  const dnfBeforeTop10 = options?.dnfBeforeTop10 ?? false;
+
+  if (dnfBeforeTop10 && isDnfFinishType(row.finish_type)) {
+    return "DNF";
+  }
+
+  if (isTop10Rank(row.overall_rank)) {
+    return "Top 10";
+  }
+
+  if (isDnfFinishType(row.finish_type)) {
+    return "DNF";
+  }
+
+  if (isBlackFinishType(row.finish_type)) {
+    return "Black Shirt";
+  }
+
+  if (isWhiteFinishType(row.finish_type)) {
+    return "White Shirt";
+  }
+
+  return "Other";
+}
+
+export function matchesGroup<T extends FinishLike & RankLike>(row: T, group: GroupOption): boolean {
   if (group === "All") {
     return true;
   }
@@ -54,13 +99,12 @@ export function matchesGroup(row: WideRow, group: GroupOption): boolean {
   }
 
   if (group === "Top 10") {
-    const rank = normalizeRank(row.overall_rank);
-    return rank !== null && rank <= 10;
+    return isTop10Rank(row.overall_rank);
   }
 
   return true;
 }
 
-export function filterRowsByGroup(rows: WideRow[], group: GroupOption): WideRow[] {
+export function filterRowsByGroup<T extends FinishLike & RankLike>(rows: T[], group: GroupOption): T[] {
   return rows.filter((row) => matchesGroup(row, group));
 }

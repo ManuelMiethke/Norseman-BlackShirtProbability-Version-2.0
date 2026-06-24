@@ -1,6 +1,13 @@
 import type { Data, Layout } from "plotly.js";
 
 import type { GroupOption } from "@/config/raceRegistry";
+import {
+  filterRowsByYear,
+  isBlackFinishType,
+  isDnfFinishType,
+  isTop10Rank,
+  isWhiteFinishType,
+} from "@/lib/groups";
 import type { CourseProfileRow, ModelRow } from "@/types/data";
 
 type PlotFigure = {
@@ -27,24 +34,23 @@ function isFiniteNumber(value: number | null | undefined): value is number {
 }
 
 function applyFilters(rows: ModelRow[], year: number | "All", group: GroupOption) {
-  return rows
+  return filterRowsByYear(rows, year)
     .filter((row) => row.set === undefined || row.set === "test")
-    .filter((row) => year === "All" || row.year === year)
     .filter((row) => {
       if (group === "All") {
         return true;
       }
       if (group === "Top 10") {
-        return isFiniteNumber(row.split_rank) && row.split_rank <= 10;
+        return isTop10Rank(row.split_rank);
       }
       if (group === "Black Shirt") {
-        return row.finish_type.toLowerCase().includes("black");
+        return isBlackFinishType(row.finish_type);
       }
       if (group === "White Shirt") {
-        return row.finish_type.toLowerCase().includes("white");
+        return isWhiteFinishType(row.finish_type);
       }
       if (group === "DNF") {
-        return row.finish_type.toLowerCase().includes("dnf");
+        return isDnfFinishType(row.finish_type);
       }
       return true;
     });
@@ -351,7 +357,7 @@ export function buildModelAccuracyModel(
     figure,
     warning:
       selectedGroup === "Top 10"
-        ? "The original Streamlit behavior is preserved here: the Top 10 filter is evaluated via split rank at each timing station, not only by final overall rank."
+        ? "Top 10 is evaluated by split rank at each station."
         : null,
   };
 }

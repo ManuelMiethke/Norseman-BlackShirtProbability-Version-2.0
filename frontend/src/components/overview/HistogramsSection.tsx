@@ -15,16 +15,14 @@ const SCALE_OPTIONS: HistogramScaleMode[] = [
 export function HistogramsSection() {
   const { rows, selectedYear, selectedGroup, isLoading } = useDashboard();
   const [scaleMode, setScaleMode] = useState<HistogramScaleMode>("Absolute (hh:mm:ss)");
+  const cardClassName = "overview-card overview-card--histograms";
 
   if (isLoading) {
     return (
-      <SectionCard
-        title="Time Distributions"
-        description="This React section ports the original overview histograms for swim, bike, run-to-cutoff and total time-to-cutoff."
-      >
+      <SectionCard title="Time Distribution" className={cardClassName}>
         <StateBlock
-          title="Loading time distributions"
-          description="Preparing athlete-level timing distributions from the shared race dataset."
+          title="Loading"
+          description="Preparing distributions."
         />
       </SectionCard>
     );
@@ -33,12 +31,9 @@ export function HistogramsSection() {
   const { figures, warning } = buildHistogramModel(rows, selectedYear, selectedGroup, scaleMode);
 
   return (
-    <SectionCard
-      title="Time Distributions"
-      description="This keeps the original distribution logic, including the group-aware Top-10 overlay, the relative-to-median view and the bike-scale comparison mode."
-    >
+    <SectionCard title="Time Distribution" className={cardClassName}>
       <div className="section-stack">
-        <div className="section-controls section-controls--stacked">
+        <div className="section-controls">
           <div className="segmented-control" role="tablist" aria-label="Histogram scale mode">
             {SCALE_OPTIONS.map((option) => (
               <button
@@ -51,22 +46,15 @@ export function HistogramsSection() {
                 }
                 onClick={() => setScaleMode(option)}
               >
-                {option}
-              </button>
-            ))}
-          </div>
-
-          <div className="section-note">
-            <strong>Selection context</strong>
-            <span>
-              The current charts use year filter "{selectedYear}" and group filter "{selectedGroup}". The Top-10 trace remains an explicit overlay inside the filtered population, matching the original Streamlit behavior.
-            </span>
-          </div>
+              {option}
+            </button>
+          ))}
+        </div>
         </div>
 
         {warning ? (
           <StateBlock
-            title="Distribution unavailable"
+            title="Note"
             description={warning}
             tone="warning"
           />
@@ -79,6 +67,7 @@ export function HistogramsSection() {
                 key={figure.key}
                 data={figure.data}
                 layout={figure.layout}
+                className="plot-card--tall"
               />
             ))}
           </div>

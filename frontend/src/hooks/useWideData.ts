@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
-
 import { KNOWN_YEARS } from "@/config/raceRegistry";
+import { useCsvRows, type CsvRowsState } from "@/hooks/useCsvRows";
 import { loadWideCsv } from "@/lib/csv";
+import { anonymizeAthleteName } from "@/lib/privacy";
 import type { WideRow } from "@/types/data";
 
-type WideDataState = {
+type WideDataState = CsvRowsState<WideRow> & {
   rows: WideRow[];
   years: Array<number | "All">;
-  isLoading: boolean;
-  error: string | null;
 };
 
 function toWideRow(record: Record<string, unknown>): WideRow {
   return {
     year: Number(record.year),
     bib: Number(record.bib),
-    name: String(record.name ?? ""),
+    name: anonymizeAthleteName(Number(record.bib), Number(record.year)),
     gender: String(record.gender ?? ""),
     country: String(record.country ?? ""),
     finish_type: String(record.finish_type ?? ""),
@@ -41,53 +39,25 @@ function toWideRow(record: Record<string, unknown>): WideRow {
   };
 }
 
+function isValidWideRow(row: WideRow) {
+  return Number.isFinite(row.year) && Number.isFinite(row.bib);
+}
+
 export function useWideData(): WideDataState {
-  const [state, setState] = useState<WideDataState>({
-    rows: [],
-    years: ["All", ...KNOWN_YEARS],
-    isLoading: true,
-    error: null,
+  const state = useCsvRows({
+    loader: loadWideCsv,
+    mapRow: toWideRow,
+    filter: isValidWideRow,
+    errorMessage: "Failed to load race data.",
   });
 
-  useEffect(() => {
-    let isCancelled = false;
+  const dynamicYears =
+    state.rows.length > 0
+      ? [...new Set<number>(state.rows.map((row) => row.year))].sort((left, right) => right - left)
+      : KNOWN_YEARS;
 
-    loadWideCsv()
-      .then((records) => {
-        if (isCancelled) {
-          return;
-        }
-
-        const rows = records
-          .map(toWideRow)
-          .filter((row) => Number.isFinite(row.year) && Number.isFinite(row.bib));
-        const dynamicYears = [...new Set<number>(rows.map((row) => row.year))].sort(
-          (left: number, right: number) => right - left,
-        );
-        setState({
-          rows,
-          years: ["All", ...dynamicYears],
-          isLoading: false,
-          error: null,
-        });
-      })
-      .catch((error: unknown) => {
-        if (isCancelled) {
-          return;
-        }
-
-        setState({
-          rows: [],
-          years: ["All", ...KNOWN_YEARS],
-          isLoading: false,
-          error: error instanceof Error ? error.message : "Failed to load race data.",
-        });
-      });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  return state;
+  return {
+    ...state,
+    years: ["All", ...dynamicYears],
+  };
 }

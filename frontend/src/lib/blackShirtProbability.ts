@@ -1,6 +1,13 @@
 import type { Data, Layout } from "plotly.js";
 
 import type { GroupOption } from "@/config/raceRegistry";
+import {
+  athleteKey,
+  filterRowsByYear,
+  isBlackFinishType,
+  isTop10Rank,
+  isWhiteFinishType,
+} from "@/lib/groups";
 import type { ModelRow } from "@/types/data";
 
 type PlotFigure = {
@@ -74,11 +81,10 @@ function mean(values: number[]) {
 }
 
 function toFinishGroup(value: string) {
-  const lower = value.trim().toLowerCase();
-  if (lower.includes("black")) {
+  if (isBlackFinishType(value)) {
     return "Black Shirt" as const;
   }
-  if (lower.includes("white")) {
+  if (isWhiteFinishType(value)) {
     return "White Shirt" as const;
   }
   return null;
@@ -105,9 +111,8 @@ function toLegKm(distanceKm: number, leg: "Swim" | "Bike" | "Run") {
 }
 
 function toProbabilityRows(rows: ModelRow[], selectedYear: number | "All") {
-  return rows
+  return filterRowsByYear(rows, selectedYear)
     .filter((row) => row.set === undefined || row.set === "test")
-    .filter((row) => selectedYear === "All" || row.year === selectedYear)
     .map((row) => {
       const finishGroup = toFinishGroup(row.finish_type);
       if (
@@ -139,17 +144,17 @@ function toProbabilityRows(rows: ModelRow[], selectedYear: number | "All") {
 function determineTop10(rows: ProbabilityRow[], selectedYear: number | "All") {
   const latestByAthlete = new Map<string, ProbabilityRow>();
   for (const row of rows) {
-    const athleteKey = selectedYear === "All" ? `${row.year}:${row.bib}` : String(row.bib);
-    const existing = latestByAthlete.get(athleteKey);
+    const athleteId = athleteKey(row, selectedYear === "All");
+    const existing = latestByAthlete.get(athleteId);
     if (!existing || row.distanceKm >= existing.distanceKm) {
-      latestByAthlete.set(athleteKey, row);
+      latestByAthlete.set(athleteId, row);
     }
   }
 
   const top10 = new Set<string>();
-  for (const [athleteKey, row] of latestByAthlete.entries()) {
-    if (isFiniteNumber(row.splitRank) && row.splitRank <= 10) {
-      top10.add(athleteKey);
+  for (const [athleteId, row] of latestByAthlete.entries()) {
+    if (isTop10Rank(row.splitRank)) {
+      top10.add(athleteId);
     }
   }
   return top10;
@@ -163,8 +168,7 @@ function buildGroups(
   const top10Keys = determineTop10(rows, selectedYear);
 
   function isTop10(row: ProbabilityRow) {
-    const athleteKey = selectedYear === "All" ? `${row.year}:${row.bib}` : String(row.bib);
-    return top10Keys.has(athleteKey);
+    return top10Keys.has(athleteKey(row, selectedYear === "All"));
   }
 
   if (selectedGroup === "All") {
@@ -231,7 +235,7 @@ export function buildBlackShirtProbabilityModel(
   if (selectedGroup === "DNF") {
     return {
       figure: null,
-      warning: "For the DNF group, the Black-Shirt probability chart is intentionally hidden, matching the original Streamlit module.",
+      warning: "Probability view is hidden for DNF.",
     };
   }
 
@@ -463,7 +467,7 @@ export function buildBlackShirtProbabilityModel(
     },
     warning:
       selectedGroup === "Top 10"
-        ? "The original Streamlit behavior is preserved here: Top 10 athletes are derived from the last available split rank per athlete, not from a separate final-rank field."
+        ? "Top 10 is derived from the last available split rank."
         : null,
   };
 }

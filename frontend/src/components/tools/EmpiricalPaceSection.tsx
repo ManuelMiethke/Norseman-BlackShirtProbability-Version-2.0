@@ -57,22 +57,9 @@ export function EmpiricalPaceSection() {
       : null;
 
   return (
-    <SectionCard
-      title="13:51 Black Shirt Empirical Pacing"
-      description="This React section ports the original empirical pacing tool end to end: a Black-Shirt-derived leg distribution, interactive discipline preferences, the overview table and the detailed course/speed figure."
-    >
+    <SectionCard title="Pace Planner">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Scope</strong>
-          <span>
-            The empirical blueprint is always based on Black-Shirt medians from the
-            37.5 km cut-off years 2024 and 2025. If the global year filter is set to
-            2024 or 2025, the detail figure narrows its empirical median to that year;
-            otherwise it keeps the combined two-year baseline, matching Streamlit.
-          </span>
-        </div>
-
-        <div className="section-controls section-controls--stacked">
+        <div className="section-controls">
           <label className="toggle-pill">
             <input
               type="checkbox"
@@ -85,7 +72,7 @@ export function EmpiricalPaceSection() {
                 }
               }}
             />
-            <span>Explore mode (unlock total time)</span>
+            <span>Explore mode</span>
           </label>
 
           {exploreMode ? (
@@ -95,7 +82,7 @@ export function EmpiricalPaceSection() {
                 checked={expertMode}
                 onChange={(event) => setExpertMode(event.target.checked)}
               />
-              <span>Expert mode (performance labels)</span>
+              <span>Expert mode</span>
             </label>
           ) : null}
         </div>
@@ -145,100 +132,86 @@ export function EmpiricalPaceSection() {
         </div>
 
         <div className="section-note">
-          <strong>Plan summary</strong>
+          <strong>Plan</strong>
           <span>{model.caption}</span>
         </div>
 
-        <div className="table-panel">
-          <div className="table-panel__header">
-            <div>
-              <h4>Leg distribution overview</h4>
-              <p>
-                The values below update immediately as the discipline preferences shift.
-              </p>
+        <details className="disclosure-panel">
+          <summary>
+            <span>Plan details</span>
+            <span className="disclosure-panel__chevron">⌄</span>
+          </summary>
+
+          <div className="disclosure-panel__body">
+            <div className="table-scroll">
+              <table className="data-table empirical-table">
+                <thead>
+                  <tr>
+                    <th>Swim Time</th>
+                    <th>Swim Pace</th>
+                    <th>T1 Time</th>
+                    <th>Bike Time</th>
+                    <th>Bike Pace</th>
+                    <th>T2 Time</th>
+                    <th>Run Time</th>
+                    <th>Run Pace</th>
+                    <th>Time at 37.5 km run</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{model.overview.swimTime}</td>
+                    <td>{model.overview.swimPace}</td>
+                    <td>{model.overview.t1Time}</td>
+                    <td>{model.overview.bikeTime}</td>
+                    <td>{model.overview.bikePace}</td>
+                    <td>{model.overview.t2Time}</td>
+                    <td>{model.overview.runTime}</td>
+                    <td>{model.overview.runPace}</td>
+                    <td>{model.overview.timeAtDecision}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
+        </details>
 
-          <div className="table-scroll">
-            <table className="data-table empirical-table">
-              <thead>
-                <tr>
-                  <th>Swim Time</th>
-                  <th>Swim Pace</th>
-                  <th>T1 Time</th>
-                  <th>Bike Time</th>
-                  <th>Bike Pace</th>
-                  <th>T2 Time</th>
-                  <th>Run Time</th>
-                  <th>Run Pace</th>
-                  <th>Time at 37.5 km run</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{model.overview.swimTime}</td>
-                  <td>{model.overview.swimPace}</td>
-                  <td>{model.overview.t1Time}</td>
-                  <td>{model.overview.bikeTime}</td>
-                  <td>{model.overview.bikePace}</td>
-                  <td>{model.overview.t2Time}</td>
-                  <td>{model.overview.runTime}</td>
-                  <td>{model.overview.runPace}</td>
-                  <td>{model.overview.timeAtDecision}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        {longData.isLoading || courseProfileData.isLoading ? (
+          <StateBlock
+            title="Loading"
+            description="Preparing pacing profile."
+          />
+        ) : null}
 
-        <div className="table-panel">
-          <div className="table-panel__header">
-            <div>
-              <h4>Detailed pacing profile</h4>
-              <p>
-                Course elevation stays in the background while the orange step line
-                shows the recommended speed blueprint to the 37.5 km Black-Shirt
-                decision point.
-              </p>
-            </div>
-          </div>
+        {longData.error ? (
+          <StateBlock
+            title="Long-data failed"
+            description={longData.error}
+            tone="error"
+          />
+        ) : null}
 
-          {longData.isLoading || courseProfileData.isLoading ? (
-            <StateBlock
-              title="Loading pacing profile"
-              description="Preparing split medians from the long race data and the packaged course profile."
-            />
-          ) : null}
+        {courseProfileData.error ? (
+          <StateBlock
+            title="Course failed"
+            description={courseProfileData.error}
+            tone="error"
+          />
+        ) : null}
 
-          {longData.error ? (
-            <StateBlock
-              title="Long-data load failed"
-              description={longData.error}
-              tone="error"
-            />
-          ) : null}
-
-          {courseProfileData.error ? (
-            <StateBlock
-              title="Course-profile load failed"
-              description={courseProfileData.error}
-              tone="error"
-            />
-          ) : null}
-
-          {!longData.isLoading &&
+        {!longData.isLoading &&
           !courseProfileData.isLoading &&
           !longData.error &&
           !courseProfileData.error &&
           !detailChart ? (
             <StateBlock
-              title="No pacing profile available"
-              description="The packaged split or course datasets are empty after validation, so the empirical detail figure cannot be rendered."
+              title="No data"
+              description="No pacing profile available."
               tone="warning"
             />
           ) : null}
 
-          {!longData.isLoading &&
+        {!longData.isLoading &&
           !courseProfileData.isLoading &&
           !longData.error &&
           !courseProfileData.error &&
@@ -249,7 +222,6 @@ export function EmpiricalPaceSection() {
               className="plot-card--xl"
             />
           ) : null}
-        </div>
       </div>
     </SectionCard>
   );

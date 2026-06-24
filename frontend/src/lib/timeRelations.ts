@@ -5,6 +5,7 @@ import {
   filterRowsByYear,
   isBlackFinishType,
   isCompleteFinisher,
+  matchesGroup,
   isWhiteFinishType,
 } from "@/lib/groups";
 import { formatDelta, secondsToHms, timeToSeconds } from "@/lib/time";
@@ -125,15 +126,15 @@ function figureForGroup(
   blackReference: { swim: number; bike: number; run: number } | null,
 ): GroupFigure | null {
   const finisherRows = rows.filter((row) => isCompleteFinisher(row));
-  let groupRows = finisherRows;
-
-  if (group === "Top 10") {
-    groupRows = finisherRows.filter((row) => row.overallRankValue <= 10);
-  } else if (group === "Black Shirt") {
-    groupRows = finisherRows.filter((row) => isBlackFinishType(row.finish_type));
-  } else if (group === "White Shirt") {
-    groupRows = finisherRows.filter((row) => isWhiteFinishType(row.finish_type));
-  }
+  const groupRows = finisherRows.filter((row) =>
+    matchesGroup(
+      {
+        finish_type: row.finish_type,
+        overall_rank: row.overallRankValue,
+      },
+      group,
+    ),
+  );
 
   if (groupRows.length === 0) {
     return null;

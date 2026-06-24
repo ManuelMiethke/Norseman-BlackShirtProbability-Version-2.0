@@ -25,13 +25,10 @@ export function CatchupSection() {
 
   if (modelData.isLoading) {
     return (
-      <SectionCard
-        title="What Are the Odds?"
-        description="This React section preserves the original catch-up estimator for Black-Shirt odds and required pace to Stavsro."
-      >
+      <SectionCard title="Odds">
         <StateBlock
-          title="Loading catch-up estimator"
-          description="Preparing historical model points and Black-Shirt pacing baselines for the selected year."
+          title="Loading"
+          description="Preparing estimator."
         />
       </SectionCard>
     );
@@ -39,12 +36,9 @@ export function CatchupSection() {
 
   if (modelData.error) {
     return (
-      <SectionCard
-        title="What Are the Odds?"
-        description="This React section preserves the original catch-up estimator for Black-Shirt odds and required pace to Stavsro."
-      >
+      <SectionCard title="Odds">
         <StateBlock
-          title="Catch-up data load failed"
+          title="Load failed"
           description={modelData.error}
           tone="error"
         />
@@ -55,13 +49,10 @@ export function CatchupSection() {
   const rows = prepareCatchupRows(modelData.rows, selectedYear);
   if (rows.length === 0) {
     return (
-      <SectionCard
-        title="What Are the Odds?"
-        description="This React section preserves the original catch-up estimator for Black-Shirt odds and required pace to Stavsro."
-      >
+      <SectionCard title="Odds">
         <StateBlock
-          title="No model data available"
-          description="The packaged model dataset is empty after the current year filter. The original Streamlit tool also cannot operate without those records."
+          title="No data"
+          description="No model data for this year."
           tone="warning"
         />
       </SectionCard>
@@ -72,20 +63,8 @@ export function CatchupSection() {
   const result = computeCatchup(rows, empirical, bikeKm, runKm, raceTime);
 
   return (
-    <SectionCard
-      title="What Are the Odds?"
-      description="Estimate Black-Shirt chances from the current race position and see the required bike speed or run pace to still reach the Stavsro cut-off at 37.5 km run."
-    >
+    <SectionCard title="Odds">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Scope</strong>
-          <span>
-            This tool intentionally ignores the global finisher-group filter and uses
-            the selected year only as an optional historical scope, matching the
-            original Streamlit module.
-          </span>
-        </div>
-
         <div className="tool-grid">
           <label className="tool-field">
             <span>Bike km</span>
@@ -119,11 +98,11 @@ export function CatchupSection() {
         </div>
 
         {result.kmError ? (
-          <StateBlock title="Distance input error" description={result.kmError} tone="error" />
+          <StateBlock title="Distance error" description={result.kmError} tone="error" />
         ) : null}
 
         {result.timeError ? (
-          <StateBlock title="Time input error" description={result.timeError} tone="error" />
+          <StateBlock title="Time error" description={result.timeError} tone="error" />
         ) : null}
 
         <div className="kpi-grid">
@@ -162,7 +141,7 @@ export function CatchupSection() {
 
         {result.leg === "pre_swim" ? (
           <StateBlock
-            title="Not yet on the bike/run course"
+            title="Too early"
             description="Catch Up is intended for use after the swim, so the distance after swim must be 0 km or greater."
             tone="warning"
           />
@@ -170,7 +149,7 @@ export function CatchupSection() {
 
         {result.leg === "beyond" ? (
           <StateBlock
-            title="Already beyond Stavsro"
+            title="Beyond Stavsro"
             description="The entered distance is already beyond the Stavsro cut-off point at 217.5 km after the swim."
             tone="warning"
           />

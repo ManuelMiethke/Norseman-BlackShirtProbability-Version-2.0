@@ -9,16 +9,14 @@ import { useDashboard } from "@/state/DashboardContext";
 export function TimeRelationsSection() {
   const { rows, selectedYear, selectedGroup, isLoading } = useDashboard();
   const [deltaOnly, setDeltaOnly] = useState(false);
+  const cardClassName = "overview-card overview-card--split";
 
   if (isLoading) {
     return (
-      <SectionCard
-        title="Distance vs. Time Relations"
-        description="This is the first Plotly chart block ported from Streamlit to React."
-      >
+      <SectionCard title="Split Balance" className={cardClassName}>
         <StateBlock
-          title="Loading chart data"
-          description="Preparing group-level time-share donuts from the shared wide dataset."
+          title="Loading"
+          description="Preparing split balance."
         />
       </SectionCard>
     );
@@ -27,10 +25,7 @@ export function TimeRelationsSection() {
   const { figures, note } = buildTimeRelationFigures(rows, selectedYear, selectedGroup, deltaOnly);
 
   return (
-    <SectionCard
-      title="Distance vs. Time Relations"
-      description="The donut charts keep the original Plotly structure: race distance share, plus median segment time share for Top 10, Black Shirt and White Shirt groups."
-    >
+    <SectionCard title="Split Balance" className={cardClassName}>
       <div className="section-controls">
         <label className="toggle-pill">
           <input
@@ -38,23 +33,24 @@ export function TimeRelationsSection() {
             checked={deltaOnly}
             onChange={(event) => setDeltaOnly(event.target.checked)}
           />
-          <span>Show Δ compared to Black Shirts</span>
+          <span>Delta vs Black</span>
         </label>
       </div>
 
-      <div className={`plot-grid plot-grid--${Math.min(figures.length, 4)}`}>
+      <div className="plot-grid plot-grid--2">
         {figures.map((figure) => (
           <PlotlyChart
             key={figure.key}
             data={figure.data}
             layout={figure.layout}
+            className="plot-card--tall"
           />
         ))}
       </div>
 
       {note ? (
         <StateBlock
-          title="DNF note"
+          title="DNF"
           description={note}
           tone="warning"
         />

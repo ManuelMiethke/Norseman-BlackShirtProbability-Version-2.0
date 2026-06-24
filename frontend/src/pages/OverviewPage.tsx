@@ -11,21 +11,7 @@ export function OverviewPage() {
   const { error } = useDashboard();
 
   return (
-    <div className="page-stack">
-      <section className="page-hero">
-        <div>
-          <span className="page-hero__eyebrow">Overview Route</span>
-          <h1>React overview migration</h1>
-          <p>
-            This route now covers six analytical building blocks of the original dashboard overview: participation context, distance-vs-time relations, cross-year comparison, race-pressure context, rank progression and the time-distribution charts. The Streamlit version stays available in parallel while the remaining pages are ported.
-          </p>
-        </div>
-        <div className="page-hero__badge">
-          <strong>Phase 4</strong>
-          <span>Overview nearly complete</span>
-        </div>
-      </section>
-
+    <div className="dashboard-page">
       {error ? (
         <StateBlock
           title="Dataset load failed"
@@ -34,12 +20,14 @@ export function OverviewPage() {
         />
       ) : null}
 
-      <ParticipantsSection />
-      <TimeRelationsSection />
-      <YearComparisonSection />
-      <WhoAreWeRacingSection />
-      <RankProgressionSection />
-      <HistogramsSection />
+      <div className="dashboard-grid dashboard-grid--overview">
+        <ParticipantsSection />
+        <TimeRelationsSection />
+        <YearComparisonSection />
+        <WhoAreWeRacingSection />
+        <RankProgressionSection />
+        <HistogramsSection />
+      </div>
     </div>
   );
 }

@@ -2,8 +2,10 @@ import type { Data, Layout } from "plotly.js";
 
 import type { GroupOption } from "@/config/raceRegistry";
 import {
+  classifyFinishGroup,
   filterRowsByYear,
   isBlackFinishType,
+  isTop10Rank,
   isWhiteFinishType,
 } from "@/lib/groups";
 import {
@@ -178,8 +180,7 @@ function isFiniteNumber(value: number | null | undefined): value is number {
 }
 
 function isTop10(row: WideRow) {
-  const rank = Number(row.overall_rank ?? Number.NaN);
-  return Number.isFinite(rank) && rank <= 10;
+  return isTop10Rank(row.overall_rank);
 }
 
 function toPreparedRows(rows: WideRow[], selectedYear: number | "All"): PreparedWideRow[] {
@@ -199,16 +200,8 @@ function toPreparedRows(rows: WideRow[], selectedYear: number | "All"): Prepared
 }
 
 function groupForChart(row: PreparedWideRow): PaceGroupKey | null {
-  if (row.isTop10) {
-    return "Top 10";
-  }
-  if (isBlackFinishType(row.finish_type)) {
-    return "Black Shirt";
-  }
-  if (isWhiteFinishType(row.finish_type)) {
-    return "White Shirt";
-  }
-  return null;
+  const group = classifyFinishGroup(row);
+  return group === "Top 10" || group === "Black Shirt" || group === "White Shirt" ? group : null;
 }
 
 function summarize(values: number[]): SummaryStats {
@@ -545,7 +538,7 @@ export function buildPaceDistributionModel(
       : null,
     warning:
       selectedYear === "All"
-        ? "The original Streamlit behavior is preserved here: the pace distributions aggregate all available race years when the year filter stays on \"All\"."
+        ? "All years are combined."
         : null,
   };
 }

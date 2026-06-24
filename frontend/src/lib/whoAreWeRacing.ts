@@ -167,6 +167,11 @@ function buildOutcomesFigure(outcomes: OutcomeRow[]): PlotFigure {
       },
       legend: {
         title: { text: "Outcome type" },
+        orientation: "h",
+        x: 0,
+        y: 1.14,
+        xanchor: "left",
+        yanchor: "bottom",
       },
     },
   };

@@ -5,9 +5,8 @@ import {
   type GroupOption,
 } from "@/config/raceRegistry";
 import {
-  isBlackFinishType,
-  isDnfFinishType,
-  isWhiteFinishType,
+  classifyFinishGroup,
+  filterRowsByYear,
 } from "@/lib/groups";
 import type { LongRow } from "@/types/data";
 
@@ -102,20 +101,8 @@ function robustAbsMax(values: number[]) {
 }
 
 function toCategory(row: LongRow): HeatmapCategory | null {
-  const overallRank = Number(row.overall_rank ?? Number.NaN);
-  if (Number.isFinite(overallRank) && overallRank <= 10) {
-    return "Top 10";
-  }
-  if (isBlackFinishType(row.finish_type)) {
-    return "Black Shirt";
-  }
-  if (isWhiteFinishType(row.finish_type)) {
-    return "White Shirt";
-  }
-  if (isDnfFinishType(row.finish_type)) {
-    return "DNF";
-  }
-  return null;
+  const group = classifyFinishGroup(row);
+  return group === "Other" ? null : group;
 }
 
 function matchesSelectedGroup(category: HeatmapCategory, selectedGroup: GroupOption) {
@@ -230,8 +217,7 @@ export function buildPacingHeatmapModel(
   selectedYear: number | "All",
   selectedGroup: GroupOption,
 ): PacingHeatmapModel {
-  const preparedRows = rows
-    .filter((row) => selectedYear === "All" || row.year === selectedYear)
+  const preparedRows = filterRowsByYear(rows, selectedYear)
     .map((row) => {
       const category = toCategory(row);
       const segmentTimeSeconds =
@@ -409,7 +395,7 @@ export function buildPacingHeatmapModel(
     },
     warning:
       selectedYear === "All"
-        ? "The original Streamlit behavior is preserved here: the heatmap aggregates athletes from all available years when the year filter stays on \"All\"."
+        ? "All years are combined."
         : null,
   };
 }

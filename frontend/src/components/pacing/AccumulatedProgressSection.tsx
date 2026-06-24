@@ -11,13 +11,10 @@ export function AccumulatedProgressSection() {
 
   if (longData.isLoading) {
     return (
-      <SectionCard
-        title="Accumulated Race Progress"
-        description="This section ports the original cumulative race-progress chart for the currently selected year and finisher group."
-      >
+      <SectionCard title="Race Progress">
         <StateBlock
-          title="Loading accumulated progress"
-          description="Preparing athlete-level cumulative distance and time traces from the long split dataset."
+          title="Loading"
+          description="Preparing progress lines."
         />
       </SectionCard>
     );
@@ -25,12 +22,9 @@ export function AccumulatedProgressSection() {
 
   if (longData.error) {
     return (
-      <SectionCard
-        title="Accumulated Race Progress"
-        description="This section ports the original cumulative race-progress chart for the currently selected year and finisher group."
-      >
+      <SectionCard title="Race Progress">
         <StateBlock
-          title="Split dataset load failed"
+          title="Load failed"
           description={longData.error}
           tone="error"
         />
@@ -45,21 +39,11 @@ export function AccumulatedProgressSection() {
   );
 
   return (
-    <SectionCard
-      title="Accumulated Race Progress"
-      description="Each line represents one athlete’s cumulative race time over distance. The React version keeps the original leg-separated distance axis and the same group semantics as the Streamlit chart."
-    >
+    <SectionCard title="Race Progress">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Filter behavior</strong>
-          <span>
-            This chart follows the global year and finisher-group filters directly. In multi-year mode it intentionally overlays all matching years, matching the original Streamlit behavior.
-          </span>
-        </div>
-
         {warning ? (
           <StateBlock
-            title="Accumulated progress unavailable"
+            title="Note"
             description={warning}
             tone="warning"
           />

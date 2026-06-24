@@ -6,16 +6,14 @@ import { buildWhoAreWeRacingModel } from "@/lib/whoAreWeRacing";
 
 export function WhoAreWeRacingSection() {
   const { rows, isLoading, error } = useLongData();
+  const cardClassName = "overview-card overview-card--outcomes";
 
   if (isLoading) {
     return (
-      <SectionCard
-        title="Who Are We Racing?"
-        description="This section uses the packaged long split dataset to compare outcome groups and empirical cut-off pressure across years."
-      >
+      <SectionCard title="Outcome Mix" className={cardClassName}>
         <StateBlock
-          title="Loading split history"
-          description="Reading long-format split data for the all-years outcome and frontier charts."
+          title="Loading"
+          description="Reading split history."
         />
       </SectionCard>
     );
@@ -23,12 +21,9 @@ export function WhoAreWeRacingSection() {
 
   if (error) {
     return (
-      <SectionCard
-        title="Who Are We Racing?"
-        description="This section uses the packaged long split dataset to compare outcome groups and empirical cut-off pressure across years."
-      >
+      <SectionCard title="Outcome Mix" className={cardClassName}>
         <StateBlock
-          title="Split dataset load failed"
+          title="Load failed"
           description={error}
           tone="error"
         />
@@ -39,48 +34,41 @@ export function WhoAreWeRacingSection() {
   const { outcomesFigure, frontierFigure, frontierMedianHours, warning } = buildWhoAreWeRacingModel(rows);
 
   return (
-    <SectionCard
-      title="Who Are We Racing?"
-      description="This preserves the original long-data section that compares yearly outcome mixes and the empirical Black Shirt frontier. Like the Streamlit version, it intentionally ignores the global year and group filters."
-    >
+    <SectionCard title="Outcome Mix" className={cardClassName}>
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Cross-year context</strong>
-          <span>
-            This module always uses the full packaged long split history. It shows how Black Shirts, White finishers, competition misses and hardcoded DNF counts shift across race editions.
-          </span>
-        </div>
-
         {warning ? (
           <StateBlock
-            title="Computation note"
+            title="Note"
             description={warning}
             tone="warning"
           />
         ) : null}
 
-        {outcomesFigure ? (
-          <PlotlyChart
-            data={outcomesFigure.data}
-            layout={outcomesFigure.layout}
-            className="plot-card--tall"
-          />
-        ) : null}
+        <div className="plot-grid plot-grid--stack">
+          {outcomesFigure ? (
+            <PlotlyChart
+              data={outcomesFigure.data}
+              layout={outcomesFigure.layout}
+              className="plot-card--tall"
+            />
+          ) : null}
+
+          {frontierFigure ? (
+            <PlotlyChart
+              data={frontierFigure.data}
+              layout={frontierFigure.layout}
+              className="plot-card--tall"
+            />
+          ) : null}
+        </div>
 
         {frontierMedianHours !== null ? (
           <div className="section-note">
-            <strong>Empirical Black Shirt pace</strong>
+            <strong>Cut-off median</strong>
             <span>
-              Median time of rank ~160 at the 37.5 km cut-off in 2024–2025: {frontierMedianHours.toFixed(2)} hours.
+              2024-2025 median at 37.5 km: {frontierMedianHours.toFixed(2)} h
             </span>
           </div>
-        ) : null}
-
-        {frontierFigure ? (
-          <PlotlyChart
-            data={frontierFigure.data}
-            layout={frontierFigure.layout}
-          />
         ) : null}
       </div>
     </SectionCard>

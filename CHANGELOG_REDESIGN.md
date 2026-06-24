@@ -1,5 +1,21 @@
 # Changelog Redesign
 
+## 2026-06-24
+
+### Added
+
+- Added `frontend/src/hooks/useCsvRows.ts` to centralize the repeated route-local CSV loading lifecycle used by the React migration.
+- Expanded `frontend/src/lib/groups.ts` with shared athlete-key, year-filter, Top-10-rank and exclusive finish-group helpers for the migrated frontend modules.
+
+### Changed
+
+- Refactored the React data hooks (`useWideData`, `useLongData`, `useModelData`, `useCourseProfileData`) to reuse the new shared CSV hook instead of each maintaining its own identical loading state machine.
+- Consolidated repeated React-side year/group classification logic in `courseWeatherSpeed`, `pacingAccumulated`, `pacingHeatmap`, `pacingDistributions`, `modelAccuracy`, `blackShirtProbability` and `timeRelations` onto shared helpers so the migration adapters no longer drift independently.
+
+### Verified
+
+- Verified `npm run build` still succeeds after consolidating the React data hooks and shared filter/group utilities.
+
 ## 2026-06-21
 
 ### Added

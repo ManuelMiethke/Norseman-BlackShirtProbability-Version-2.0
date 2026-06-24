@@ -830,3 +830,469 @@ select {
     grid-template-columns: 1fr;
   }
 }
+
+/* Clean grey redesign */
+
+:root {
+  --bg: #757575;
+  --bg-deep: #666666;
+  --surface: rgba(44, 44, 44, 0.9);
+  --surface-strong: rgba(36, 36, 36, 0.96);
+  --surface-muted: rgba(78, 78, 78, 0.84);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #f4f4f4;
+  --muted: rgba(255, 255, 255, 0.72);
+  --accent: #ffffff;
+  --accent-soft: rgba(255, 255, 255, 0.08);
+  --accent-lime: #f4f4f4;
+  --shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent 18%),
+    linear-gradient(180deg, #8a8a8a 0%, var(--bg) 38%, var(--bg-deep) 100%);
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 1rem;
+  display: block;
+}
+
+.app-main {
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.app-topbar {
+  position: sticky;
+  top: 1rem;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(24, 24, 24, 0.88);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.app-topbar::-webkit-scrollbar {
+  display: none;
+}
+
+.app-topbar__brand h1 {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.app-topbar__nav {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.app-topbar__link {
+  padding: 0.58rem 0.82rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.84rem;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.app-topbar__link:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.app-topbar__link--active {
+  background: #f1f1f1;
+  color: #151515;
+}
+
+.topbar-controls {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 0.45rem;
+}
+
+.topbar-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.topbar-filter span {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.topbar-filter select {
+  width: auto;
+  min-width: 96px;
+  padding: 0.52rem 0.65rem;
+  border: 0;
+  border-radius: 14px;
+  background: #f1f1f1;
+  color: #111111;
+}
+
+.app-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.dashboard-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.dashboard-grid,
+.dashboard-grid--two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.dashboard-grid > *,
+.dashboard-grid--two > * {
+  min-width: 0;
+}
+
+.dashboard-grid--overview {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.overview-card {
+  min-width: 0;
+}
+
+.overview-card--participants {
+  grid-column: span 3;
+}
+
+.overview-card--split {
+  grid-column: span 5;
+}
+
+.overview-card--year {
+  grid-column: span 4;
+}
+
+.overview-card--outcomes {
+  grid-column: span 4;
+}
+
+.overview-card--rank {
+  grid-column: span 3;
+}
+
+.overview-card--histograms {
+  grid-column: span 5;
+}
+
+.section-card,
+.state-block,
+.tool-field,
+.table-panel,
+.disclosure-panel,
+.pacing-leg-panel {
+  box-shadow: var(--shadow);
+}
+
+.section-card {
+  padding: 0.8rem;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(58, 58, 58, 0.95), rgba(42, 42, 42, 0.92));
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.section-card__header {
+  margin-bottom: 0.65rem;
+}
+
+.section-card__header h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.section-card__header p {
+  margin: 0.35rem 0 0;
+  font-size: 0.84rem;
+}
+
+.section-controls {
+  justify-content: flex-start;
+  margin-bottom: 0.55rem;
+}
+
+.section-note,
+.table-panel,
+.disclosure-panel,
+.state-block {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.toggle-pill,
+.segmented-control__button {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.segmented-control__button {
+  color: #f4f4f4;
+}
+
+.segmented-control__button--active {
+  background: #efefef;
+  color: #151515;
+  border-color: transparent;
+}
+
+.plot-grid,
+.pacing-grid {
+  gap: 0.6rem;
+}
+
+.plot-grid--2,
+.plot-grid--3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.plot-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.plot-grid--stack {
+  grid-template-columns: 1fr;
+}
+
+.plot-card {
+  position: relative;
+  height: 190px;
+  min-height: 190px;
+  border-radius: 18px;
+  background: rgba(108, 108, 108, 0.85);
+  cursor: zoom-in;
+}
+
+.plot-card--tall {
+  height: 220px;
+  min-height: 220px;
+}
+
+.plot-card--xl {
+  height: 240px;
+  min-height: 240px;
+}
+
+.plot-card--focus {
+  height: 280px;
+  min-height: 280px;
+}
+
+.plot-card--pace {
+  height: 180px;
+  min-height: 180px;
+}
+
+.plot-card--heatmap {
+  height: 260px;
+  min-height: 260px;
+}
+
+.plot-card__loading {
+  min-height: 220px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.plot-card__expand,
+.plot-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(24, 24, 24, 0.72);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.plot-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: rgba(15, 15, 15, 0.74);
+  backdrop-filter: blur(10px);
+}
+
+.plot-modal__panel {
+  position: relative;
+  width: min(1400px, 100%);
+  height: min(84vh, 900px);
+  padding: 1rem;
+  border-radius: 26px;
+  background: rgba(70, 70, 70, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+}
+
+.plot-modal__close {
+  font-size: 1.25rem;
+}
+
+.hero-kpi,
+.metric-card,
+.country-chip,
+.tool-field,
+.pacing-leg-panel {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.metric-card__header span,
+.hero-kpi__label,
+.tool-field span,
+.country-chip span,
+.state-block p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ratio-bar {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.country-chip__flag {
+  font-size: 1.4rem;
+}
+
+.mini-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.mini-kpi {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mini-kpi span {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.mini-kpi strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.country-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.tool-metric {
+  font-size: clamp(1.4rem, 1.8vw, 2rem);
+}
+
+.disclosure-panel__body,
+.table-panel,
+.state-block,
+.tool-field,
+.pacing-leg-panel {
+  padding: 0.85rem;
+}
+
+.data-table th,
+.pace-table th {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.pace-table td,
+.data-table td {
+  color: #ffffff;
+}
+
+@media (max-width: 1280px) {
+  .app-topbar {
+    gap: 0.6rem;
+  }
+
+  .app-topbar__nav {
+    justify-content: flex-start;
+  }
+
+  .topbar-controls {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 980px) {
+  .app-topbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow-x: visible;
+  }
+
+  .app-topbar__nav,
+  .topbar-controls {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-grid,
+  .dashboard-grid--overview,
+  .dashboard-grid--two,
+  .plot-grid--2,
+  .plot-grid--3,
+  .plot-grid--4,
+  .pacing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .plot-modal {
+    padding: 1rem;
+  }
+
+  .plot-modal__panel {
+    height: min(82vh, 760px);
+  }
+}

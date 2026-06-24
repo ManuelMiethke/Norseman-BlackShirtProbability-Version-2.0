@@ -13,13 +13,10 @@ export function ModelAccuracySection() {
 
   if (modelData.isLoading || courseData.isLoading) {
     return (
-      <SectionCard
-        title="Model Accuracy"
-        description="This React section preserves the original station-by-station model-accuracy chart from the Streamlit prediction route."
-      >
+      <SectionCard title="Model Accuracy">
         <StateBlock
-          title="Loading model accuracy"
-          description="Preparing test-set predictions and course-profile context for the selected filter combination."
+          title="Loading"
+          description="Preparing test-set accuracy."
         />
       </SectionCard>
     );
@@ -27,12 +24,9 @@ export function ModelAccuracySection() {
 
   if (modelData.error || courseData.error) {
     return (
-      <SectionCard
-        title="Model Accuracy"
-        description="This React section preserves the original station-by-station model-accuracy chart from the Streamlit prediction route."
-      >
+      <SectionCard title="Model Accuracy">
         <StateBlock
-          title="Prediction data load failed"
+          title="Load failed"
           description={modelData.error ?? courseData.error ?? "Unknown data loading error."}
           tone="error"
         />
@@ -48,23 +42,11 @@ export function ModelAccuracySection() {
   );
 
   return (
-    <SectionCard
-      title="Model Accuracy by Timing Station"
-      description="The amber line shows how accurately the test-set model classifies the final Black/White outcome at each timing station, while the colored elevation backdrop preserves the original slope-aware course context."
-    >
+    <SectionCard title="Model Accuracy">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Prediction scope</strong>
-          <span>
-            This section intentionally uses only the packaged model test set, matching
-            the Streamlit module. Year and group filters are applied on top of that
-            evaluation slice.
-          </span>
-        </div>
-
         {model.warning ? (
           <StateBlock
-            title="Accuracy filter note"
+            title="Note"
             description={model.warning}
             tone="warning"
           />
@@ -78,8 +60,8 @@ export function ModelAccuracySection() {
           />
         ) : (
           <StateBlock
-            title="No accuracy chart available"
-            description="No model-evaluation data is available for the current filter selection."
+            title="No data"
+            description="No evaluation data for this filter."
             tone="warning"
           />
         )}

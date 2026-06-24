@@ -138,13 +138,10 @@ export function PaceDistributionSection() {
 
   if (isLoading) {
     return (
-      <SectionCard
-        title="Pace Distributions"
-        description="This React section preserves the original leg-wise pace boxplots and summary tables from the Streamlit pacing module."
-      >
+      <SectionCard title="Pace Distribution">
         <StateBlock
-          title="Loading pace distributions"
-          description="Preparing leg-wise timing distributions from the packaged wide race dataset."
+          title="Loading"
+          description="Preparing pace charts."
         />
       </SectionCard>
     );
@@ -152,12 +149,9 @@ export function PaceDistributionSection() {
 
   if (error) {
     return (
-      <SectionCard
-        title="Pace Distributions"
-        description="This React section preserves the original leg-wise pace boxplots and summary tables from the Streamlit pacing module."
-      >
+      <SectionCard title="Pace Distribution">
         <StateBlock
-          title="Pace data load failed"
+          title="Load failed"
           description={error}
           tone="error"
         />
@@ -168,21 +162,8 @@ export function PaceDistributionSection() {
   const model = buildPaceDistributionModel(rows, selectedYear, selectedGroup);
 
   return (
-    <SectionCard
-      title="Pace Distributions"
-      description="The original pacing boxplots now run in React: each leg keeps the Top 10, Black Shirt and White Shirt distribution comparison plus the summary stats table underneath."
-    >
+    <SectionCard title="Pace Distribution">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Filter behavior</strong>
-          <span>
-            The year filter is applied directly. Like the original Streamlit module,
-            the boxplots always compare Top 10, Black Shirt and White Shirt finishers,
-            while the global group filter only changes the summary-table columns and
-            keeps DNF athletes excluded.
-          </span>
-        </div>
-
         <div className="section-controls">
           <label className="toggle-pill">
             <input
@@ -190,13 +171,13 @@ export function PaceDistributionSection() {
               checked={showZombieHill}
               onChange={(event) => setShowZombieHill(event.target.checked)}
             />
-            <span>Include Zombie Hill split</span>
+            <span>Zombie Hill</span>
           </label>
         </div>
 
         {model.warning ? (
           <StateBlock
-            title="Pace filter note"
+            title="Note"
             description={model.warning}
             tone="warning"
           />
@@ -213,8 +194,8 @@ export function PaceDistributionSection() {
           </div>
         ) : (
           <StateBlock
-            title="No pace charts"
-            description="No usable leg timing data is available for the current filter selection."
+            title="No data"
+            description="No usable timing data for this filter."
             tone="warning"
           />
         )}

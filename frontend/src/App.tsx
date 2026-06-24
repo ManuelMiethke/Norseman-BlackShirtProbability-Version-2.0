@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { DashboardProvider } from "@/state/DashboardContext";
 import { OverviewPage } from "@/pages/OverviewPage";
-import { MigrationPage } from "@/pages/MigrationPage";
 import { PacingCoursePage } from "@/pages/PacingCoursePage";
 import { ModelPredictionsPage } from "@/pages/ModelPredictionsPage";
 import { ToolsPage } from "@/pages/ToolsPage";

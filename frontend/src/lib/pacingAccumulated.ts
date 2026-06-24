@@ -1,7 +1,7 @@
 import type { Data, Layout } from "plotly.js";
 
 import type { GroupOption } from "@/config/raceRegistry";
-import { isBlackFinishType, isDnfFinishType, isWhiteFinishType } from "@/lib/groups";
+import { classifyFinishGroup, filterRowsByYear } from "@/lib/groups";
 import type { LongRow } from "@/types/data";
 
 type PlotFigure = {
@@ -30,6 +30,23 @@ const RUN_KM = 42.2;
 const GAP_KM = 6.0;
 const GRID_COLOR = "#C8C8C8";
 
+function toAccumulatedCategory(row: LongRow): AccumulatedRow["category"] {
+  const group = classifyFinishGroup(row);
+  if (group === "Top 10") {
+    return "Top10";
+  }
+  if (group === "Black Shirt") {
+    return "Black";
+  }
+  if (group === "White Shirt") {
+    return "White";
+  }
+  if (group === "DNF") {
+    return "DNF";
+  }
+  return "Other";
+}
+
 function normalizeAccumulatedRows(rows: LongRow[]): AccumulatedRow[] {
   const bikeOffset = SWIM_KM + GAP_KM;
   const runOffset = SWIM_KM + GAP_KM + BIKE_KM + GAP_KM;
@@ -46,8 +63,6 @@ function normalizeAccumulatedRows(rows: LongRow[]): AccumulatedRow[] {
     .map((row) => {
       const year = Number(row.year);
       const bib = Number(row.bib);
-      const overallRank = Number(row.overall_rank ?? Number.NaN);
-      const finishType = String(row.finish_type ?? "");
       const cumDistanceKm = Number(row.race_distance_km);
       const leg =
         cumDistanceKm <= SWIM_KM + 1e-9
@@ -60,22 +75,11 @@ function normalizeAccumulatedRows(rows: LongRow[]): AccumulatedRow[] {
       const xPlot =
         leg === "swim" ? legKm : leg === "bike" ? legKm + bikeOffset : legKm + runOffset;
 
-      let category: AccumulatedRow["category"] = "Other";
-      if (Number.isFinite(overallRank) && overallRank <= 10) {
-        category = "Top10";
-      } else if (isDnfFinishType(finishType)) {
-        category = "DNF";
-      } else if (isBlackFinishType(finishType)) {
-        category = "Black";
-      } else if (isWhiteFinishType(finishType)) {
-        category = "White";
-      }
-
       return {
         athleteId: `${year}_${bib}`,
         year,
         bib,
-        category,
+        category: toAccumulatedCategory(row),
         cumDistanceKm: Math.max(0, Math.min(cumDistanceKm, 226)),
         cumTimeHours: Number(row.cum_time_seconds) / 3600,
         xPlot,
@@ -109,11 +113,7 @@ function applyFilters(
   selectedYear: number | "All",
   selectedGroup: GroupOption,
 ): AccumulatedRow[] {
-  let filtered = rows;
-
-  if (selectedYear !== "All") {
-    filtered = filtered.filter((row) => row.year === selectedYear);
-  }
+  let filtered = filterRowsByYear(rows, selectedYear);
 
   if (selectedGroup === "Top 10") {
     filtered = filtered.filter((row) => row.category === "Top10");

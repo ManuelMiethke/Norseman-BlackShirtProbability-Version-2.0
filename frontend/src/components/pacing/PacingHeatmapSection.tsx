@@ -11,13 +11,10 @@ export function PacingHeatmapSection() {
 
   if (longData.isLoading) {
     return (
-      <SectionCard
-        title="Pacing Heatmap"
-        description="This React section preserves the original split-by-split pacing heatmap from the Streamlit route."
-      >
+      <SectionCard title="Pacing Heatmap">
         <StateBlock
-          title="Loading pacing heatmap"
-          description="Preparing athlete-level split deltas against the median pacing profile."
+          title="Loading"
+          description="Preparing heatmap."
         />
       </SectionCard>
     );
@@ -25,12 +22,9 @@ export function PacingHeatmapSection() {
 
   if (longData.error) {
     return (
-      <SectionCard
-        title="Pacing Heatmap"
-        description="This React section preserves the original split-by-split pacing heatmap from the Streamlit route."
-      >
+      <SectionCard title="Pacing Heatmap">
         <StateBlock
-          title="Heatmap data load failed"
+          title="Load failed"
           description={longData.error}
           tone="error"
         />
@@ -45,23 +39,11 @@ export function PacingHeatmapSection() {
   );
 
   return (
-    <SectionCard
-      title="Pacing Heatmap"
-      description="Each cell shows how much faster or slower one athlete was versus the split median. The React version keeps the original athlete ordering by finisher category and overall rank."
-    >
+    <SectionCard title="Pacing Heatmap">
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Filter behavior</strong>
-          <span>
-            The year and group filters are applied directly here. Finish-line splits,
-            transition markers and the imputed `bike_152km_end_imingfjell` split stay
-            excluded, matching the original Streamlit heatmap semantics.
-          </span>
-        </div>
-
         {model.warning ? (
           <StateBlock
-            title="Heatmap filter note"
+            title="Note"
             description={model.warning}
             tone="warning"
           />
@@ -75,8 +57,8 @@ export function PacingHeatmapSection() {
           />
         ) : (
           <StateBlock
-            title="No heatmap available"
-            description="No pacing heatmap data is available for the current filter selection."
+            title="No data"
+            description="No heatmap data for this filter."
             tone="warning"
           />
         )}

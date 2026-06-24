@@ -13,13 +13,10 @@ export function CourseWeatherSpeedSection() {
 
   if (longData.isLoading || courseData.isLoading) {
     return (
-      <SectionCard
-        title="Course, Weather & Speed"
-        description="This React section combines the course profile, sparse weather checkpoints and group median segment speed for the selected race year."
-      >
+      <SectionCard title="Course / Weather / Speed">
         <StateBlock
-          title="Loading course context"
-          description="Preparing split history, weather checkpoints and course profile data."
+          title="Loading"
+          description="Preparing course context."
         />
       </SectionCard>
     );
@@ -27,12 +24,9 @@ export function CourseWeatherSpeedSection() {
 
   if (longData.error || courseData.error) {
     return (
-      <SectionCard
-        title="Course, Weather & Speed"
-        description="This React section combines the course profile, sparse weather checkpoints and group median segment speed for the selected race year."
-      >
+      <SectionCard title="Course / Weather / Speed">
         <StateBlock
-          title="Course data load failed"
+          title="Load failed"
           description={longData.error ?? courseData.error ?? "Unknown data loading error."}
           tone="error"
         />
@@ -48,23 +42,20 @@ export function CourseWeatherSpeedSection() {
   );
 
   return (
-    <SectionCard
-      title="Course, Weather & Speed"
-      description="This preserves the original combined course profile chart: median group speed is layered over the Norseman route with elevation, sparse weather markers and directional wind hints."
-    >
+    <SectionCard title="Course / Weather / Speed">
       <div className="section-stack">
         <div className="section-note">
-          <strong>Rendered year</strong>
+          <strong>Year</strong>
           <span>
             {selectedYear === "All"
-              ? `The original Streamlit behavior is preserved here: "All" falls back to the latest available year, currently ${effectiveYear ?? "unknown"}.`
+              ? `All uses the latest year: ${effectiveYear ?? "unknown"}.`
               : `The chart is currently rendered for ${effectiveYear ?? selectedYear} with group filter "${selectedGroup}".`}
           </span>
         </div>
 
         {warning ? (
           <StateBlock
-            title="Group note"
+            title="Note"
             description={warning}
             tone="warning"
           />

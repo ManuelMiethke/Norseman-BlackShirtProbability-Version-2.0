@@ -1,6 +1,7 @@
 import type { Data, Layout } from "plotly.js";
 
 import type { GroupOption } from "@/config/raceRegistry";
+import { classifyFinishGroup, filterRowsByYear } from "@/lib/groups";
 import type { CourseProfileRow, LongRow } from "@/types/data";
 
 const COL_GROUP = "group";
@@ -186,28 +187,7 @@ function buildSegmentPairs(): SegmentPair[] {
 const SEGMENT_PAIRS = buildSegmentPairs();
 
 function groupLabel(row: LongRow) {
-  const finishType = String(row.finish_type ?? "");
-  const overallRank = Number(row.overall_rank ?? Number.NaN);
-  const isDnf = finishType.toUpperCase().includes("DNF");
-  if (isDnf) {
-    return GROUP_DNF;
-  }
-  if (finishType.toLowerCase().includes("black")) {
-    if (Number.isFinite(overallRank) && overallRank <= 10) {
-      return GROUP_TOP10;
-    }
-    return GROUP_BLACK;
-  }
-  if (finishType.toLowerCase().includes("white")) {
-    if (Number.isFinite(overallRank) && overallRank <= 10) {
-      return GROUP_TOP10;
-    }
-    return GROUP_WHITE;
-  }
-  if (Number.isFinite(overallRank) && overallRank <= 10) {
-    return GROUP_TOP10;
-  }
-  return "Other";
+  return classifyFinishGroup(row, { dnfBeforeTop10: true });
 }
 
 function parseKmFromKey(key: string) {
@@ -272,8 +252,8 @@ function windColorFromEffect(effect?: string) {
 }
 
 function aggregateWeather(rows: LongRow[], year: number): WeatherRow[] {
-  const scoped = rows
-    .filter((row) => Number(row.year) === year && ORDERED_SPLIT_KEYS.includes(row.split_key as never))
+  const scoped = filterRowsByYear(rows, year)
+    .filter((row) => ORDERED_SPLIT_KEYS.includes(row.split_key as never))
     .map((row) => ({
       splitKey: row.split_key,
       raceDistanceKm: Number(row.race_distance_km ?? Number.NaN),
@@ -349,8 +329,8 @@ function aggregateWeather(rows: LongRow[], year: number): WeatherRow[] {
 }
 
 function aggregateSpeedByGroup(rows: LongRow[], year: number, groupsToPlot: string[]): SpeedRow[] {
-  const scoped = rows
-    .filter((row) => Number(row.year) === year && ORDERED_SPLIT_KEYS.includes(row.split_key as never))
+  const scoped = filterRowsByYear(rows, year)
+    .filter((row) => ORDERED_SPLIT_KEYS.includes(row.split_key as never))
     .map((row) => ({
       bib: Number(row.bib),
       group: groupLabel(row),
@@ -533,7 +513,7 @@ function aggregateSpeedByGroup(rows: LongRow[], year: number, groupsToPlot: stri
 
 function buildSplitDistMap(rows: LongRow[], year: number) {
   const map = new Map<string, number>();
-  const scoped = rows.filter((row) => Number(row.year) === year);
+  const scoped = filterRowsByYear(rows, year);
   for (const splitKey of ORDERED_SPLIT_KEYS) {
     const distance = median(
       scoped
