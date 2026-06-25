@@ -1,6 +1,8 @@
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { MODEL_ACCURACY_INFO } from "@/content/chartInfo";
 import { useCourseProfileData } from "@/hooks/useCourseProfileData";
 import { useModelData } from "@/hooks/useModelData";
 import { buildModelAccuracyModel } from "@/lib/modelAccuracy";
@@ -10,10 +12,15 @@ export function ModelAccuracySection() {
   const modelData = useModelData();
   const courseData = useCourseProfileData();
   const { selectedYear, selectedGroup } = useDashboard();
+  const headerActions = (
+    <div className="section-toolbar">
+      <ChartInfoPopover title="Model Accuracy" info={MODEL_ACCURACY_INFO} />
+    </div>
+  );
 
   if (modelData.isLoading || courseData.isLoading) {
     return (
-      <SectionCard title="Model Accuracy">
+      <SectionCard title="Model Accuracy" headerActions={headerActions}>
         <StateBlock
           title="Loading"
           description="Preparing test-set accuracy."
@@ -24,7 +31,7 @@ export function ModelAccuracySection() {
 
   if (modelData.error || courseData.error) {
     return (
-      <SectionCard title="Model Accuracy">
+      <SectionCard title="Model Accuracy" headerActions={headerActions}>
         <StateBlock
           title="Load failed"
           description={modelData.error ?? courseData.error ?? "Unknown data loading error."}
@@ -42,7 +49,7 @@ export function ModelAccuracySection() {
   );
 
   return (
-    <SectionCard title="Model Accuracy">
+    <SectionCard title="Model Accuracy" headerActions={headerActions}>
       <div className="section-stack">
         {model.warning ? (
           <StateBlock

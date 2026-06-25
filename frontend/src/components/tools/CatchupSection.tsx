@@ -1,7 +1,9 @@
 import { useState } from "react";
 
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { CATCHUP_INFO } from "@/content/chartInfo";
 import { useModelData } from "@/hooks/useModelData";
 import {
   computeCatchup,
@@ -22,10 +24,15 @@ export function CatchupSection() {
   const [bikeKm, setBikeKm] = useState("");
   const [runKm, setRunKm] = useState("");
   const [raceTime, setRaceTime] = useState("");
+  const headerActions = (
+    <div className="section-toolbar">
+      <ChartInfoPopover title="Odds" info={CATCHUP_INFO} />
+    </div>
+  );
 
   if (modelData.isLoading) {
     return (
-      <SectionCard title="Odds">
+      <SectionCard title="Odds" headerActions={headerActions}>
         <StateBlock
           title="Loading"
           description="Preparing estimator."
@@ -36,7 +43,7 @@ export function CatchupSection() {
 
   if (modelData.error) {
     return (
-      <SectionCard title="Odds">
+      <SectionCard title="Odds" headerActions={headerActions}>
         <StateBlock
           title="Load failed"
           description={modelData.error}
@@ -49,7 +56,7 @@ export function CatchupSection() {
   const rows = prepareCatchupRows(modelData.rows, selectedYear);
   if (rows.length === 0) {
     return (
-      <SectionCard title="Odds">
+      <SectionCard title="Odds" headerActions={headerActions}>
         <StateBlock
           title="No data"
           description="No model data for this year."
@@ -63,7 +70,7 @@ export function CatchupSection() {
   const result = computeCatchup(rows, empirical, bikeKm, runKm, raceTime);
 
   return (
-    <SectionCard title="Odds">
+    <SectionCard title="Odds" headerActions={headerActions}>
       <div className="section-stack">
         <div className="tool-grid">
           <label className="tool-field">

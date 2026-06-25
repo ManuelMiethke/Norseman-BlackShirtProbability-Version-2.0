@@ -1,16 +1,27 @@
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { OUTCOME_MIX_INFO } from "@/content/chartInfo";
 import { useLongData } from "@/hooks/useLongData";
 import { buildWhoAreWeRacingModel } from "@/lib/whoAreWeRacing";
 
 export function WhoAreWeRacingSection() {
   const { rows, isLoading, error } = useLongData();
   const cardClassName = "overview-card overview-card--outcomes";
+  const headerActions = (
+    <div className="section-toolbar">
+      <ChartInfoPopover title="Outcome Mix" info={OUTCOME_MIX_INFO} />
+    </div>
+  );
 
   if (isLoading) {
     return (
-      <SectionCard title="Outcome Mix" className={cardClassName}>
+      <SectionCard
+        title="Outcome Mix"
+        className={cardClassName}
+        headerActions={headerActions}
+      >
         <StateBlock
           title="Loading"
           description="Reading split history."
@@ -21,7 +32,11 @@ export function WhoAreWeRacingSection() {
 
   if (error) {
     return (
-      <SectionCard title="Outcome Mix" className={cardClassName}>
+      <SectionCard
+        title="Outcome Mix"
+        className={cardClassName}
+        headerActions={headerActions}
+      >
         <StateBlock
           title="Load failed"
           description={error}
@@ -34,7 +49,11 @@ export function WhoAreWeRacingSection() {
   const { outcomesFigure, frontierFigure, frontierMedianHours, warning } = buildWhoAreWeRacingModel(rows);
 
   return (
-    <SectionCard title="Outcome Mix" className={cardClassName}>
+    <SectionCard
+      title="Outcome Mix"
+      className={cardClassName}
+      headerActions={headerActions}
+    >
       <div className="section-stack">
         {warning ? (
           <StateBlock

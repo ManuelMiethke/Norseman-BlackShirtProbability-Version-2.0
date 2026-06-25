@@ -1,8 +1,10 @@
 import { useDeferredValue, useState } from "react";
 
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { PROBABILITY_SURFACE_INFO } from "@/content/chartInfo";
 import { useModelData } from "@/hooks/useModelData";
 import {
   buildProbabilityMarkers,
@@ -19,6 +21,27 @@ export function Probability3DSection() {
   const [bikeKmText, setBikeKmText] = useState("");
   const [runKmText, setRunKmText] = useState("");
   const [timeText, setTimeText] = useState("");
+  const headerActions = <ChartInfoPopover title="Probability Surface" info={PROBABILITY_SURFACE_INFO} />;
+  const footerControls = (
+    <div className="section-controls section-controls--footer">
+      <div className="segmented-control" role="tablist" aria-label="Probability surface mode">
+        <button
+          type="button"
+          className={mode === "3d" ? "segmented-control__button segmented-control__button--active" : "segmented-control__button"}
+          onClick={() => setMode("3d")}
+        >
+          3D surface
+        </button>
+        <button
+          type="button"
+          className={mode === "2d" ? "segmented-control__button segmented-control__button--active" : "segmented-control__button"}
+          onClick={() => setMode("2d")}
+        >
+          2D transition
+        </button>
+      </div>
+    </div>
+  );
 
   const deferredBikeKmText = useDeferredValue(bikeKmText);
   const deferredRunKmText = useDeferredValue(runKmText);
@@ -26,7 +49,7 @@ export function Probability3DSection() {
 
   if (modelData.isLoading) {
     return (
-      <SectionCard title="Probability Surface">
+      <SectionCard title="Probability Surface" headerActions={headerActions}>
         <StateBlock title="Loading" description="Preparing probability surface." />
       </SectionCard>
     );
@@ -34,7 +57,7 @@ export function Probability3DSection() {
 
   if (modelData.error) {
     return (
-      <SectionCard title="Probability Surface">
+      <SectionCard title="Probability Surface" headerActions={headerActions}>
         <StateBlock title="Load failed" description={modelData.error} tone="error" />
       </SectionCard>
     );
@@ -56,27 +79,8 @@ export function Probability3DSection() {
   );
 
   return (
-    <SectionCard title="Probability Surface">
+    <SectionCard title="Probability Surface" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="section-controls">
-          <div className="segmented-control" role="tablist" aria-label="Probability surface mode">
-            <button
-              type="button"
-              className={mode === "3d" ? "segmented-control__button segmented-control__button--active" : "segmented-control__button"}
-              onClick={() => setMode("3d")}
-            >
-              3D surface
-            </button>
-            <button
-              type="button"
-              className={mode === "2d" ? "segmented-control__button segmented-control__button--active" : "segmented-control__button"}
-              onClick={() => setMode("2d")}
-            >
-              2D transition
-            </button>
-          </div>
-        </div>
-
         <div className="tool-grid">
           <label className="tool-field">
             <span>Bike km</span>
@@ -129,6 +133,8 @@ export function Probability3DSection() {
             <span>{model.markerSummaries.join(" | ")}</span>
           </div>
         ) : null}
+
+        {footerControls}
       </div>
     </SectionCard>
   );

@@ -32,6 +32,7 @@ export function PlotlyChart({
         className={className ? `plot-card ${className}` : "plot-card"}
         role="button"
         tabIndex={0}
+        aria-label="Open chart fullscreen"
         onClick={() => setIsExpanded(true)}
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
@@ -40,18 +41,6 @@ export function PlotlyChart({
           }
         }}
       >
-        <button
-          type="button"
-          className="plot-card__expand"
-          onClick={(event) => {
-            event.stopPropagation();
-            setIsExpanded(true);
-          }}
-          aria-label="Open chart fullscreen"
-        >
-          ⤢
-        </button>
-
         <Suspense fallback={<div className="plot-card__loading">Loading chart…</div>}>
           <Plot
             data={data}

@@ -1,8 +1,10 @@
 import { useState } from "react";
 
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { EMPIRICAL_PACE_INFO } from "@/content/chartInfo";
 import { useCourseProfileData } from "@/hooks/useCourseProfileData";
 import { useLongData } from "@/hooks/useLongData";
 import {
@@ -34,6 +36,36 @@ export function EmpiricalPaceSection() {
   const [swimPref, setSwimPref] = useState<EmpiricalPref>("p50");
   const [bikePref, setBikePref] = useState<EmpiricalPref>("p50");
   const [runPref, setRunPref] = useState<EmpiricalPref>("p50");
+  const headerActions = <ChartInfoPopover title="Pace Planner" info={EMPIRICAL_PACE_INFO} />;
+  const footerControls = (
+    <div className="section-controls section-controls--footer">
+      <label className="toggle-pill">
+        <input
+          type="checkbox"
+          checked={exploreMode}
+          onChange={(event) => {
+            const checked = event.target.checked;
+            setExploreMode(checked);
+            if (!checked) {
+              setExpertMode(false);
+            }
+          }}
+        />
+        <span>Explore mode</span>
+      </label>
+
+      {exploreMode ? (
+        <label className="toggle-pill">
+          <input
+            type="checkbox"
+            checked={expertMode}
+            onChange={(event) => setExpertMode(event.target.checked)}
+          />
+          <span>Expert mode</span>
+        </label>
+      ) : null}
+    </div>
+  );
 
   const model = buildEmpiricalPlanModel({
     swimPref,
@@ -57,36 +89,8 @@ export function EmpiricalPaceSection() {
       : null;
 
   return (
-    <SectionCard title="Pace Planner">
+    <SectionCard title="Pace Planner" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="section-controls">
-          <label className="toggle-pill">
-            <input
-              type="checkbox"
-              checked={exploreMode}
-              onChange={(event) => {
-                const checked = event.target.checked;
-                setExploreMode(checked);
-                if (!checked) {
-                  setExpertMode(false);
-                }
-              }}
-            />
-            <span>Explore mode</span>
-          </label>
-
-          {exploreMode ? (
-            <label className="toggle-pill">
-              <input
-                type="checkbox"
-                checked={expertMode}
-                onChange={(event) => setExpertMode(event.target.checked)}
-              />
-              <span>Expert mode</span>
-            </label>
-          ) : null}
-        </div>
-
         <div className="tool-grid">
           <label className="tool-field">
             <span>{expertMode ? "Swim (CSS)" : "Swim Training Time"}</span>
@@ -222,6 +226,8 @@ export function EmpiricalPaceSection() {
               className="plot-card--xl"
             />
           ) : null}
+
+        {footerControls}
       </div>
     </SectionCard>
   );

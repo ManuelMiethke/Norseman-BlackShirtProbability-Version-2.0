@@ -1,8 +1,10 @@
 import { Fragment, useState } from "react";
 
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { PACE_DISTRIBUTION_INFO } from "@/content/chartInfo";
 import {
   buildPaceDistributionModel,
   type PaceLegModel,
@@ -135,10 +137,23 @@ export function PaceDistributionSection() {
     error,
   } = useDashboard();
   const [showZombieHill, setShowZombieHill] = useState(false);
+  const headerActions = <ChartInfoPopover title="Pace Distribution" info={PACE_DISTRIBUTION_INFO} />;
+  const footerControls = (
+    <div className="section-controls section-controls--footer">
+      <label className="toggle-pill">
+        <input
+          type="checkbox"
+          checked={showZombieHill}
+          onChange={(event) => setShowZombieHill(event.target.checked)}
+        />
+        <span>Zombie Hill</span>
+      </label>
+    </div>
+  );
 
   if (isLoading) {
     return (
-      <SectionCard title="Pace Distribution">
+      <SectionCard title="Pace Distribution" headerActions={headerActions}>
         <StateBlock
           title="Loading"
           description="Preparing pace charts."
@@ -149,7 +164,7 @@ export function PaceDistributionSection() {
 
   if (error) {
     return (
-      <SectionCard title="Pace Distribution">
+      <SectionCard title="Pace Distribution" headerActions={headerActions}>
         <StateBlock
           title="Load failed"
           description={error}
@@ -162,19 +177,8 @@ export function PaceDistributionSection() {
   const model = buildPaceDistributionModel(rows, selectedYear, selectedGroup);
 
   return (
-    <SectionCard title="Pace Distribution">
+    <SectionCard title="Pace Distribution" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="section-controls">
-          <label className="toggle-pill">
-            <input
-              type="checkbox"
-              checked={showZombieHill}
-              onChange={(event) => setShowZombieHill(event.target.checked)}
-            />
-            <span>Zombie Hill</span>
-          </label>
-        </div>
-
         {model.warning ? (
           <StateBlock
             title="Note"
@@ -199,6 +203,8 @@ export function PaceDistributionSection() {
             tone="warning"
           />
         )}
+
+        {footerControls}
       </div>
     </SectionCard>
   );

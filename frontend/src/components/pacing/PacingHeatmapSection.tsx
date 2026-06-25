@@ -1,6 +1,8 @@
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { PACING_HEATMAP_INFO } from "@/content/chartInfo";
 import { useLongData } from "@/hooks/useLongData";
 import { buildPacingHeatmapModel } from "@/lib/pacingHeatmap";
 import { useDashboard } from "@/state/DashboardContext";
@@ -8,10 +10,15 @@ import { useDashboard } from "@/state/DashboardContext";
 export function PacingHeatmapSection() {
   const longData = useLongData();
   const { selectedYear, selectedGroup } = useDashboard();
+  const headerActions = (
+    <div className="section-toolbar">
+      <ChartInfoPopover title="Pacing Heatmap" info={PACING_HEATMAP_INFO} />
+    </div>
+  );
 
   if (longData.isLoading) {
     return (
-      <SectionCard title="Pacing Heatmap">
+      <SectionCard title="Pacing Heatmap" headerActions={headerActions}>
         <StateBlock
           title="Loading"
           description="Preparing heatmap."
@@ -22,7 +29,7 @@ export function PacingHeatmapSection() {
 
   if (longData.error) {
     return (
-      <SectionCard title="Pacing Heatmap">
+      <SectionCard title="Pacing Heatmap" headerActions={headerActions}>
         <StateBlock
           title="Load failed"
           description={longData.error}
@@ -39,7 +46,7 @@ export function PacingHeatmapSection() {
   );
 
   return (
-    <SectionCard title="Pacing Heatmap">
+    <SectionCard title="Pacing Heatmap" headerActions={headerActions}>
       <div className="section-stack">
         {model.warning ? (
           <StateBlock

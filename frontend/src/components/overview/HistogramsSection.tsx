@@ -1,8 +1,10 @@
 import { useState } from "react";
 
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { HISTOGRAMS_INFO } from "@/content/chartInfo";
 import { buildHistogramModel, type HistogramScaleMode } from "@/lib/histograms";
 import { useDashboard } from "@/state/DashboardContext";
 
@@ -16,10 +18,35 @@ export function HistogramsSection() {
   const { rows, selectedYear, selectedGroup, isLoading } = useDashboard();
   const [scaleMode, setScaleMode] = useState<HistogramScaleMode>("Absolute (hh:mm:ss)");
   const cardClassName = "overview-card overview-card--histograms";
+  const headerActions = <ChartInfoPopover title="Time Distribution" info={HISTOGRAMS_INFO} />;
+  const footerControls = (
+    <div className="section-controls section-controls--footer">
+      <div className="segmented-control" role="tablist" aria-label="Histogram scale mode">
+        {SCALE_OPTIONS.map((option) => (
+          <button
+            key={option}
+            type="button"
+            className={
+              option === scaleMode
+                ? "segmented-control__button segmented-control__button--active"
+                : "segmented-control__button"
+            }
+            onClick={() => setScaleMode(option)}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   if (isLoading) {
     return (
-      <SectionCard title="Time Distribution" className={cardClassName}>
+      <SectionCard
+        title="Time Distribution"
+        className={cardClassName}
+        headerActions={headerActions}
+      >
         <StateBlock
           title="Loading"
           description="Preparing distributions."
@@ -31,27 +58,12 @@ export function HistogramsSection() {
   const { figures, warning } = buildHistogramModel(rows, selectedYear, selectedGroup, scaleMode);
 
   return (
-    <SectionCard title="Time Distribution" className={cardClassName}>
+    <SectionCard
+      title="Time Distribution"
+      className={cardClassName}
+      headerActions={headerActions}
+    >
       <div className="section-stack">
-        <div className="section-controls">
-          <div className="segmented-control" role="tablist" aria-label="Histogram scale mode">
-            {SCALE_OPTIONS.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={
-                  option === scaleMode
-                    ? "segmented-control__button segmented-control__button--active"
-                    : "segmented-control__button"
-                }
-                onClick={() => setScaleMode(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {warning ? (
           <StateBlock
             title="Note"
@@ -72,6 +84,8 @@ export function HistogramsSection() {
             ))}
           </div>
         ) : null}
+
+        {footerControls}
       </div>
     </SectionCard>
   );

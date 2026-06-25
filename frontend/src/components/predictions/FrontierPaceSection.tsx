@@ -1,8 +1,10 @@
 import { useState } from "react";
 
+import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
+import { FRONTIER_PACE_INFO } from "@/content/chartInfo";
 import { useCourseProfileData } from "@/hooks/useCourseProfileData";
 import { useLongData } from "@/hooks/useLongData";
 import { useModelData } from "@/hooks/useModelData";
@@ -20,10 +22,31 @@ export function FrontierPaceSection() {
   const courseData = useCourseProfileData();
   const { selectedYear, selectedGroup } = useDashboard();
   const [mode, setMode] = useState<(typeof VIEW_OPTIONS)[number]["value"]>("absolute");
+  const headerActions = <ChartInfoPopover title="Frontier Pace" info={FRONTIER_PACE_INFO} />;
+  const footerControls = (
+    <div className="section-controls section-controls--footer">
+      <div className="segmented-control" role="tablist" aria-label="Frontier comparison mode">
+        {VIEW_OPTIONS.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            className={
+              mode === option.value
+                ? "segmented-control__button segmented-control__button--active"
+                : "segmented-control__button"
+            }
+            onClick={() => setMode(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   if (modelData.isLoading || longData.isLoading || courseData.isLoading) {
     return (
-      <SectionCard title="Frontier Pace">
+      <SectionCard title="Frontier Pace" headerActions={headerActions}>
         <StateBlock title="Loading" description="Preparing 50% frontier pace." />
       </SectionCard>
     );
@@ -32,7 +55,7 @@ export function FrontierPaceSection() {
   const error = modelData.error ?? longData.error ?? courseData.error;
   if (error) {
     return (
-      <SectionCard title="Frontier Pace">
+      <SectionCard title="Frontier Pace" headerActions={headerActions}>
         <StateBlock title="Load failed" description={error} tone="error" />
       </SectionCard>
     );
@@ -48,27 +71,8 @@ export function FrontierPaceSection() {
   );
 
   return (
-    <SectionCard title="Frontier Pace">
+    <SectionCard title="Frontier Pace" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="section-controls">
-          <div className="segmented-control" role="tablist" aria-label="Frontier comparison mode">
-            {VIEW_OPTIONS.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                className={
-                  mode === option.value
-                    ? "segmented-control__button segmented-control__button--active"
-                    : "segmented-control__button"
-                }
-                onClick={() => setMode(option.value)}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {model.warning ? <StateBlock title="Note" description={model.warning} tone="warning" /> : null}
 
         {model.chartFigure ? (
@@ -119,6 +123,8 @@ export function FrontierPaceSection() {
             className="plot-card--hero"
           />
         ) : null}
+
+        {footerControls}
       </div>
     </SectionCard>
   );
