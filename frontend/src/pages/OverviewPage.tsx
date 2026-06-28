@@ -23,10 +23,10 @@ export function OverviewPage() {
       <div className="dashboard-grid dashboard-grid--overview">
         <ParticipantsSection />
         <TimeRelationsSection />
-        <YearComparisonSection />
         <WhoAreWeRacingSection />
-        <RankProgressionSection />
+        <YearComparisonSection />
         <HistogramsSection />
+        <RankProgressionSection />
       </div>
     </div>
   );

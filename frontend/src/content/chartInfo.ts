@@ -75,8 +75,10 @@ export const YEAR_COMPARISON_INFO: ChartInfoSpec = {
     {
       heading: "What is shown",
       bullets: [
-        "This view compares median swim, bike and run times by year up to 32.5 km on the run.",
-        "Each mode keeps the same yearly base but changes the comparison lens: absolute overview, versus 2025, or long-term trend.",
+        "The left chart compares median swim, bike and run times by year up to 32.5 km on the run.",
+        "The right chart shows the overall median finish time by year for the same selected group.",
+        "The mode switch changes the left comparison chart between absolute overview and the 2025 baseline view.",
+        "The Zoomed time differences toggle narrows the right chart to the observed finish-time range so small year-to-year shifts become easier to read.",
         "The global group filter keeps the comparison focused on the same athlete cohort across years.",
       ],
     },
@@ -86,6 +88,8 @@ export const YEAR_COMPARISON_INFO: ChartInfoSpec = {
         "Longer bars or higher values mean slower segment medians.",
         "Within-year comparison shows which discipline dominates race time in that edition.",
         "Compared to 2025 mode marks faster years against the 2025 benchmark and slower years against the same baseline.",
+        "In the zoomed finish-time view, lower points indicate quicker race medians and higher points indicate slower editions.",
+        "The finish-time chart lets you compare total race difficulty or pace shifts independently from the leg split structure.",
       ],
     },
     {

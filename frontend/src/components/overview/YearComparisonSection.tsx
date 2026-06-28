@@ -14,12 +14,12 @@ import { useDashboard } from "@/state/DashboardContext";
 const MODE_OPTIONS: YearComparisonMode[] = [
   "Time Overview",
   "Compared to 2025",
-  "Trend",
 ];
 
 export function YearComparisonSection() {
   const { rows, selectedGroup, isLoading } = useDashboard();
   const [mode, setMode] = useState<YearComparisonMode>("Time Overview");
+  const [zoomOverallDifferences, setZoomOverallDifferences] = useState(false);
   const cardClassName = "overview-card overview-card--year";
   const headerActions = <ChartInfoPopover title="Year Comparison" info={YEAR_COMPARISON_INFO} />;
   const footerControls = (
@@ -40,6 +40,21 @@ export function YearComparisonSection() {
           </button>
         ))}
       </div>
+
+      <div className="segmented-control" role="group" aria-label="Overall finish time detail">
+        <button
+          type="button"
+          className={
+            zoomOverallDifferences
+              ? "segmented-control__button segmented-control__button--active"
+              : "segmented-control__button"
+          }
+          aria-pressed={zoomOverallDifferences}
+          onClick={() => setZoomOverallDifferences((current) => !current)}
+        >
+          Zoomed time differences
+        </button>
+      </div>
     </div>
   );
 
@@ -58,7 +73,13 @@ export function YearComparisonSection() {
     );
   }
 
-  const { figure, warning } = buildYearComparisonModel(rows, selectedGroup, mode);
+  const {
+    comparisonFigure,
+    overallFigure,
+    warning,
+    comparisonWarning,
+    overallWarning,
+  } = buildYearComparisonModel(rows, selectedGroup, mode, zoomOverallDifferences);
 
   return (
     <SectionCard
@@ -74,13 +95,37 @@ export function YearComparisonSection() {
         />
       ) : null}
 
-      {figure ? (
-        <PlotlyChart
-          data={figure.data}
-          layout={figure.layout}
-          className="plot-card--focus"
-        />
-      ) : null}
+      <div className="year-comparison-grid">
+        {comparisonFigure ? (
+          <PlotlyChart
+            data={comparisonFigure.data}
+            layout={comparisonFigure.layout}
+            previewLayout={comparisonFigure.previewLayout}
+            className="plot-card--year-comparison"
+          />
+        ) : (
+          <StateBlock
+            title="Split medians"
+            description={comparisonWarning ?? "No split medians are available for this selection."}
+            tone="warning"
+          />
+        )}
+
+        {overallFigure ? (
+          <PlotlyChart
+            data={overallFigure.data}
+            layout={overallFigure.layout}
+            previewLayout={overallFigure.previewLayout}
+            className="plot-card--year-comparison"
+          />
+        ) : (
+          <StateBlock
+            title="Overall median"
+            description={overallWarning ?? "No overall finish medians are available for this selection."}
+            tone="warning"
+          />
+        )}
+      </div>
 
       {footerControls}
     </SectionCard>

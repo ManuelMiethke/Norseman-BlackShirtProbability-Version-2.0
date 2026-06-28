@@ -292,6 +292,40 @@ select {
   justify-content: flex-end;
 }
 
+.chart-header-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+}
+
+.chart-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chart-legend__swatch {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 0.24rem;
+  border: 1px solid transparent;
+  flex: 0 0 auto;
+}
+
 .section-toolbar {
   display: flex;
   justify-content: flex-end;
@@ -474,6 +508,10 @@ select {
 
 .plot-card--split-balance {
   min-height: 430px;
+}
+
+.plot-card--year-comparison {
+  min-height: 500px;
 }
 
 .plot-card--xl {
@@ -1073,33 +1111,74 @@ body {
   display: flex;
   justify-content: flex-end;
   flex-wrap: nowrap;
-  gap: 0.45rem;
+  gap: 0.55rem;
 }
 
 .topbar-filter {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.42rem;
   min-width: 0;
 }
 
 .topbar-filter span {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.61rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 700;
   white-space: nowrap;
+  line-height: 1;
 }
 
 .topbar-filter select {
+  appearance: none;
   width: auto;
-  min-width: 96px;
-  padding: 0.52rem 0.65rem;
-  border: 0;
-  border-radius: 14px;
-  background: #f1f1f1;
-  color: #111111;
+  min-width: 104px;
+  padding: 0.52rem 2rem 0.52rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.74) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.74) 50%, transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.05));
+  background-position:
+    calc(100% - 16px) calc(50% - 2px),
+    calc(100% - 11px) calc(50% - 2px),
+    0 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    100% 100%;
+  background-repeat: no-repeat;
+  color: #f4f6f8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.topbar-filter select:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.8) 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.8) 50%, transparent 50%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.06));
+}
+
+.topbar-filter select:focus-visible {
+  outline: none;
+  border-color: rgba(99, 210, 255, 0.4);
+  box-shadow:
+    0 0 0 3px rgba(99, 210, 255, 0.12);
+}
+
+.topbar-filter select:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .app-content {
@@ -1142,7 +1221,7 @@ body {
 }
 
 .overview-card--year {
-  grid-column: span 4;
+  grid-column: 1 / -1;
 }
 
 .overview-card--outcomes {
@@ -1150,11 +1229,15 @@ body {
 }
 
 .overview-card--rank {
-  grid-column: span 3;
+  grid-column: 1 / -1;
 }
 
 .overview-card--histograms {
-  grid-column: span 5;
+  grid-column: 1 / -1;
+}
+
+.pacing-card--course-overview {
+  grid-column: 1 / -1;
 }
 
 .section-card,
@@ -1311,6 +1394,13 @@ body {
   grid-template-columns: 1fr;
 }
 
+.year-comparison-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: stretch;
+}
+
 .plot-card {
   position: relative;
   height: 190px;
@@ -1330,9 +1420,19 @@ body {
   min-height: 220px;
 }
 
+.plot-card--histogram {
+  height: 310px;
+  min-height: 310px;
+}
+
 .plot-card--split-balance {
   height: 248px;
   min-height: 248px;
+}
+
+.plot-card--year-comparison {
+  height: 290px;
+  min-height: 290px;
 }
 
 .plot-card--xl {
@@ -1353,6 +1453,15 @@ body {
 .plot-card--panorama {
   height: 420px;
   min-height: 420px;
+}
+
+.course-overview-frame {
+  width: 100%;
+  height: clamp(760px, 92vh, 900px);
+  border: 0;
+  border-radius: 20px;
+  background: #08111a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .plot-card--3d {
@@ -1392,6 +1501,10 @@ body {
 .overview-card--split .annotation .bg {
   rx: 10px;
   ry: 10px;
+}
+
+.year-comparison-grid .state-block {
+  min-height: 290px;
 }
 
 .plot-modal {
@@ -1674,6 +1787,7 @@ body {
   .dashboard-grid,
   .dashboard-grid--overview,
   .dashboard-grid--two,
+  .year-comparison-grid,
   .plot-grid--2,
   .plot-grid--3,
   .plot-grid--4,
@@ -1687,5 +1801,9 @@ body {
 
   .plot-modal__panel {
     height: min(82vh, 760px);
+  }
+
+  .course-overview-frame {
+    height: 700px;
   }
 }

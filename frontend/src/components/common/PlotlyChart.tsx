@@ -3,22 +3,46 @@ import type { Data, Layout, Config } from "plotly.js";
 
 const Plot = lazy(() => import("react-plotly.js"));
 
+function stripHeight(layout: Partial<Layout> | undefined) {
+  if (!layout) {
+    return {};
+  }
+
+  const next = { ...layout };
+  delete next.height;
+  return next;
+}
+
 export function PlotlyChart({
   data,
   layout,
+  previewLayout,
+  expandedLayout,
   config,
   className,
 }: {
   data: Data[];
   layout: Partial<Layout>;
+  previewLayout?: Partial<Layout>;
+  expandedLayout?: Partial<Layout>;
   config?: Partial<Config>;
   className?: string;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { height: _previewHeight, ...layoutWithoutFixedHeight } = layout;
-  const mergedLayout = {
+  const defaultLayoutWithoutFixedHeight = stripHeight(layout);
+  const previewLayoutWithoutFixedHeight =
+    previewLayout ? stripHeight(previewLayout) : defaultLayoutWithoutFixedHeight;
+  const expandedLayoutWithoutFixedHeight =
+    expandedLayout ? stripHeight(expandedLayout) : defaultLayoutWithoutFixedHeight;
+  const mergedPreviewLayout = {
     autosize: true,
-    ...layoutWithoutFixedHeight,
+    ...defaultLayoutWithoutFixedHeight,
+    ...previewLayoutWithoutFixedHeight,
+  };
+  const mergedExpandedLayout = {
+    autosize: true,
+    ...defaultLayoutWithoutFixedHeight,
+    ...expandedLayoutWithoutFixedHeight,
   };
   const mergedConfig = {
     displayModeBar: false,
@@ -44,7 +68,7 @@ export function PlotlyChart({
         <Suspense fallback={<div className="plot-card__loading">Loading chart…</div>}>
           <Plot
             data={data}
-            layout={mergedLayout}
+            layout={mergedPreviewLayout}
             config={mergedConfig}
             useResizeHandler
             style={{ width: "100%", height: "100%" }}
@@ -72,7 +96,7 @@ export function PlotlyChart({
             <Suspense fallback={<div className="plot-card__loading">Loading chart…</div>}>
               <Plot
                 data={data}
-                layout={mergedLayout}
+                layout={mergedExpandedLayout}
                 config={mergedConfig}
                 useResizeHandler
                 style={{ width: "100%", height: "100%" }}

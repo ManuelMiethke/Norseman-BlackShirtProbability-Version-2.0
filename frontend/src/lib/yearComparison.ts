@@ -24,9 +24,10 @@ type YearMedianRow = {
 type ComparisonFigure = {
   data: Data[];
   layout: Partial<Layout>;
+  previewLayout?: Partial<Layout>;
 };
 
-export type YearComparisonMode = "Time Overview" | "Compared to 2025" | "Trend";
+export type YearComparisonMode = "Time Overview" | "Compared to 2025";
 
 export type ComparisonTableRow = {
   year: number;
@@ -36,9 +37,12 @@ export type ComparisonTableRow = {
 };
 
 export type YearComparisonModel = {
-  figure: ComparisonFigure | null;
+  comparisonFigure: ComparisonFigure | null;
+  overallFigure: ComparisonFigure | null;
   tableRows: ComparisonTableRow[];
   warning: string | null;
+  comparisonWarning: string | null;
+  overallWarning: string | null;
 };
 
 function median(values: number[]): number | null {
@@ -111,7 +115,7 @@ function toLegMedianRows(rows: WideRow[]): YearMedianRow[] {
 
 function buildYearCompareFigure(
   medians: YearMedianRow[],
-  mode: Exclude<YearComparisonMode, "Trend">,
+  mode: YearComparisonMode,
 ): ComparisonFigure {
   const baseline = new Map<Leg, number>();
   for (const row of medians) {
@@ -172,44 +176,87 @@ function buildYearCompareFigure(
     };
   });
 
+  const layout: Partial<Layout> = {
+    paper_bgcolor: "rgba(0,0,0,0)",
+    plot_bgcolor: "rgba(0,0,0,0)",
+    font: { color: "#eef5fb", family: "IBM Plex Sans, sans-serif" },
+    barmode: "group",
+    bargap: 0.28,
+    bargroupgap: 0.1,
+    height: 520,
+    margin: { l: 48, r: 24, t: 32, b: 52 },
+    xaxis: {
+      title: { text: "Median time (hours)" },
+      showgrid: true,
+      zeroline: false,
+      tickformat: ".1f",
+      gridcolor: "rgba(167, 194, 218, 0.16)",
+    },
+    yaxis: {
+      title: { text: "Year" },
+      type: "category",
+      categoryorder: "array",
+      categoryarray: years,
+      autorange: "reversed",
+    },
+    legend: {
+      title: { text: " " },
+      orientation: "h",
+      yanchor: "bottom",
+      y: 1.02,
+      xanchor: "left",
+      x: 0,
+    },
+  };
+
   return {
     data,
-    layout: {
-      paper_bgcolor: "rgba(0,0,0,0)",
-      plot_bgcolor: "rgba(0,0,0,0)",
-      font: { color: "#eef5fb", family: "IBM Plex Sans, sans-serif" },
-      barmode: "group",
-      bargap: 0.28,
-      bargroupgap: 0.1,
-      height: 520,
-      margin: { l: 48, r: 24, t: 32, b: 52 },
+    layout,
+    previewLayout: {
+      ...layout,
+      font: {
+        color: "#eef5fb",
+        family: "IBM Plex Sans, sans-serif",
+        size: 10,
+      },
+      margin: { l: 40, r: 12, t: 18, b: 38 },
       xaxis: {
-        title: { text: "Median time (hours)" },
-        showgrid: true,
-        zeroline: false,
-        tickformat: ".1f",
-        gridcolor: "rgba(167, 194, 218, 0.16)",
+        ...layout.xaxis,
+        title: { text: "Median time (hours)", font: { size: 11 } },
+        tickfont: { size: 10 },
       },
       yaxis: {
-        title: { text: "Year" },
-        type: "category",
-        categoryorder: "array",
-        categoryarray: years,
-        autorange: "reversed",
+        ...layout.yaxis,
+        title: { text: "Year", font: { size: 11 } },
+        tickfont: { size: 10 },
       },
       legend: {
-        title: { text: " " },
-        orientation: "h",
-        yanchor: "bottom",
-        y: 1.02,
-        xanchor: "left",
-        x: 0,
+        ...layout.legend,
+        font: { size: 10 },
+        itemwidth: 40,
+        y: 1,
       },
     },
   };
 }
 
-function buildTrendFigure(rows: WideRow[]): ComparisonFigure | null {
+function zoomedHourRange(values: number[]) {
+  if (values.length === 0) {
+    return undefined;
+  }
+
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const spread = maxValue - minValue;
+  const padding = Math.max(spread * 0.35, 0.08);
+
+  return [Math.max(0, minValue - padding), maxValue + padding];
+}
+
+function buildTrendFigure(
+  rows: WideRow[],
+  zoomOverallDifferences: boolean,
+): ComparisonFigure | null {
   const finishSecondsByYear = new Map<number, number[]>();
 
   for (const row of rows) {
@@ -261,6 +308,34 @@ function buildTrendFigure(rows: WideRow[]): ComparisonFigure | null {
     return null;
   }
 
+  const medianHours = yearly.map((entry) => entry.medianHours);
+  const yAxisRange = zoomOverallDifferences ? zoomedHourRange(medianHours) : undefined;
+
+  const layout: Partial<Layout> = {
+    paper_bgcolor: "rgba(0,0,0,0)",
+    plot_bgcolor: "rgba(0,0,0,0)",
+    font: { color: "#eef5fb", family: "IBM Plex Sans, sans-serif" },
+    height: 420,
+    margin: { l: 48, r: 24, t: 28, b: 48 },
+    xaxis: {
+      title: { text: "Year" },
+      type: "category",
+      categoryorder: "array",
+      categoryarray: yearly.map((entry) => entry.year),
+      showgrid: false,
+      zeroline: false,
+    },
+    yaxis: {
+      title: { text: "Median finish time (hours)" },
+      showgrid: true,
+      zeroline: false,
+      tickformat: ".1f",
+      gridcolor: "rgba(167, 194, 218, 0.16)",
+      range: yAxisRange,
+    },
+    showlegend: false,
+  };
+
   return {
     data: [
       {
@@ -284,28 +359,25 @@ function buildTrendFigure(rows: WideRow[]): ComparisonFigure | null {
         hovertemplate: "<b>Year</b>: %{x}<br><b>Median finish</b>: %{text}<extra></extra>",
       },
     ],
-    layout: {
-      paper_bgcolor: "rgba(0,0,0,0)",
-      plot_bgcolor: "rgba(0,0,0,0)",
-      font: { color: "#eef5fb", family: "IBM Plex Sans, sans-serif" },
-      height: 420,
-      margin: { l: 48, r: 24, t: 28, b: 48 },
+    layout,
+    previewLayout: {
+      ...layout,
+      font: {
+        color: "#eef5fb",
+        family: "IBM Plex Sans, sans-serif",
+        size: 10,
+      },
+      margin: { l: 40, r: 12, t: 16, b: 36 },
       xaxis: {
-        title: { text: "Year" },
-        type: "category",
-        categoryorder: "array",
-        categoryarray: yearly.map((entry) => entry.year),
-        showgrid: false,
-        zeroline: false,
+        ...layout.xaxis,
+        title: { text: "Year", font: { size: 11 } },
+        tickfont: { size: 10 },
       },
       yaxis: {
-        title: { text: "Median finish time (hours)" },
-        showgrid: true,
-        zeroline: false,
-        tickformat: ".1f",
-        gridcolor: "rgba(167, 194, 218, 0.16)",
+        ...layout.yaxis,
+        title: { text: "Median finish time (hours)", font: { size: 11 } },
+        tickfont: { size: 10 },
       },
-      showlegend: false,
     },
   };
 }
@@ -334,39 +406,42 @@ export function buildYearComparisonModel(
   rows: WideRow[],
   selectedGroup: GroupOption,
   mode: YearComparisonMode,
+  zoomOverallDifferences = false,
 ): YearComparisonModel {
   const filteredRows = filterRowsByGroup(rows, selectedGroup);
   if (filteredRows.length === 0) {
     return {
-      figure: null,
+      comparisonFigure: null,
+      overallFigure: null,
       tableRows: [],
       warning: "No data is available for the selected group.",
+      comparisonWarning: "No data is available for the selected group.",
+      overallWarning: "No data is available for the selected group.",
     };
   }
 
   const medians = toLegMedianRows(filteredRows);
-  if (medians.length === 0) {
-    return {
-      figure: null,
-      tableRows: [],
-      warning: "No median values are available because the selected rows do not contain the required split times.",
-    };
-  }
-
-  const figure =
-    mode === "Trend" ? buildTrendFigure(filteredRows) : buildYearCompareFigure(medians, mode);
-
-  if (!figure) {
-    return {
-      figure: null,
-      tableRows: buildTableRows(medians),
-      warning: "Trend view needs finish times, but none were available for the current selection.",
-    };
-  }
+  const comparisonFigure = medians.length > 0 ? buildYearCompareFigure(medians, mode) : null;
+  const overallFigure = buildTrendFigure(filteredRows, zoomOverallDifferences);
+  const comparisonWarning =
+    comparisonFigure === null
+      ? "No split medians are available because the selected rows do not contain the required segment times."
+      : null;
+  const overallWarning =
+    overallFigure === null
+      ? "Overall median view needs finish times, but none were available for the current selection."
+      : null;
+  const warning =
+    comparisonFigure === null && overallFigure === null
+      ? comparisonWarning ?? overallWarning ?? "No yearly medians are available for the current selection."
+      : null;
 
   return {
-    figure,
-    tableRows: buildTableRows(medians),
-    warning: null,
+    comparisonFigure,
+    overallFigure,
+    tableRows: medians.length > 0 ? buildTableRows(medians) : [],
+    warning,
+    comparisonWarning,
+    overallWarning,
   };
 }

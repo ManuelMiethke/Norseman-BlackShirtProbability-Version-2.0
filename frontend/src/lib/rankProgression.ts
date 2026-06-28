@@ -24,6 +24,8 @@ const TOP10_COLORS = [
 ];
 const CONTENDER_COLOR = "rgba(60, 60, 60, 0.85)";
 const GRID_COLOR = "rgba(255,255,255,0.25)";
+const AXIS_TITLE_FONT_SIZE = 13;
+const AXIS_TICK_FONT_SIZE = 11;
 
 type PlotFigure = {
   data: Data[];
@@ -395,12 +397,9 @@ function buildTop10Figure(rows: RankRow[], year: number, focusTop10: boolean): P
 
   const layout: Partial<Layout> = {
     ...buildSharedLayout(550),
-    legend: {
-      title: { text: "Athlete", font: { size: 14 } },
-      font: { size: 14 },
-    },
+    showlegend: false,
     xaxis: {
-      title: { text: "Race Distance (km)", font: { size: 25 } },
+      title: { text: "Race Distance (km)", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 10 },
       range: [0, finishKm],
       constrain: "range",
       tickmode: "array",
@@ -409,18 +408,20 @@ function buildTop10Figure(rows: RankRow[], year: number, focusTop10: boolean): P
       showgrid: false,
       zeroline: false,
       tickangle: 0,
+      tickfont: { size: AXIS_TICK_FONT_SIZE },
     },
     yaxis: focusTop10
       ? {
-          title: { text: "Rank", font: { size: 25 } },
+          title: { text: "Rank", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 8 },
           autorange: false,
           range: [10.5, 0.5],
           dtick: 1,
           showgrid: true,
           gridcolor: GRID_COLOR,
+          tickfont: { size: AXIS_TICK_FONT_SIZE },
         }
       : {
-          title: { text: "Rank", font: { size: 25 } },
+          title: { text: "Rank", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 8 },
           autorange: false,
           tickmode: "linear",
           tick0: 1,
@@ -428,6 +429,7 @@ function buildTop10Figure(rows: RankRow[], year: number, focusTop10: boolean): P
           range: [maxRankTop10 + 0.5, 0.5],
           showgrid: true,
           gridcolor: GRID_COLOR,
+          tickfont: { size: AXIS_TICK_FONT_SIZE },
         },
     shapes: [
       {
@@ -573,7 +575,7 @@ function buildRankBandFigure(rows: RankRow[], year: number): PlotFigure | null {
     ...buildSharedLayout(550),
     showlegend: false,
     xaxis: {
-      title: { text: "Race Distance (km)", font: { size: 25 } },
+      title: { text: "Race Distance (km)", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 10 },
       range: [0, structure.runEnd],
       tickmode: "array",
       tickvals: tickValues,
@@ -581,15 +583,17 @@ function buildRankBandFigure(rows: RankRow[], year: number): PlotFigure | null {
       showgrid: true,
       gridcolor: "#555555",
       zeroline: false,
+      tickfont: { size: AXIS_TICK_FONT_SIZE },
     },
     yaxis: {
-      title: { text: "Rank", font: { size: 25 } },
+      title: { text: "Rank", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 8 },
       autorange: false,
       range: [rankMax + 0.5, rankMin - 0.5],
       tickmode: "linear",
       dtick: 2,
       gridcolor: "#555555",
       zeroline: false,
+      tickfont: { size: AXIS_TICK_FONT_SIZE },
     },
     shapes: [
       {
@@ -714,15 +718,16 @@ function buildAllAthletesFigure(
     ...buildSharedLayout(650),
     showlegend: false,
     xaxis: {
-      title: { text: "Race Distance", font: { size: 25 } },
+      title: { text: "Race Distance", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 10 },
       tickmode: "array",
       tickvals: tickValues,
       ticktext: tickText,
       showgrid: false,
       zeroline: false,
+      tickfont: { size: AXIS_TICK_FONT_SIZE },
     },
     yaxis: {
-      title: { text: "Rank", font: { size: 25 } },
+      title: { text: "Rank", font: { size: AXIS_TITLE_FONT_SIZE }, standoff: 8 },
       autorange: false,
       range: [maxRank + 2, 1],
       tickmode: "linear",
@@ -730,6 +735,7 @@ function buildAllAthletesFigure(
       dtick: 10,
       gridcolor: "#555555",
       zeroline: false,
+      tickfont: { size: AXIS_TICK_FONT_SIZE },
     },
     shapes: [
       {

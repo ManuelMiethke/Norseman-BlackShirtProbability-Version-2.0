@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Norseman 3D Overview</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="embed-body">
+    <main class="page-shell">
+      <section class="hero" hidden aria-hidden="true">
+        <div class="hero-copy">
+          <p class="eyebrow" id="event-eyebrow">Norseman Visualization</p>
+          <h1 id="event-title">Route as a 3D Elevation Model</h1>
+          <p class="intro" id="event-intro">
+            This view is based on the reference image: a spatially projected
+            route where elevation is visible directly in the course itself.
+            Key climbing stats sit underneath the route.
+          </p>
+        </div>
+        <div class="switch-stack">
+          <div class="event-switch" id="event-switch" aria-label="Event wählen"></div>
+          <div class="route-switch" id="route-switch" aria-label="Disziplin wählen"></div>
+        </div>
+      </section>
+
+      <section class="visual-card">
+        <div class="canvas-wrap">
+          <div class="canvas-stage">
+            <canvas id="route-canvas" aria-label="3D overview of the Norseman route"></canvas>
+            <div class="canvas-caption">
+              <span id="route-title">Lade Route...</span>
+              <span id="route-subtitle"></span>
+            </div>
+          </div>
+
+          <div class="profile-wrap profile-wrap-inline">
+            <div class="profile-label-row">
+              <span>Elevation Profile</span>
+              <span id="elevation-range">--</span>
+            </div>
+            <div class="profile-legend" id="profile-legend"></div>
+            <svg id="elevation-profile" viewBox="0 0 1000 180" preserveAspectRatio="none"></svg>
+            <div class="profile-hover" id="profile-hover" hidden></div>
+          </div>
+        </div>
+
+        <section class="stats-panel">
+          <div class="primary-stat">
+            <span class="stat-label" id="primary-stat-label">Elevation Gain</span>
+            <strong id="ascent-value">--</strong>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card">
+              <span class="stat-label" id="distance-label">Distance</span>
+              <strong id="distance-value">--</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label" id="descent-label">Descent</span>
+              <strong id="descent-value">--</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label" id="max-ele-label">Highest Point</span>
+              <strong id="max-ele-value">--</strong>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <div class="message" id="message" hidden></div>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

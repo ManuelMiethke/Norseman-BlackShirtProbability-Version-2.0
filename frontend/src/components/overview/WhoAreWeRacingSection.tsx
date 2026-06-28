@@ -6,6 +6,13 @@ import { OUTCOME_MIX_INFO } from "@/content/chartInfo";
 import { useLongData } from "@/hooks/useLongData";
 import { buildWhoAreWeRacingModel } from "@/lib/whoAreWeRacing";
 
+function formatHoursMinutes(hours: number) {
+  const totalMinutes = Math.round(hours * 60);
+  const wholeHours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${wholeHours} h ${String(minutes).padStart(2, "0")} min`;
+}
+
 export function WhoAreWeRacingSection() {
   const { rows, isLoading, error } = useLongData();
   const cardClassName = "overview-card overview-card--outcomes";
@@ -85,7 +92,7 @@ export function WhoAreWeRacingSection() {
           <div className="section-note">
             <strong>Cut-off median</strong>
             <span>
-              2024-2025 median at 37.5 km: {frontierMedianHours.toFixed(2)} h
+              2024-2025 median at 37.5 km: {formatHoursMinutes(frontierMedianHours)}
             </span>
           </div>
         ) : null}

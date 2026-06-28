@@ -13,9 +13,11 @@ const MODE_OPTIONS = ["Top 10 finishers", "Places 140-180", "All athletes to cut
 
 export function RankProgressionSection() {
   const { rows, isLoading, error } = useLongData();
-  const { selectedYear, selectedGroup } = useDashboard();
+  const { selectedYear, selectedGroup, years } = useDashboard();
   const [mode, setMode] = useState<(typeof MODE_OPTIONS)[number]>("Top 10 finishers");
   const [focusTop10, setFocusTop10] = useState(true);
+  const latestYear = years.find((year): year is number => year !== "All") ?? null;
+  const effectiveSelectedYear = selectedYear === "All" ? latestYear ?? "All" : selectedYear;
   const cardClassName = "overview-card overview-card--rank";
   const headerActions = (
     <ChartInfoPopover
@@ -88,7 +90,7 @@ export function RankProgressionSection() {
 
   const { figure, warning } = buildRankProgressionModel(
     rows,
-    selectedYear,
+    effectiveSelectedYear,
     selectedGroup,
     mode,
     focusTop10,

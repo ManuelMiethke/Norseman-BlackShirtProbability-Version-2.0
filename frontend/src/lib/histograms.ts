@@ -17,6 +17,7 @@ type HistogramFigure = {
   key: string;
   data: Data[];
   layout: Partial<Layout>;
+  previewLayout?: Partial<Layout>;
 };
 
 export type HistogramModel = {
@@ -39,6 +40,13 @@ function median(values: number[]): number | null {
 
 function formatHms(seconds: number): string {
   return secondsToPaddedHms(seconds) || "";
+}
+
+function formatHmTick(seconds: number): string {
+  const roundedMinutes = Math.round(seconds / 60);
+  const hours = Math.floor(roundedMinutes / 60);
+  const minutes = roundedMinutes % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 }
 
 function toHistogramEdges(minValue: number, maxValue: number, bins: number): number[] {
@@ -88,15 +96,18 @@ function buildRoundedTicks(secMin: number, secMax: number) {
 
   const minMinutes = secMin / 60;
   const maxMinutes = secMax / 60;
-  const span = maxMinutes - minMinutes;
+  const candidateSteps = [5, 10, 15, 20, 30, 45, 60, 90, 120, 180];
+  const maxTickCount = 7;
 
-  let step = 5;
-  if (span > 240) {
-    step = 30;
-  } else if (span > 120) {
-    step = 20;
-  } else if (span > 60) {
-    step = 10;
+  let step = candidateSteps[candidateSteps.length - 1];
+  for (const candidate of candidateSteps) {
+    const start = Math.floor(minMinutes / candidate) * candidate;
+    const end = Math.ceil(maxMinutes / candidate) * candidate;
+    const tickCount = Math.round((end - start) / candidate) + 1;
+    if (tickCount <= maxTickCount) {
+      step = candidate;
+      break;
+    }
   }
 
   const start = Math.floor(minMinutes / step) * step;
@@ -107,7 +118,7 @@ function buildRoundedTicks(secMin: number, secMax: number) {
   for (let value = start; value <= end + 1e-9; value += step) {
     const seconds = value * 60;
     tickvals.push(seconds);
-    ticktext.push(formatHms(seconds));
+    ticktext.push(formatHmTick(seconds));
   }
 
   return { tickvals, ticktext };
@@ -301,76 +312,128 @@ function buildHistogramFigure(
       : scaleMode === "Bike-Time scale (min swim → 10h)" && referenceRange
         ? buildRoundedTicks(referenceRange[0], referenceRange[1])
         : buildRoundedTicks(Math.min(...allSeconds), Math.max(...allSeconds));
+  const medianGuideX =
+    scaleMode === "Relative (% vs median)"
+      ? 0
+      : scaleMode === "Absolute (hh:mm:ss)"
+        ? medianSeconds
+        : null;
+  const showMedianGuide = medianGuideX !== null;
+
+  const layout: Partial<Layout> = {
+    paper_bgcolor: BACKGROUND,
+    plot_bgcolor: BACKGROUND,
+    font: { color: "#eef5fb", family: "IBM Plex Sans, sans-serif" },
+    margin: { l: 52, r: 18, t: 82, b: 72 },
+    title: { text: title, y: 0.96, x: 0.01, xanchor: "left" },
+    barmode: "overlay",
+    showlegend: true,
+    legend: {
+      orientation: "h",
+      y: 1.12,
+      x: 0,
+      xanchor: "left",
+      yanchor: "bottom",
+      font: { size: 12, color: "#eef5fb" },
+    },
+    xaxis: {
+      title: {
+        text: xAxisTitle,
+        font: { size: 14, color: "#ffffff" },
+        standoff: 18,
+      },
+      tickfont: { size: 12, color: "#ffffff" },
+      gridcolor: "#c7c7c7",
+      zerolinecolor: "#c7c7c7",
+      automargin: true,
+      tickmode: tickSpec ? "array" : "auto",
+      tickvals: tickSpec?.tickvals,
+      ticktext: tickSpec?.ticktext,
+      tickangle: scaleMode === "Relative (% vs median)" ? 0 : -28,
+      nticks: scaleMode === "Relative (% vs median)" ? 6 : undefined,
+      tickformat: scaleMode === "Relative (% vs median)" ? ".0%" : undefined,
+      range: scaleMode === "Bike-Time scale (min swim → 10h)" && referenceRange ? [...referenceRange] : undefined,
+    },
+    yaxis: {
+      title: {
+        text: "Frequency",
+        font: { size: 14, color: "#ffffff" },
+        standoff: 10,
+      },
+      tickfont: { size: 12, color: "#ffffff" },
+      gridcolor: "#c7c7c7",
+      zerolinecolor: "#c7c7c7",
+      automargin: true,
+    },
+    shapes:
+      showMedianGuide
+        ? [
+            {
+              type: "line",
+              x0: medianGuideX,
+              x1: medianGuideX,
+              y0: 0,
+              y1: 1,
+              xref: "x",
+              yref: "paper",
+              line: {
+                color: "orange",
+                width: 2,
+                dash: "dot",
+              },
+            },
+          ]
+        : undefined,
+    annotations:
+      showMedianGuide
+        ? [
+            {
+              text: "Median",
+              x: medianGuideX,
+              y: 1,
+              xref: "x",
+              yref: "paper",
+              showarrow: false,
+              font: { color: "orange", size: 12 },
+              yshift: 12,
+            },
+          ]
+        : undefined,
+  };
 
   return {
     key: `${metric}:${scaleMode}`,
     data,
-    layout: {
-      paper_bgcolor: BACKGROUND,
-      plot_bgcolor: BACKGROUND,
-      font: { color: "#eef5fb", family: "IBM Plex Sans, sans-serif" },
-      margin: { l: 10, r: 10, t: 90, b: 10 },
-      title: { text: title, y: 0.92, x: 0.01, xanchor: "left" },
-      barmode: "overlay",
-      legend: {
-        orientation: "h",
-        y: 1.16,
-        x: 0,
+    layout,
+    previewLayout: {
+      ...layout,
+      margin: { l: 46, r: 14, t: 48, b: 84 },
+      showlegend: false,
+      title: {
+        text: title,
+        y: 0.97,
+        x: 0.01,
         xanchor: "left",
-        yanchor: "bottom",
         font: { size: 12, color: "#eef5fb" },
       },
       xaxis: {
-        title: { text: xAxisTitle, font: { size: 14, color: "#ffffff" } },
-        tickfont: { size: 12, color: "#ffffff" },
-        gridcolor: "#c7c7c7",
-        zerolinecolor: "#c7c7c7",
-        tickmode: tickSpec ? "array" : "auto",
-        tickvals: tickSpec?.tickvals,
-        ticktext: tickSpec?.ticktext,
-        tickformat: scaleMode === "Relative (% vs median)" ? ".0%" : undefined,
-        range: scaleMode === "Bike-Time scale (min swim → 10h)" && referenceRange ? [...referenceRange] : undefined,
+        ...layout.xaxis,
+        title: {
+          text: xAxisTitle,
+          font: { size: 12, color: "#ffffff" },
+          standoff: 16,
+        },
+        tickfont: { size: 11, color: "#ffffff" },
       },
       yaxis: {
-        title: { text: "Frequency", font: { size: 14, color: "#ffffff" } },
-        tickfont: { size: 12, color: "#ffffff" },
-        gridcolor: "#c7c7c7",
-        zerolinecolor: "#c7c7c7",
+        ...layout.yaxis,
+        title: {
+          text: "Frequency",
+          font: { size: 12, color: "#ffffff" },
+          standoff: 8,
+        },
+        tickfont: { size: 11, color: "#ffffff" },
       },
-      shapes:
-        scaleMode === "Relative (% vs median)"
-          ? [
-              {
-                type: "line",
-                x0: 0,
-                x1: 0,
-                y0: 0,
-                y1: 1,
-                xref: "x",
-                yref: "paper",
-                line: {
-                  color: "orange",
-                  width: 2,
-                  dash: "dot",
-                },
-              },
-            ]
-          : undefined,
-      annotations:
-        scaleMode === "Relative (% vs median)"
-          ? [
-              {
-                text: "Median",
-                x: 0,
-                y: 1,
-                xref: "x",
-                yref: "paper",
-                showarrow: false,
-                font: { color: "orange", size: 12 },
-                yshift: 12,
-              },
-            ]
-          : undefined,
     },
   };
 }
