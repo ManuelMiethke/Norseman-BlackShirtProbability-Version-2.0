@@ -9,11 +9,12 @@ import {
   buildYearComparisonModel,
   type YearComparisonMode,
 } from "@/lib/yearComparison";
+import { LATEST_YEAR } from "@/config/raceRegistry";
 import { useDashboard } from "@/state/DashboardContext";
 
 const MODE_OPTIONS: YearComparisonMode[] = [
   "Time Overview",
-  "Compared to 2025",
+  "Compared to baseline",
 ];
 
 export function YearComparisonSection() {
@@ -36,7 +37,7 @@ export function YearComparisonSection() {
             }
             onClick={() => setMode(option)}
           >
-            {option}
+            {option === "Compared to baseline" ? `Compared to ${LATEST_YEAR}` : option}
           </button>
         ))}
       </div>

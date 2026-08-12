@@ -1,6 +1,6 @@
 import streamlit as st
 
-from core.config import APP_INFO, ASSET_PATHS, assets_last_updated_label
+from core.config import APP_INFO, ASSET_PATHS, KNOWN_RACE_YEARS, assets_last_updated_label
 
 
 def footer() -> None:
@@ -15,7 +15,8 @@ def footer() -> None:
 
     with col_center:
         st.markdown(
-            f"Data coverage: **2018-2025**  \nLast packaged asset update: **{assets_last_updated_label()}**"
+            f"Data coverage: **{min(KNOWN_RACE_YEARS)}-{max(KNOWN_RACE_YEARS)}**  "
+            f"\nLast packaged asset update: **{assets_last_updated_label()}**"
         )
 
     with col_contact:

@@ -1457,10 +1457,10 @@ body {
 
 .course-overview-frame {
   width: 100%;
-  height: clamp(760px, 92vh, 900px);
+  height: clamp(398px, 48vh, 426px);
   border: 0;
   border-radius: 20px;
-  background: #08111a;
+  background: rgba(108, 108, 108, 0.85);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
@@ -1804,6 +1804,6 @@ body {
   }
 
   .course-overview-frame {
-    height: 700px;
+    height: 414px;
   }
 }

@@ -107,7 +107,9 @@ function statsForSingleYear(rows: WideRow[], year: number): ParticipantStats | n
   const black = subset.filter((row) => row.finish_type === "Black").length;
   const white = subset.filter((row) => row.finish_type === "White").length;
   const dnfKnown = subset.filter((row) => row.finish_type === "DNF").length;
-  const dnf = year === 2019 || year === 2025 ? dnfKnown : Math.max(starters - black - white, 0);
+  // Wo die Quelldaten DNF explizit ausweisen, diese Zahl verwenden -
+  // sonst aus Startern minus Finishern ableiten
+  const dnf = dnfKnown > 0 ? dnfKnown : Math.max(starters - black - white, 0);
 
   const men = subset.filter((row) => row.gender === "M").length;
   const women = subset.filter((row) => row.gender === "F").length;

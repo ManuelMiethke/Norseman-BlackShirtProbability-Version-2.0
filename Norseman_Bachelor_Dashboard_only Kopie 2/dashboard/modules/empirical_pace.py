@@ -78,7 +78,11 @@ RUN_DECISION_COURSE_KM = SWIM_DIST_KM + BIKE_DIST_KM + RUN_DECISION_DIST_KM
 COURSE_MAX_KM = 221.3  
 
 # Years where the Black-Shirt decision point is at 37.5 km
-CUTOFF_37_5_YEARS = {2024, 2025}
+from core.config import RACE_YEAR_REGISTRY
+
+# Jahre mit Black-Shirt-Entscheidung bei 37,5 km (Stavsro) - aus der Registry,
+# damit ein neues Renn-Jahr automatisch in die Baseline einfliesst
+CUTOFF_37_5_YEARS = {y for y, c in RACE_YEAR_REGISTRY.items() if c.cutoff_run_km == 37.5}
 
 # Expert swim label heuristic: CSS
 CSS_DELTA_SEC_PER_100M = 10  # e.g., 2:05/100m race pace -> CSS ~1:55/100m
@@ -360,7 +364,7 @@ def apply_pref_biases_explore(
 def _effective_cutoff_years(selected_year) -> set[int]:
     """
     If a selected_year is given and it's one of the known 37.5km years,
-    use only that year for the empirical median. Otherwise default to {2024, 2025}.
+    use only that year for the empirical median. Otherwise default to all 37.5 km cut-off years.
     """
     try:
         y = int(selected_year)
@@ -377,7 +381,7 @@ def build_blackshirt_segment_pacing(
     """
     For each split of each leg (swim/bike/run):
     - Take median segment_speed_kmh of all Black Shirt finishers.
-      IMPORTANT: only use years where the Black-Shirt decision was at 37.5 km (2024/2025),
+      IMPORTANT: only use years where the Black-Shirt decision was at 37.5 km,
       optionally narrowed to selected_year if it is one of those years.
     - Build segments [start_km, end_km] along the course.
     - Scale speeds per leg so that total leg times match scaled_leg_secs.
@@ -499,13 +503,13 @@ def render_overview_table(scaled_leg_secs: dict, fixed_total: bool = True):
     if fixed_total:
         st.caption(
             f"Leg distribution based on empirical Black Shirt medians "
-            f"(years 2024/2025 with 37.5km cut-off), scaled to a total of "
+            f"(years with 37.5km cut-off: {sorted(CUTOFF_37_5_YEARS)}), scaled to a total of "
             f"{format_hms(total_secs)} (target 13:51)."
         )
     else:
         st.caption(
             f"Explore mode: leg distribution based on empirical Black Shirt medians "
-            f"(years 2024/2025 with 37.5km cut-off). Total time is **unlocked** "
+            f"(years with 37.5km cut-off: {sorted(CUTOFF_37_5_YEARS)}). Total time is **unlocked** "
             f"and currently sums to {format_hms(total_secs)}."
         )
 
@@ -697,7 +701,7 @@ def render_13h_empirical_pace(selected_year=None, selected_group=None):
 
 This section shows a **Black Shirt empirical pacing blueprint** for a **13:51 finish time**.
 
-- **Baseline**: median Black Shirt pacing patterns derived **only from years with a 37.5 km Black-Shirt decision rule (2024 & 2025)**.
+- **Baseline**: median Black Shirt pacing patterns derived **only from years with a 37.5 km Black-Shirt decision rule**.
 - **Scaling**: all segment speeds and leg times are **scaled to match the target finish time**.
 
 **What you see below**

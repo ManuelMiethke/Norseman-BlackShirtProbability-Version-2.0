@@ -28,7 +28,7 @@ const RUN_DIST_KM = 42.2;
 const RUN_DECISION_DIST_KM = 37.5;
 const RUN_DECISION_COURSE_KM = SWIM_DIST_KM + BIKE_DIST_KM + RUN_DECISION_DIST_KM;
 const COURSE_MAX_KM = 221.3;
-const CUTOFF_37_5_YEARS = new Set([2024, 2025]);
+// aus der Registry abgeleitet, siehe config/raceRegistry.ts
 const RUN_FRESH_MARATHON_EQUIV_SECS_BY_PREF: Record<EmpiricalPref, number> = {
   p90: 2 * 3600 + 45 * 60,
   p75: 3 * 3600 + 10 * 60,
@@ -599,8 +599,8 @@ export function buildEmpiricalPlanModel({
     legTimes,
     overview: buildOverview(legTimes),
     caption: exploreMode
-      ? `Explore mode: leg distribution is based on empirical Black Shirt medians from 2024/2025 with the 37.5 km Black-Shirt cut-off, and the total time is unlocked. The current plan sums to ${formatHms(totalTime)}.`
-      : `Leg distribution is based on empirical Black Shirt medians from 2024/2025 with the 37.5 km Black-Shirt cut-off, scaled to a fixed target total of ${formatHms(totalTime)} (13:51).`,
+      ? `Explore mode: leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, and the total time is unlocked. The current plan sums to ${formatHms(totalTime)}.`
+      : `Leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, scaled to a fixed target total of ${formatHms(totalTime)} (13:51).`,
     swimExpertLabels,
     bikeExpertLabels,
     runExpertLabels,

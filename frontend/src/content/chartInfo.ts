@@ -77,7 +77,7 @@ export const YEAR_COMPARISON_INFO: ChartInfoSpec = {
       bullets: [
         "The left chart compares median swim, bike and run times by year up to 32.5 km on the run.",
         "The right chart shows the overall median finish time by year for the same selected group.",
-        "The mode switch changes the left comparison chart between absolute overview and the 2025 baseline view.",
+        "The mode switch changes the left comparison chart between absolute overview and the latest-year baseline view.",
         "The Zoomed time differences toggle narrows the right chart to the observed finish-time range so small year-to-year shifts become easier to read.",
         "The global group filter keeps the comparison focused on the same athlete cohort across years.",
       ],
@@ -87,7 +87,7 @@ export const YEAR_COMPARISON_INFO: ChartInfoSpec = {
       bullets: [
         "Longer bars or higher values mean slower segment medians.",
         "Within-year comparison shows which discipline dominates race time in that edition.",
-        "Compared to 2025 mode marks faster years against the 2025 benchmark and slower years against the same baseline.",
+        "Baseline mode marks faster years against the latest-year benchmark and slower years against the same baseline.",
         "In the zoomed finish-time view, lower points indicate quicker race medians and higher points indicate slower editions.",
         "The finish-time chart lets you compare total race difficulty or pace shifts independently from the leg split structure.",
       ],
@@ -108,7 +108,7 @@ export const OUTCOME_MIX_INFO: ChartInfoSpec = {
       heading: "What is shown",
       bullets: [
         "The stacked bars show how starters split into Black Shirt, White Shirt, DNF and the cut-off frontier miss group in each race year.",
-        "The second chart summarizes the empirical 37.5 km run frontier for 2024 and 2025, where Black Shirt qualification pressure was determined by rank around 160.",
+        "The second chart summarizes the empirical 37.5 km run frontier across the 37.5 km cut-off years, where Black Shirt qualification pressure was determined by rank around 160.",
       ],
     },
     {
@@ -283,6 +283,35 @@ export const COURSE_WEATHER_SPEED_INFO: ChartInfoSpec = {
       bullets: [
         "It shows where Top 10, Black Shirt and White Shirt athletes open gaps.",
         "It helps identify decisive sections where terrain and weather interact with pacing.",
+      ],
+    },
+  ],
+};
+
+export const COURSE_OVERVIEW_3D_INFO: ChartInfoSpec = {
+  sections: [
+    {
+      heading: "What is shown",
+      bullets: [
+        "This card stitches the Norseman swim, bike and run GPX tracks into one continuous 3D course view.",
+        "The upper panel shows the spatial route, while the lower profile compresses the full climbing story into a single elevation strip.",
+        "The summary cards underneath keep the main course facts visible: total distance, ascent, descent and highest point.",
+      ],
+    },
+    {
+      heading: "How to use it",
+      bullets: [
+        "The chart opens in a fixed overview angle first, so the full Norseman course is immediately readable.",
+        "Click and drag inside the 3D route to unlock a controlled tilt view, then drag up or down to rotate the course vertically while Swim and Run stay fixed left and right.",
+        "Use the mouse wheel to zoom and double-click to reset the preview.",
+        "The profile below marks each meaningful climb segment with its length so the course rhythm stays readable at a glance.",
+      ],
+    },
+    {
+      heading: "The Course",
+      paragraphs: [
+        "Norseman starts in the black water of Eidfjord, stretches across the exposed roads of Hardangervidda and saves its final statement for the mountain wall toward Gaustatoppen.",
+        "It is less a single route than a long escalation: cold fjord, wind-battered plateau and a brutal final climb where fatigue and altitude finally cash every earlier decision.",
       ],
     },
   ],

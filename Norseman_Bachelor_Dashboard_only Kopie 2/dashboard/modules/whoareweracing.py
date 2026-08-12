@@ -55,19 +55,18 @@ This stacked bar chart shows how many athletes ended up in each **outcome group*
     # --------------------------------------------------
     # 0.1 Jahre ohne Rennen raus + keine Achsen-Lücken
     # --------------------------------------------------
-    YEARS_TO_PLOT = [2018, 2019, 2021, 2022, 2024, 2025]
+    # Jahre und Cut-off-Splits kommen aus der Registry, damit ein neues
+    # Renn-Jahr nicht in mehreren Modulen nachgetragen werden muss.
+    from core.config import RACE_YEAR_REGISTRY
+
+    YEARS_TO_PLOT = sorted(RACE_YEAR_REGISTRY)
     df = df[df["year"].isin(YEARS_TO_PLOT)].copy()
 
     # --------------------------------------------------
     # 1. Jahr-spezifischen Cut-off Split festlegen
     # --------------------------------------------------
     CUTOFF_SPLIT_BY_YEAR = {
-        2018: "run_32_5km_langefonn",
-        2019: "run_32_5km_langefonn",
-        2021: "run_32_5km_langefonn",
-        2022: "run_32_5km_langefonn",
-        2024: "run_37_5km_stavsro_cut_off",
-        2025: "run_37_5km_stavsro_cut_off",
+        year: cfg.cutoff_split_key for year, cfg in RACE_YEAR_REGISTRY.items()
     }
 
     df_cutoff_parts = []
@@ -104,6 +103,7 @@ This stacked bar chart shows how many athletes ended up in each **outcome group*
         2022: 16,
         2024: 17,
         2025: 11,
+        2026: 15,   # aus der ETL: finish_type == 'DNF'
     }
 
     results = []
@@ -244,7 +244,7 @@ This stacked bar chart shows how many athletes ended up in each **outcome group*
 **What is shown in this chart?**
 
 This horizontal bar chart shows the **empirical Black Shirt cut-off frontier**
-at the **37.5 km run cut-off (Stavsro)** for **2024 and 2025**.
+at the **37.5 km run cut-off (Stavsro)** for the 37.5 km years.
 
 - **Y-axis**: year  
 - **X-axis**: elapsed time (hours) at the cut-off for **rank ~160**
@@ -253,7 +253,7 @@ at the **37.5 km run cut-off (Stavsro)** for **2024 and 2025**.
 
 - **Shorter bar** → stronger competition (faster cut-off)  
 - **Longer bar** → weaker competition (slower cut-off)  
-- **Red dotted line** → median of 2024–2025
+- **Red dotted line** → median across the 37.5 km years
 
 **How this can be used**
 
@@ -269,11 +269,15 @@ at the **37.5 km run cut-off (Stavsro)** for **2024 and 2025**.
         st.info("No cut-off data available to compute frontier.")
         return
 
-    frontier_years = [2024, 2025]
+    # Alle Jahre mit dem 37,5-km-Cut-off (Stavsro), aktuell 2024-2026
+    frontier_years = sorted(
+        y for y, cfg in RACE_YEAR_REGISTRY.items() if cfg.cutoff_run_km == 37.5
+    )
+    frontier_label = f"{frontier_years[0]}–{frontier_years[-1]}" if frontier_years else "—"
     df_cutoff_375 = df_cutoff[df_cutoff["year"].isin(frontier_years)].copy()
 
     if df_cutoff_375.empty:
-        st.info("No 37.5 km cut-off data available for 2024/2025.")
+        st.info(f"No 37.5 km cut-off data available for {frontier_label}.")
         return
 
     def get_frontier_time(group: pd.DataFrame):
@@ -295,14 +299,14 @@ at the **37.5 km run cut-off (Stavsro)** for **2024 and 2025**.
     )
 
     if frontier_series.empty:
-        st.info("No cut-off rank data available to compute frontier for 2024/2025.")
+        st.info(f"No cut-off rank data available to compute frontier for {frontier_label}.")
         return
 
     frontier_hours = (frontier_series / 3600.0).sort_index()
     median_frontier = frontier_hours.median()
 
     st.markdown(
-        f"**Median time of rank ~160 at the 37.5 km cut-off (2024–2025): {median_frontier:.2f} hours**"
+        f"**Median time of rank ~160 at the 37.5 km cut-off ({frontier_label}): {median_frontier:.2f} hours**"
     )
 
     frontier_df = pd.DataFrame(
@@ -334,7 +338,7 @@ at the **37.5 km run cut-off (Stavsro)** for **2024 and 2025**.
 
     fig2.update_layout(
         title=dict(
-            text="Black Shirt Frontier: Time of rank ~160 at 37.5 km cut-off (2024–2025)",
+            text=f"Black Shirt Frontier: Time of rank ~160 at 37.5 km cut-off ({frontier_label})",
             x=0.1,
             font=dict(size=26),
         ),
@@ -349,7 +353,7 @@ at the **37.5 km run cut-off (Stavsro)** for **2024 and 2025**.
             tickfont=dict(size=18),
             type="category",
             categoryorder="array",
-            categoryarray=["2024", "2025"],
+            categoryarray=[str(y) for y in frontier_years],
             showgrid=False,
         ),
         plot_bgcolor=BG,

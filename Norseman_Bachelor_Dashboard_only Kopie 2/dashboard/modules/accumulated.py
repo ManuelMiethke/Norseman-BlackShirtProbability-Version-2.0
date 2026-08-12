@@ -83,7 +83,7 @@ Athletes are grouped by finish category (Top 10, Black, White, DNF).
 - Detect **critical race segments** where many DNFs occur or pacing diverges strongly.
                             
 
-Tip💡 Click and drag a rectangle with your cursor to zoom in the graph. This could be interesting at cut-off points E.g. 216 km (2018, 2019, 2021, 2022) and 221 km (2024, 2025)
+Tip💡 Click and drag a rectangle with your cursor to zoom in the graph. This could be interesting at cut-off points E.g. 216 km (32.5 km cut-off years) and 221 km (37.5 km cut-off years)
                 """)
 
         # --------------------------------------------------

@@ -23,8 +23,12 @@ def _split_order_and_filter(df: pd.DataFrame) -> pd.DataFrame:
     finish_white = "finish_white_t_shirt"
     d = d[~d["split_key"].isin([finish_black, finish_white])].copy()
 
-    years_32 = {2018, 2019, 2021, 2022}
-    years_37 = {2024, 2025}
+    # Cut-off-Distanz je Jahr aus der Registry, damit neue Jahre automatisch
+    # in der richtigen Gruppe landen
+    from core.config import RACE_YEAR_REGISTRY
+
+    years_32 = {y for y, c in RACE_YEAR_REGISTRY.items() if c.cutoff_run_km == 32.5}
+    years_37 = {y for y, c in RACE_YEAR_REGISTRY.items() if c.cutoff_run_km == 37.5}
 
     if "race_distance_km" in d.columns:
         d["race_distance_km"] = pd.to_numeric(d["race_distance_km"], errors="coerce")

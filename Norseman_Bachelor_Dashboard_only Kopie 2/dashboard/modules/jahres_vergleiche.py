@@ -148,9 +148,11 @@ def _build_year_compare_chart(med: pd.DataFrame, show_in: str) -> go.Figure:
     med["leg"] = pd.Categorical(med["leg"], categories=leg_order, ordered=True)
     med = med.sort_values(["year", "leg"])
 
-    # Baseline medians (2025) per leg for compare mode
+    # Baseline = juengstes Renn-Jahr, damit der Vergleich nicht veraltet,
+    # sobald ein neues Jahr dazukommt
+    baseline_year = max(years)
     base = (
-        med[med["year"] == 2025][["leg", "median_sec"]]
+        med[med["year"] == baseline_year][["leg", "median_sec"]]
         .dropna()
         .set_index("leg")["median_sec"]
         .to_dict()
@@ -174,7 +176,7 @@ def _build_year_compare_chart(med: pd.DataFrame, show_in: str) -> go.Figure:
             txt = [_seconds_to_hms(v) for v in secs]
             colors = [SEGMENT_COLORS.get(leg, "#999999")] * len(secs)
         else:
-            # Compare mode vs 2025: faster = green, slower = red (2025 neutral)
+            # Compare mode vs Basisjahr: faster = green, slower = red (Basis neutral)
             txt = []
             colors = []
             for year, s in zip(y, secs):
@@ -188,7 +190,7 @@ def _build_year_compare_chart(med: pd.DataFrame, show_in: str) -> go.Figure:
                 sign = "+" if delta_min > 0 else ""
                 txt.append(f"{_seconds_to_hms(s)} ({sign}{delta_min:.1f} min)")
 
-                if year == 2025:
+                if year == baseline_year:
                     colors.append("#bdbdbd")
                 else:
                     if delta_sec < 0:
@@ -369,10 +371,10 @@ Each year contains **three horizontal bars**:
 
 - Compare **within a year** to see which segment contributes most to time  
 - Compare **across years** to spot performance shifts (faster/slower medians)  
-- In **Compared to 2025** mode:
-  - **Green** = faster than 2025 median  
-  - **Red** = slower than 2025 median  
-  - **Grey** = 2025 baseline / no change  
+- In **Compared to <latest year>** mode:
+  - **Green** = faster than the latest-year median  
+  - **Red** = slower than the latest-year median  
+  - **Grey** = baseline year / no change  
 
 **How this can be used**
 
@@ -390,9 +392,12 @@ Each year contains **three horizontal bars**:
     # ignore selected_year on purpose (always compare all years)
     df = _apply_group_filter(df, selected_group)
 
+    years_available = pd.to_numeric(df.get("year"), errors="coerce").dropna()
+    latest_year = int(years_available.max()) if not years_available.empty else 0
+
     show_in = st.radio(
         "Display values as",
-        ["Time Overview", "Compared to 2025", "Trend"],
+        ["Time Overview", f"Compared to {latest_year}", "Trend"],
         horizontal=True,
         index=0,
         key="year_compare_units",

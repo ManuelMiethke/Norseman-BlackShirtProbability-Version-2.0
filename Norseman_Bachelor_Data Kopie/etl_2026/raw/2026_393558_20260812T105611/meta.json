@@ -1,0 +1,17 @@
+{
+  "year": 2026,
+  "event_id": 393558,
+  "eventname": "Norseman Xtreme Triathlon 2026",
+  "fetched_at": "2026-08-12T10:56:11",
+  "n_splits": 84,
+  "lists_ok": [
+    "02-Result lists|02 - LIVE MF",
+    "02-Result lists|06 - DropDown_NXTRI",
+    "03 - Finale results|01 - Final results",
+    "03 - Finale results|02 - Top 5 Finishers",
+    "__details__|Splits aus der Detailansicht"
+  ],
+  "lists_failed": {
+    "02-Result lists|01 - LIVE 2025": "404 Client Error: Not Found for url: https://my.raceresult.com/393558/results/list?key=ec71f9bfaae5d517a25b62fb1bc5c80d&listname=02-Result+lists%7C01+-+LIVE+2025&page=results&contest=0&r=all&l=0"
+  }
+}

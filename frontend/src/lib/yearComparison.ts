@@ -1,6 +1,6 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
+import { LATEST_YEAR, type GroupOption } from "@/config/raceRegistry";
 import { filterRowsByGroup } from "@/lib/groups";
 import { secondsToHms, secondsToPaddedHms, timeToSeconds } from "@/lib/time";
 import type { WideRow } from "@/types/data";
@@ -11,7 +11,9 @@ const SEGMENT_COLORS = {
   Bike: "#4A4A4A",
   "Run (to 32.5 km)": "#2e7d32",
 } as const;
-const BASELINE_YEAR = 2025;
+// Basis ist immer das juengste Renn-Jahr, damit der Vergleich nicht
+// veraltet, sobald ein neues Jahr dazukommt
+const BASELINE_YEAR = LATEST_YEAR;
 
 type Leg = (typeof LEG_ORDER)[number];
 
@@ -27,7 +29,7 @@ type ComparisonFigure = {
   previewLayout?: Partial<Layout>;
 };
 
-export type YearComparisonMode = "Time Overview" | "Compared to 2025";
+export type YearComparisonMode = "Time Overview" | "Compared to baseline";
 
 export type ComparisonTableRow = {
   year: number;

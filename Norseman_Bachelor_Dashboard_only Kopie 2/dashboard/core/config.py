@@ -166,6 +166,23 @@ RACE_YEAR_REGISTRY: dict[int, RaceYearConfig] = {
         import_status="available",
         notes=("37.5 km Black/White decision year",),
     ),
+    2026: RaceYearConfig(
+        race_id="norseman",
+        race_name="Norseman Xtreme Triathlon",
+        location="Eidfjord, Norway",
+        year=2026,
+        distance_label="Xtreme Full Distance",
+        cutoff_run_km=37.5,
+        cutoff_split_key="run_37_5km_stavsro_cut_off",
+        finish_distance_km=221.3,
+        starters_after_swim=248,
+        result_source="RACE RESULT / RaceTracker (automatisierte ETL)",
+        import_status="available",
+        notes=(
+            "37.5 km Black/White decision year",
+            "Zeitmatte bei 101 km Skurdalen weitgehend ausgefallen - 143 Zwischenzeiten interpoliert.",
+        ),
+    ),
 }
 
 KNOWN_RACE_YEARS = tuple(sorted(RACE_YEAR_REGISTRY.keys(), reverse=True))

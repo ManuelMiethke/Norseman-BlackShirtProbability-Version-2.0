@@ -1,0 +1,9 @@
+# Zwischenstaende und Sicherungen gehoeren nicht ins Repo.
+# Sie lassen sich jederzeit aus raw/ neu erzeugen:
+#   python run_pipeline.py --year <jahr> --skip-extract
+build/
+backups/
+
+# Rohdaten der Zeitnahme bleiben nachvollziehbar im Repo (~3 MB pro Jahr).
+# Wer das nicht will, kommentiert die naechste Zeile ein.
+# raw/

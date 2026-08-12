@@ -1,0 +1,761 @@
+{
+  "key": "ec71f9bfaae5d517a25b62fb1bc5c80d",
+  "contests": {
+    "1": "Norseman Xtreme Triathlon",
+    "2": "VGTV Norseman Xtreme Triathlon",
+    "7": "Pulled out"
+  },
+  "splits": [
+    {
+      "ID": 39,
+      "Name": "Swim",
+      "Label": "Swim to T1",
+      "SplitType": 9,
+      "Contest": 1,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 165,
+      "Name": "Swim",
+      "Label": "Swim to T1",
+      "SplitType": 9,
+      "Contest": 2,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 2,
+      "Name": "SWIM_FINISH",
+      "Label": "Swim finish",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 4
+    },
+    {
+      "ID": 40,
+      "Name": "T1",
+      "Label": "T1",
+      "SplitType": 9,
+      "Contest": 1,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 128,
+      "Name": "SWIM_FINISH",
+      "Label": "Swim finish",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 4
+    },
+    {
+      "ID": 166,
+      "Name": "T1",
+      "Label": "T1",
+      "SplitType": 9,
+      "Contest": 2,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 3,
+      "Name": "T1_IN",
+      "Label": "Transition 1 Eidfjord",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 250
+    },
+    {
+      "ID": 41,
+      "Name": "Bike",
+      "Label": "Bike",
+      "SplitType": 9,
+      "Contest": 1,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 129,
+      "Name": "T1_IN",
+      "Label": "Transition 1 Eidfjord",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 250
+    },
+    {
+      "ID": 167,
+      "Name": "Bike",
+      "Label": "Bike",
+      "SplitType": 9,
+      "Contest": 2,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 4,
+      "Name": "T1_OUT",
+      "Label": "Bike Start Eidfjord",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 250
+    },
+    {
+      "ID": 42,
+      "Name": "T2",
+      "Label": "T2",
+      "SplitType": 9,
+      "Contest": 1,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 130,
+      "Name": "T1_OUT",
+      "Label": "Bike Start Eidfjord",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 250
+    },
+    {
+      "ID": 168,
+      "Name": "T2",
+      "Label": "T2",
+      "SplitType": 9,
+      "Contest": 2,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 5,
+      "Name": "OVRE_EIDFJORD",
+      "Label": "Bike - 6 km Øvre Eidfjord",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 43,
+      "Name": "Run",
+      "Label": "Run (Black)",
+      "SplitType": 9,
+      "Contest": 1,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 131,
+      "Name": "OVRE_EIDFJORD",
+      "Label": "Bike - 6 km Øvre Eidfjord",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 169,
+      "Name": "Run",
+      "Label": "Run (Black)",
+      "SplitType": 9,
+      "Contest": 2,
+      "TypeOfSport": 0
+    },
+    {
+      "ID": 6,
+      "Name": "ENTER_GAMLEVEGEN",
+      "Label": "Bike - 11 km Enter Gamlevegen",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 132,
+      "Name": "ENTER_GAMLEVEGEN",
+      "Label": "Bike - 11 km Enter Gamlevegen",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 7,
+      "Name": "VORINGSFOSSEN",
+      "Label": "Bike - 16 km Vøringfossen",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 133,
+      "Name": "VORINGSFOSSEN",
+      "Label": "Bike - 16 km Vøringfossen",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 8,
+      "Name": "BEGIN_SUPPORT",
+      "Label": "Bike - 20 km Garen",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 134,
+      "Name": "BEGIN_SUPPORT",
+      "Label": "Bike - 20 km Garen",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 9,
+      "Name": "BJOREIO_28K",
+      "Label": "Bike - 28 km Bjoreio",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 135,
+      "Name": "BJOREIO_28K",
+      "Label": "Bike - 28 km Bjoreio",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 10,
+      "Name": "DYRANUT",
+      "Label": "Bike - 36 km Dyranut",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 136,
+      "Name": "DYRANUT",
+      "Label": "Bike - 36 km Dyranut",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 11,
+      "Name": "HALNE",
+      "Label": "Bike - 47 km Halne",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 137,
+      "Name": "HALNE",
+      "Label": "Bike - 47 km Halne",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 12,
+      "Name": "HAUGASTOL",
+      "Label": "Bike - 66 km Haugastøl",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 138,
+      "Name": "HAUGASTOL",
+      "Label": "Bike - 66 km Haugastøl",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 13,
+      "Name": "GEILO",
+      "Label": "Bike - 90 km Geilo",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 139,
+      "Name": "GEILO",
+      "Label": "Bike - 90 km Geilo",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 14,
+      "Name": "KIKUT",
+      "Label": "Bike - 94 km Kikut",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 140,
+      "Name": "KIKUT",
+      "Label": "Bike - 94 km Kikut",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 15,
+      "Name": "SKURDALEN",
+      "Label": "Bike - 101 km Skurdalen",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 141,
+      "Name": "SKURDALEN",
+      "Label": "Bike - 101 km Skurdalen",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 16,
+      "Name": "DAGALI",
+      "Label": "Bike - 113 km Dagali",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 142,
+      "Name": "DAGALI",
+      "Label": "Bike - 113 km Dagali",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 17,
+      "Name": "VASSTULAN",
+      "Label": "Bike - 123 km Vasstulan",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 143,
+      "Name": "VASSTULAN",
+      "Label": "Bike - 123 km Vasstulan",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 18,
+      "Name": "IMINGFJELL_START",
+      "Label": "Bike - 134 km Start Imingfjell",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 144,
+      "Name": "IMINGFJELL_START",
+      "Label": "Bike - 134 km Start Imingfjell",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 19,
+      "Name": "IMINGFJELL",
+      "Label": "Bike - 142 km Top Imingfjell",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 145,
+      "Name": "IMINGFJELL",
+      "Label": "Bike - 142 km Top Imingfjell",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 20,
+      "Name": "END_SUPPORT",
+      "Label": "Bike - 152 km End Imingfjell",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 146,
+      "Name": "END_SUPPORT",
+      "Label": "Bike - 152 km End Imingfjell",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 21,
+      "Name": "AUSTBYGDEKIRKE",
+      "Label": "Bike - 179 km Austbygde",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 147,
+      "Name": "AUSTBYGDEKIRKE",
+      "Label": "Bike - 179 km Austbygde",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 22,
+      "Name": "T2_IN",
+      "Label": "Bike finish Austbygde",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 148,
+      "Name": "T2_IN",
+      "Label": "Bike finish Austbygde",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 11
+    },
+    {
+      "ID": 23,
+      "Name": "T2_OUT",
+      "Label": "Run start Austbygde",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 250
+    },
+    {
+      "ID": 149,
+      "Name": "T2_OUT",
+      "Label": "Run start Austbygde",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 250
+    },
+    {
+      "ID": 24,
+      "Name": "Run_5K_ATRAA",
+      "Label": "Run - 5 km Atraa",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 150,
+      "Name": "Run_5K_ATRAA",
+      "Label": "Run - 5 km Atraa",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 25,
+      "Name": "Run_10K",
+      "Label": "Run - 10K",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 151,
+      "Name": "Run_10K",
+      "Label": "Run - 10K",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 26,
+      "Name": "Run_15K_TINNSJO",
+      "Label": "Run - 15 km Tinnsjø",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 152,
+      "Name": "Run_15K_TINNSJO",
+      "Label": "Run - 15 km Tinnsjø",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 27,
+      "Name": "RUN_20K_MILAND",
+      "Label": "Run - 20 km Miland",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 153,
+      "Name": "RUN_20K_MILAND",
+      "Label": "Run - 20 km Miland",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 28,
+      "Name": "RUN_25K_ZH_START",
+      "Label": "Run - 25 km Zombie Hill base",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 154,
+      "Name": "RUN_25K_ZH_START",
+      "Label": "Run - 25 km Zombie Hill base",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 29,
+      "Name": "ZOMBIE_HILL_TURN1",
+      "Label": "Run - Zombie Hill 1st turn",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 155,
+      "Name": "ZOMBIE_HILL_TURN1",
+      "Label": "Run - Zombie Hill 1st turn",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 30,
+      "Name": "ZOMBIE_HILL_TURN2",
+      "Label": "Run - Zombie Hill 2nd turn",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 156,
+      "Name": "ZOMBIE_HILL_TURN2",
+      "Label": "Run - Zombie Hill 2nd turn",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 31,
+      "Name": "ZOMBIE_HILL_TURN3",
+      "Label": "Run - Zombie Hill 3rd turn",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 157,
+      "Name": "ZOMBIE_HILL_TURN3",
+      "Label": "Run - Zombie Hill 3rd turn",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 32,
+      "Name": "ZOMBIE_HILL_TURN4",
+      "Label": "Run - Zombie Hill 4th turn",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 158,
+      "Name": "ZOMBIE_HILL_TURN4",
+      "Label": "Run - Zombie Hill 4th turn",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 33,
+      "Name": "ZOMBIE_HILL_TURN5",
+      "Label": "Run - Zombie Hill 5th turn",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 159,
+      "Name": "ZOMBIE_HILL_TURN5",
+      "Label": "Run - Zombie Hill 5th turn",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 34,
+      "Name": "RUN_32K",
+      "Label": "Run - 32.5km Langefonn",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 160,
+      "Name": "RUN_32K",
+      "Label": "Run - 32.5km Langefonn",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 35,
+      "Name": "SVINEROI",
+      "Label": "Run - 33 km Svineroi",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 161,
+      "Name": "SVINEROI",
+      "Label": "Run - 33 km Svineroi",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 36,
+      "Name": "STAVSRO_CUTOFF",
+      "Label": "Run - 37,5km Stavsro",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 162,
+      "Name": "STAVSRO_CUTOFF",
+      "Label": "Run - 37,5km Stavsro",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 37,
+      "Name": "RUN_40K_MOUNTAIN",
+      "Label": "Run - 40km towards Mt. Gausta",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 163,
+      "Name": "RUN_40K_MOUNTAIN",
+      "Label": "Run - 40km towards Mt. Gausta",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 38,
+      "Name": "FINISH_BLACK",
+      "Label": "Finish - 42km Mount Gausta (Black finish)",
+      "SplitType": 0,
+      "Contest": 1,
+      "TypeOfSport": 100
+    },
+    {
+      "ID": 164,
+      "Name": "FINISH_BLACK",
+      "Label": "Finish - 42km Mount Gausta (Black finish)",
+      "SplitType": 0,
+      "Contest": 2,
+      "TypeOfSport": 100
+    }
+  ],
+  "lists": [
+    {
+      "Name": "02-Result lists|01 - LIVE 2025",
+      "Mode": "",
+      "Contest": "0",
+      "ShowAs": "LIVE Overall",
+      "Format": "V",
+      "Live": 1,
+      "Sortable": 1,
+      "Leader": 0,
+      "Details": "02-Result lists|04 - Details",
+      "ID": "67BF9F"
+    },
+    {
+      "Name": "02-Result lists|02 - LIVE MF",
+      "Mode": "hidden",
+      "Contest": "0",
+      "ShowAs": "{EN:LIVE Men / Women|NO:LIVE Menn / Kvinner}",
+      "Format": "V",
+      "Live": 1,
+      "Sortable": 1,
+      "Leader": 10,
+      "Details": "02-Result lists|04 - Details",
+      "ID": "3FB7C8"
+    },
+    {
+      "Name": "02-Result lists|06 - DropDown_NXTRI",
+      "Mode": "hidden",
+      "Contest": "0",
+      "ShowAs": "LIVE CP",
+      "Format": "V",
+      "Live": 1,
+      "Sortable": 1,
+      "Leader": 0,
+      "Details": "02-Result lists|04 - Details",
+      "ID": "18171F"
+    },
+    {
+      "Name": "03 - Finale results|01 - Final results",
+      "Mode": "hidden",
+      "Contest": "1",
+      "ShowAs": "Final Results",
+      "Format": "VP",
+      "Live": 0,
+      "Sortable": 1,
+      "Leader": 10,
+      "Details": "02-Result lists|04 - Details",
+      "ID": "1935A6"
+    },
+    {
+      "Name": "03 - Finale results|02 - Top 5 Finishers",
+      "Mode": "hidden",
+      "Contest": "1",
+      "ShowAs": "Top 5 NXTRI",
+      "Format": "VP",
+      "Live": 0,
+      "Sortable": 1,
+      "Leader": 5,
+      "Details": "02-Result lists|04 - Details",
+      "ID": "2518AE"
+    }
+  ],
+  "infotext": "",
+  "LinkCertificates": true,
+  "LeaderboardHideCount": false,
+  "DisableiComments": false,
+  "PhotographerEventID": "",
+  "eventname": "Norseman Xtreme Triathlon 2026",
+  "showResults": true,
+  "showParticipants": true,
+  "showLive": false,
+  "showCertificates": true,
+  "ListSelector": "dropdown",
+  "SplitConfig": "00011111111",
+  "TimerLogo": "racetracker.png",
+  "TimerURL": "www.racetracker.no",
+  "EventOver": true,
+  "Time": 39353,
+  "server": "my4.raceresult.com"
+}

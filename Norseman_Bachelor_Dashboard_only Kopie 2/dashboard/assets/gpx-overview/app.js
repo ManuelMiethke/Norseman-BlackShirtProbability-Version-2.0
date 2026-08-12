@@ -44,6 +44,7 @@ const switchEl = document.getElementById("route-switch");
 const messageEl = document.getElementById("message");
 const titleEl = document.getElementById("route-title");
 const subtitleEl = document.getElementById("route-subtitle");
+const interactionHintEl = document.getElementById("canvas-interaction-hint");
 const ascentEl = document.getElementById("ascent-value");
 const distanceEl = document.getElementById("distance-value");
 const descentEl = document.getElementById("descent-value");
@@ -71,11 +72,14 @@ const cameraState = {
   dragging: false,
   pointerId: null,
   lastX: 0,
-  lastY: 0
+  lastY: 0,
+  overallUnlocked: false
 };
 
 const DRAG_YAW_RANGE = Math.PI * 0.75;
 const DRAG_PITCH_RANGE = Math.PI * 0.55;
+const OVERALL_VERTICAL_TILT_LIMIT = degreesToRadians(90);
+const FREE_ORBIT_PITCH_LIMIT = degreesToRadians(85);
 
 function degreesToRadians(value) {
   return (value * Math.PI) / 180;
@@ -150,9 +154,9 @@ function getDefaultCamera(route) {
 
   if (route?.id === "overall") {
     return {
-      yaw: -0.74,
-      pitch: degreesToRadians(28),
-      zoom: 1.08
+      yaw: -0.03,
+      pitch: degreesToRadians(11),
+      zoom: 1.92
     };
   }
 
@@ -169,17 +173,53 @@ function applyDefaultCamera(route) {
   cameraState.pitch = defaults.pitch;
   cameraState.rotation = buildDefaultRotation(cameraState.yaw, cameraState.pitch);
   cameraState.zoom = defaults.zoom;
+  cameraState.overallUnlocked = route?.id !== "overall";
+  updateCanvasInteractionHint(route);
+}
+
+function hasLockedOverallPreview(route) {
+  return route?.id === "overall" && !cameraState.overallUnlocked;
 }
 
 function updateCameraFromDrag(deltaX, deltaY) {
   const { width, height } = canvas.getBoundingClientRect();
-  const safeWidth = Math.max(width, 320);
   const safeHeight = Math.max(height, 320);
 
+  if (hasLockedOverallPreview(activeRoute)) {
+    return;
+  }
+
+  if (activeRoute?.id === "overall") {
+    const defaults = getDefaultCamera(activeRoute);
+    cameraState.yaw = defaults.yaw;
+    cameraState.pitch -= (deltaY / safeHeight) * DRAG_PITCH_RANGE;
+    cameraState.pitch = clamp(
+      cameraState.pitch,
+      defaults.pitch - OVERALL_VERTICAL_TILT_LIMIT,
+      defaults.pitch + OVERALL_VERTICAL_TILT_LIMIT
+    );
+    cameraState.rotation = buildDefaultRotation(cameraState.yaw, cameraState.pitch);
+    return;
+  }
+
+  const safeWidth = Math.max(width, 320);
   cameraState.yaw += (deltaX / safeWidth) * DRAG_YAW_RANGE;
   cameraState.pitch -= (deltaY / safeHeight) * DRAG_PITCH_RANGE;
   cameraState.pitch = clamp(cameraState.pitch, degreesToRadians(0), degreesToRadians(85));
+
   cameraState.rotation = buildDefaultRotation(cameraState.yaw, cameraState.pitch);
+}
+
+function updateCanvasInteractionHint(route) {
+  const canvasStageEl = canvas.closest(".canvas-stage");
+  const showHint = route?.id === "overall" && !cameraState.overallUnlocked;
+
+  canvas.classList.toggle("is-preview-locked", showHint);
+  canvasStageEl?.classList.toggle("is-preview-locked", showHint);
+
+  if (interactionHintEl) {
+    interactionHintEl.hidden = !showHint;
+  }
 }
 
 function setMessage(text) {
@@ -416,6 +456,7 @@ function buildOverallRoute(routes, overallTitle) {
     label: "Overall",
     title: overallTitle,
     type: "Swim + Bike + Run",
+    subtitle: "From the black fjord at Eidfjord to the final mountain wall of Gaustatoppen.",
     accent: "#cf6f37",
     points: routes.flatMap((route) => route.points),
     metrics,
@@ -526,11 +567,17 @@ function detectClimbCandidates(samples) {
 }
 
 function buildClimbAnnotations(route) {
-  const maxClimbs = route.profileMode === "overlay" ? 4 : 6;
-  const minAscentM = Math.min(80, Math.max(20, route.metrics.ascentM * 0.03));
-  const minDistanceM = route.profileMode === "overlay" ? 350 : 500;
+  const maxClimbs = route.id === "overall" ? 16 : route.profileMode === "overlay" ? 12 : 10;
+  const minAscentM =
+    route.id === "overall"
+      ? Math.min(42, Math.max(16, route.metrics.ascentM * 0.004))
+      : route.profileMode === "overlay"
+        ? Math.min(48, Math.max(18, route.metrics.ascentM * 0.016))
+        : Math.min(56, Math.max(22, route.metrics.ascentM * 0.02));
+  const minDistanceM =
+    route.id === "overall" ? 140 : route.profileMode === "overlay" ? 220 : 260;
 
-  return route.profileGroups
+  const climbs = route.profileGroups
     .flatMap((group) =>
       detectClimbCandidates(group.samples)
         .filter((climb) => climb.ascentM >= minAscentM && climb.distanceM >= minDistanceM)
@@ -539,7 +586,15 @@ function buildClimbAnnotations(route) {
           accent: group.accent
         }))
     )
-    .sort((a, b) => b.ascentM - a.ascentM)
+    .sort((a, b) => a.startDistanceM - b.startDistanceM);
+
+  if (climbs.length <= maxClimbs) {
+    return climbs;
+  }
+
+  return climbs
+    .slice()
+    .sort((a, b) => b.distanceM - a.distanceM)
     .slice(0, maxClimbs)
     .sort((a, b) => a.startDistanceM - b.startDistanceM);
 }
@@ -550,9 +605,9 @@ function assignClimbAnnotationLanes(climbs, totalDistanceM, width, padX) {
   return climbs.map((climb) => {
     const startX = padX + (climb.startDistanceM / totalDistanceM) * (width - padX * 2);
     const endX = padX + (climb.endDistanceM / totalDistanceM) * (width - padX * 2);
-    const minimumWidth = 118;
+    const minimumWidth = 58;
     const paddedEnd = Math.max(endX, startX + minimumWidth);
-    let lane = laneEnds.findIndex((laneEnd) => startX > laneEnd + 28);
+    let lane = laneEnds.findIndex((laneEnd) => startX > laneEnd + 12);
 
     if (lane === -1) {
       lane = laneEnds.length;
@@ -571,19 +626,19 @@ function assignClimbAnnotationLanes(climbs, totalDistanceM, width, padX) {
 }
 
 function getProfileSegmentColor(gradePct) {
-  if (gradePct >= 4.5) {
-    return "#7f1d1d";
+  if (gradePct >= 1.2) {
+    return "#b12c24";
   }
 
   if (gradePct >= 0.18) {
-    return "#c2410c";
+    return "#d05b27";
   }
 
   if (gradePct <= -0.18) {
-    return "#2f855a";
+    return "#319467";
   }
 
-  return "rgba(120, 105, 84, 0.72)";
+  return "rgba(188, 164, 126, 0.68)";
 }
 
 function formatPercent(value) {
@@ -963,7 +1018,7 @@ function resizeCanvas() {
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
 }
 
-function createProjector(points, width, height) {
+function createProjector(points, width, height, route) {
   const bounds = points.reduce(
     (acc, point) => ({
       minX: Math.min(acc.minX, point.x),
@@ -989,27 +1044,29 @@ function createProjector(points, width, height) {
   const centerX = (bounds.minX + bounds.maxX) / 2;
   const centerY = (bounds.minY + bounds.maxY) / 2;
   const centerZ = bounds.minZ + spanZ / 2;
-  const paddingX = spanX * 0.08;
-  const paddingY = spanY * 0.18;
-  const horizontalPad = width * 0.03;
-  const verticalPad = height * 0.1;
+  const isOverallRoute = route?.id === "overall";
+  const paddingX = spanX * (isOverallRoute ? 0.028 : 0.08);
+  const paddingY = spanY * (isOverallRoute ? 0.1 : 0.18);
+  const horizontalPad = isOverallRoute ? 15 : width * 0.03;
+  const verticalPad = height * (isOverallRoute ? 0.06 : 0.1);
   const availableWidth = width - horizontalPad * 2;
   const availableHeight = height - verticalPad * 2;
   const radiusX = (spanX + paddingX * 2) / 2;
   const radiusY = (spanY + paddingY * 2) / 2;
   const radiusZ = spanZ * 1.1;
   const modelRadius = Math.sqrt(radiusX ** 2 + radiusY ** 2 + radiusZ ** 2);
-  const scale =
+  const scaleBase =
     Math.min(
       availableWidth / Math.max(modelRadius * 2.2, 1),
       availableHeight / Math.max(modelRadius * 2.1, 1)
     ) * cameraState.zoom;
   const rotation = cameraState.rotation ?? buildDefaultRotation(-0.74, degreesToRadians(28));
   const perspectiveDistance = modelRadius * 2.6;
-  const anchorX = width * 0.5;
-  const anchorY = height * 0.54;
+  let scale = isOverallRoute ? scaleBase * 1.12 : scaleBase;
+  const baseZ = bounds.minZ;
+  const verticalScale = isOverallRoute ? 1.22 : 1.95;
 
-  const rawProject = (point, zOverride) => {
+  const rawProjectAtScale = (point, zOverride, scaleValue) => {
     const z = typeof zOverride === "number" ? zOverride : point.z;
     const rotated = applyRotationMatrix(rotation, {
       x: point.x - centerX,
@@ -1017,16 +1074,86 @@ function createProjector(points, width, height) {
       z: z - centerZ
     });
     const depth = rotated.y;
-    const perspective =
-      perspectiveDistance / Math.max(perspectiveDistance + depth * 0.58, perspectiveDistance * 0.34);
+    const perspective = isOverallRoute
+      ? 1
+      : perspectiveDistance /
+        Math.max(perspectiveDistance + depth * 0.58, perspectiveDistance * 0.34);
 
     return {
-      x: rotated.x * scale * perspective,
-      y: -(rotated.z * 1.95) * scale * perspective,
+      x: rotated.x * scaleValue * perspective,
+      y: -(rotated.z * verticalScale) * scaleValue * perspective,
       depth
     };
   };
-  const baseZ = bounds.minZ;
+
+  if (isOverallRoute) {
+    const projectOverallAtPitch = (point, pitchValue) => {
+      const defaults = getDefaultCamera(route);
+      const rotationAtPitch = buildDefaultRotation(defaults.yaw, pitchValue);
+      const rotated = applyRotationMatrix(rotationAtPitch, {
+        x: point.x - centerX,
+        y: point.y - centerY,
+        z: point.z - centerZ
+      });
+
+      return {
+        x: rotated.x,
+        y: -(rotated.z * verticalScale)
+      };
+    };
+    const defaults = getDefaultCamera(route);
+    const startUnit = projectOverallAtPitch(points[0], defaults.pitch);
+    const endUnit = projectOverallAtPitch(points[points.length - 1], defaults.pitch);
+    const routeWidthAtUnit = Math.max(Math.abs(endUnit.x - startUnit.x), 1);
+    const widthScale = (width - 18) / routeWidthAtUnit;
+    scale = widthScale * 0.998;
+  }
+
+  const rawProject = (point, zOverride) => rawProjectAtScale(point, zOverride, scale);
+  const centeringSamples = [
+    ...points,
+    { x: bounds.minX - paddingX, y: bounds.minY - paddingY, z: baseZ },
+    { x: bounds.maxX + paddingX, y: bounds.minY - paddingY, z: baseZ },
+    { x: bounds.maxX + paddingX, y: bounds.maxY + paddingY, z: baseZ },
+    { x: bounds.minX - paddingX, y: bounds.maxY + paddingY, z: baseZ }
+  ].map((point) => rawProject(point, point.z));
+  const projectedBounds = centeringSamples.reduce(
+    (acc, point) => ({
+      minX: Math.min(acc.minX, point.x),
+      maxX: Math.max(acc.maxX, point.x),
+      minY: Math.min(acc.minY, point.y),
+      maxY: Math.max(acc.maxY, point.y)
+    }),
+    {
+      minX: Infinity,
+      maxX: -Infinity,
+      minY: Infinity,
+      maxY: -Infinity
+    }
+  );
+  const routeProjectedBounds = points
+    .map((point) => rawProject(point, point.z))
+    .reduce(
+      (acc, point) => ({
+        minX: Math.min(acc.minX, point.x),
+        maxX: Math.max(acc.maxX, point.x),
+        minY: Math.min(acc.minY, point.y),
+        maxY: Math.max(acc.maxY, point.y)
+      }),
+      {
+        minX: Infinity,
+        maxX: -Infinity,
+        minY: Infinity,
+        maxY: -Infinity
+      }
+    );
+  const projectedStart = rawProject(points[0], points[0].z);
+  const anchorX = isOverallRoute
+    ? 4 - projectedStart.x
+    : width * 0.5 - (projectedBounds.minX + projectedBounds.maxX) / 2;
+  const anchorY = isOverallRoute
+    ? height * 0.52 - (routeProjectedBounds.minY + routeProjectedBounds.maxY) / 2
+    : height * 0.54 - (projectedBounds.minY + projectedBounds.maxY) / 2;
 
   const project = (point, zOverride) => {
     const projected = rawProject(point, zOverride);
@@ -1051,8 +1178,8 @@ function drawFloor(ctx2d, projector, width, height) {
   ].map((point) => project(point, baseZ));
 
   const floorGradient = ctx2d.createLinearGradient(0, height * 0.24, width, height);
-  floorGradient.addColorStop(0, "rgba(214, 204, 182, 0.26)");
-  floorGradient.addColorStop(1, "rgba(177, 164, 136, 0.12)");
+  floorGradient.addColorStop(0, "rgba(228, 219, 198, 0.34)");
+  floorGradient.addColorStop(1, "rgba(190, 178, 148, 0.18)");
 
   ctx2d.beginPath();
   corners.forEach((corner, index) => {
@@ -1066,7 +1193,7 @@ function drawFloor(ctx2d, projector, width, height) {
   ctx2d.fillStyle = floorGradient;
   ctx2d.fill();
 
-  ctx2d.strokeStyle = "rgba(107, 97, 80, 0.12)";
+  ctx2d.strokeStyle = "rgba(107, 97, 80, 0.18)";
   ctx2d.lineWidth = 1;
   ctx2d.stroke();
 
@@ -1086,12 +1213,16 @@ function drawFloor(ctx2d, projector, width, height) {
     ctx2d.beginPath();
     ctx2d.moveTo(p1.x, p1.y);
     ctx2d.lineTo(p2.x, p2.y);
-    ctx2d.strokeStyle = "rgba(107, 97, 80, 0.08)";
+    ctx2d.strokeStyle = "rgba(107, 97, 80, 0.12)";
     ctx2d.stroke();
   }
 }
 
 function drawAxisCaptions(ctx2d, route, projector) {
+  if (route?.id === "overall") {
+    return;
+  }
+
   const { bounds, project, baseZ } = projector;
   const leftBase = project({ x: bounds.minX, y: bounds.maxY, z: baseZ }, baseZ);
   const lowerBase = project({ x: bounds.maxX, y: bounds.maxY, z: baseZ }, baseZ);
@@ -1125,7 +1256,7 @@ function drawRoute(route) {
   ctx.clearRect(0, 0, width, height);
 
   const allPoints = route.plotGroups.flatMap((group) => group.points);
-  const projector = createProjector(allPoints, width, height);
+  const projector = createProjector(allPoints, width, height, route);
   drawFloor(ctx, projector, width, height);
 
   const sideSegments = [];
@@ -1242,6 +1373,31 @@ function drawRoute(route) {
   drawAxisCaptions(ctx, route, projector);
 }
 
+function buildSmoothPath(points) {
+  if (points.length === 0) {
+    return "";
+  }
+
+  if (points.length === 1) {
+    return `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+  }
+
+  let path = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+
+  for (let index = 1; index < points.length - 1; index += 1) {
+    const current = points[index];
+    const next = points[index + 1];
+    const midX = (current.x + next.x) / 2;
+    const midY = (current.y + next.y) / 2;
+    path += ` Q ${current.x.toFixed(2)} ${current.y.toFixed(2)} ${midX.toFixed(2)} ${midY.toFixed(2)}`;
+  }
+
+  const last = points[points.length - 1];
+  const penultimate = points[points.length - 2];
+  path += ` Q ${penultimate.x.toFixed(2)} ${penultimate.y.toFixed(2)} ${last.x.toFixed(2)} ${last.y.toFixed(2)}`;
+  return path;
+}
+
 function renderProfile(route) {
   const width = 1000;
   const climbAnnotations = assignClimbAnnotationLanes(
@@ -1254,11 +1410,11 @@ function renderProfile(route) {
     10
   );
   const laneCount = climbAnnotations.reduce((maxLane, climb) => Math.max(maxLane, climb.lane + 1), 0);
-  const annotationHeight = laneCount > 0 ? 28 + laneCount * 24 : 12;
-  const height = 180 + annotationHeight + 18;
-  const padX = 10;
+  const annotationHeight = laneCount > 0 ? 14 + laneCount * 12 : 10;
+  const height = 56 + annotationHeight + 12;
+  const padX = 14;
   const padTop = annotationHeight;
-  const padBottom = 18;
+  const padBottom = 12;
   const min = route.metrics.minEleM;
   const max = route.metrics.maxEleM;
   const range = Math.max(max - min, 1);
@@ -1267,47 +1423,84 @@ function renderProfile(route) {
     1
   );
   const plotHeight = height - padTop - padBottom;
+  const gridLines = [0.24, 0.52, 0.8]
+    .map((ratio) => {
+      const y = padTop + plotHeight * ratio;
+      return `<line x1="${padX}" y1="${y.toFixed(2)}" x2="${width - padX}" y2="${y.toFixed(
+        2
+      )}" stroke="rgba(255,255,255,0.055)" stroke-width="1"></line>`;
+    })
+    .join("");
 
   const segmentMarkup = route.profileGroups
     .map((group) => {
-      const plottedPoints = group.samples.map((point) => ({
+      const renderedSamples = smoothProfileSamples(group.samples, route.id === "overall" ? 4 : 3).map(
+        (point) => ({
+          ...point,
+          renderedEle: point.smoothEle ?? point.ele
+        })
+      );
+      const plottedPoints = renderedSamples.map((point) => ({
         ...point,
         x: padX + (point.distanceM / totalDistanceM) * (width - padX * 2),
-        y: height - padBottom - ((point.ele - min) / range) * plotHeight
+        y: height - padBottom - ((point.renderedEle - min) / range) * plotHeight
       }));
-      const path = plottedPoints
-        .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`)
-        .join(" ");
+      const path = buildSmoothPath(plottedPoints);
 
-      const last = group.samples[group.samples.length - 1];
-      const first = group.samples[0];
+      const last = renderedSamples[renderedSamples.length - 1];
+      const first = renderedSamples[0];
       const fillPath = `${path} L ${
         padX + (last.distanceM / totalDistanceM) * (width - padX * 2)
       } ${height - padBottom} L ${
         padX + (first.distanceM / totalDistanceM) * (width - padX * 2)
       } ${height - padBottom} Z`;
+      const colorSegments = plottedPoints
+        .slice(1)
+        .map((point, index) => {
+          const previous = plottedPoints[index];
+          const currentSample = renderedSamples[index + 1];
+          const previousSample = renderedSamples[index];
+          const distanceDeltaM = Math.max(currentSample.distanceM - previousSample.distanceM, 1);
+          const gradePct =
+            ((currentSample.renderedEle - previousSample.renderedEle) / distanceDeltaM) * 100;
+
+          return `
+            <line
+              x1="${previous.x.toFixed(2)}"
+              y1="${previous.y.toFixed(2)}"
+              x2="${point.x.toFixed(2)}"
+              y2="${point.y.toFixed(2)}"
+              stroke="${getProfileSegmentColor(gradePct)}"
+              stroke-width="3.8"
+              stroke-linecap="round"
+            ></line>
+          `;
+        })
+        .join("");
 
       return `
-        <path d="${fillPath}" fill="${group.accent}" fill-opacity="0.18"></path>
+        <path d="${fillPath}" fill="rgba(188,128,78,0.11)"></path>
+        <path
+          d="${path}"
+          fill="none"
+          stroke="rgba(34,35,39,0.26)"
+          stroke-width="6.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+        ${colorSegments}
         ${plottedPoints
-          .slice(1)
-          .map((point, index) => {
-            const previous = plottedPoints[index];
-            const distanceDeltaM = Math.max(point.distanceM - previous.distanceM, 1);
-            const gradePct = ((point.ele - previous.ele) / distanceDeltaM) * 100;
-
-            return `
-              <line
-                x1="${previous.x.toFixed(2)}"
-                y1="${previous.y.toFixed(2)}"
-                x2="${point.x.toFixed(2)}"
-                y2="${point.y.toFixed(2)}"
-                stroke="${getProfileSegmentColor(gradePct)}"
-                stroke-width="4.5"
-                stroke-linecap="round"
-              ></line>
-            `;
-          })
+          .filter((point, index) => index % 6 === 0)
+          .map(
+            (point) => `
+              <circle
+                cx="${point.x.toFixed(2)}"
+                cy="${point.y.toFixed(2)}"
+                r="1.15"
+                fill="rgba(255,246,233,0.22)"
+              ></circle>
+            `
+          )
           .join("")}
       `;
     })
@@ -1320,9 +1513,9 @@ function renderProfile(route) {
           .map((group) => {
             const edge = group.samples[group.samples.length - 1];
             const x = padX + (edge.distanceM / totalDistanceM) * (width - padX * 2);
-            return `<line x1="${x.toFixed(2)}" y1="0" x2="${x.toFixed(
+            return `<line x1="${x.toFixed(2)}" y1="${padTop - 2}" x2="${x.toFixed(
               2
-            )}" y2="${height}" stroke="rgba(97,85,62,0.18)" stroke-dasharray="6 6"></line>`;
+            )}" y2="${height - padBottom + 2}" stroke="rgba(255,255,255,0.055)" stroke-width="1"></line>`;
           })
           .join("")
       : "";
@@ -1352,31 +1545,39 @@ function renderProfile(route) {
 
   const climbMarkup = climbAnnotations
     .map((climb) => {
-      const label = `${(climb.distanceM / 1000).toFixed(1).replace(".", ",")} km · ${Math.round(
-        climb.ascentM
-      )} hm`;
-      const lineY = 18 + climb.lane * 24;
-      const labelWidth = Math.max(128, label.length * 6.2 + 16);
+      const label = `${(climb.distanceM / 1000).toFixed(1).replace(".", ",")} km`;
+      const centerX =
+        padX +
+        (((climb.startDistanceM + climb.endDistanceM) / 2) / totalDistanceM) * (width - padX * 2);
+      const pillY = 3 + climb.lane * 12;
+      const labelWidth = Math.max(54, label.length * 5.35 + 16);
       const labelX = Math.min(
-        Math.max((climb.startX + climb.endX) / 2 - labelWidth / 2, padX),
+        Math.max(centerX - labelWidth / 2, padX),
         width - padX - labelWidth
       );
+      const dotY = pillY + 15;
 
       return `
         <rect
           x="${labelX.toFixed(2)}"
-          y="${(lineY - 19).toFixed(2)}"
+          y="${pillY.toFixed(2)}"
           width="${labelWidth.toFixed(2)}"
-          height="18"
-          rx="9"
-          fill="rgba(255,250,240,0.92)"
-          stroke="rgba(97,85,62,0.12)"
+          height="12"
+          rx="6"
+          fill="rgba(50,46,42,0.72)"
+          stroke="rgba(255,248,235,0.14)"
         ></rect>
+        <circle
+          cx="${centerX.toFixed(2)}"
+          cy="${dotY.toFixed(2)}"
+          r="1.7"
+          fill="rgba(255,244,226,0.48)"
+        ></circle>
         <text
           x="${(labelX + labelWidth / 2).toFixed(2)}"
-          y="${(lineY - 7).toFixed(2)}"
-          fill="rgba(31,36,48,0.78)"
-          font-size="11.5"
+          y="${(pillY + 8.2).toFixed(2)}"
+          fill="rgba(252,246,237,0.94)"
+          font-size="8.2"
           font-weight="600"
           text-anchor="middle"
         >${label}</text>
@@ -1430,6 +1631,14 @@ function renderProfile(route) {
   profileEl.setAttribute("viewBox", `0 0 ${width} ${height}`);
   profileEl.style.height = `${height}px`;
   profileEl.innerHTML = `
+    <defs>
+      <linearGradient id="profile-surface" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.11"></stop>
+        <stop offset="100%" stop-color="#000000" stop-opacity="0.1"></stop>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="${width}" height="${height}" rx="16" fill="url(#profile-surface)"></rect>
+    ${gridLines}
     <rect x="0" y="${height - 1}" width="${width}" height="1" fill="rgba(97,85,62,0.14)"></rect>
     ${zeroLine}
     ${separators}
@@ -1568,6 +1777,7 @@ function renderActiveRoute() {
   }
 
   activeRoute = route;
+  updateCanvasInteractionHint(route);
   updateEventCopy(event);
   document.documentElement.style.setProperty("--accent", route.accent);
   updateStats(route);
@@ -1576,6 +1786,11 @@ function renderActiveRoute() {
 
 function setupCanvasInteraction() {
   canvas.addEventListener("pointerdown", (event) => {
+    if (activeRoute?.id === "overall" && !cameraState.overallUnlocked) {
+      cameraState.overallUnlocked = true;
+      updateCanvasInteractionHint(activeRoute);
+    }
+
     cameraState.dragging = true;
     cameraState.pointerId = event.pointerId;
     cameraState.lastX = event.clientX;
@@ -1618,6 +1833,10 @@ function setupCanvasInteraction() {
   canvas.addEventListener(
     "wheel",
     (event) => {
+      if (activeRoute?.id === "overall" && !cameraState.overallUnlocked) {
+        return;
+      }
+
       event.preventDefault();
       const zoomFactor = Math.exp(-event.deltaY * 0.0022);
       cameraState.zoom = clamp(cameraState.zoom * zoomFactor, 0.14, 12);

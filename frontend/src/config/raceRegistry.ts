@@ -69,7 +69,28 @@ export const RACE_YEAR_REGISTRY: Record<number, RaceYearConfig> = {
     startersAfterSwim: 253,
     notes: ["37.5 km Black/White decision year"],
   },
+  2026: {
+    year: 2026,
+    cutoffRunKm: 37.5,
+    cutoffSplitKey: "run_37_5km_stavsro_cut_off",
+    finishDistanceKm: 221.3,
+    startersAfterSwim: 248,
+    notes: [
+      "37.5 km Black/White decision year",
+      "Timing mat at 101 km Skurdalen largely failed; 143 splits interpolated.",
+    ],
+  },
 };
+
+export const CUTOFF_37_5_YEARS = new Set(
+  Object.values(RACE_YEAR_REGISTRY)
+    .filter((config) => config.cutoffRunKm === 37.5)
+    .map((config) => config.year),
+);
+
+export const LATEST_YEAR = Math.max(
+  ...Object.values(RACE_YEAR_REGISTRY).map((config) => config.year),
+);
 
 export const KNOWN_YEARS = Object.keys(RACE_YEAR_REGISTRY)
   .map((year) => Number(year))

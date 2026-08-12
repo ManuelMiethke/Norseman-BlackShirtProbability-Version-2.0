@@ -1,17 +1,20 @@
 import type { Data, Layout } from "plotly.js";
 
+import { CUTOFF_37_5_YEARS, RACE_YEAR_REGISTRY } from "@/config/raceRegistry";
 import type { LongRow } from "@/types/data";
 
-const YEARS_TO_PLOT = [2018, 2019, 2021, 2022, 2024, 2025];
+// Jahre und Cut-off-Splits kommen aus der Registry, damit ein neues
+// Renn-Jahr nicht an mehreren Stellen nachgetragen werden muss
+const YEARS_TO_PLOT = Object.values(RACE_YEAR_REGISTRY)
+  .map((config) => config.year)
+  .sort((left, right) => left - right);
 const CUTOFF_SECONDS = 14 * 3600 + 45 * 60;
-const CUTOFF_SPLIT_BY_YEAR: Record<number, string> = {
-  2018: "run_32_5km_langefonn",
-  2019: "run_32_5km_langefonn",
-  2021: "run_32_5km_langefonn",
-  2022: "run_32_5km_langefonn",
-  2024: "run_37_5km_stavsro_cut_off",
-  2025: "run_37_5km_stavsro_cut_off",
-};
+const CUTOFF_SPLIT_BY_YEAR: Record<number, string> = Object.values(
+  RACE_YEAR_REGISTRY,
+).reduce<Record<number, string>>((acc, config) => {
+  acc[config.year] = config.cutoffSplitKey;
+  return acc;
+}, {});
 const DNF_HARDCODED: Record<number, number> = {
   2018: 7,
   2019: 12,
@@ -19,6 +22,7 @@ const DNF_HARDCODED: Record<number, number> = {
   2022: 16,
   2024: 17,
   2025: 11,
+  2026: 15,
 };
 
 type PlotFigure = {
@@ -181,7 +185,7 @@ function buildFrontierFigure(rows: LongRow[]): {
   figure: PlotFigure | null;
   medianHours: number | null;
 } {
-  const frontierYears = [2024, 2025];
+  const frontierYears = [...CUTOFF_37_5_YEARS].sort((left, right) => left - right);
   const frontierRows = rows.filter(
     (row) =>
       frontierYears.includes(Number(row.year)) &&

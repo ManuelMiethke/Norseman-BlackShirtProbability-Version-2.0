@@ -1,0 +1,63 @@
+{
+  "identity": {
+    "t1_time": "T1",
+    "bike_time": "Bike",
+    "t2_time": "T2",
+    "swim_time": "Swim to T1",
+    "run_time": "Run (Black)",
+    "bib": "Bib",
+    "name": "Name",
+    "gender": "M/F",
+    "country": "Nat",
+    "club": "Club",
+    "finish_type": "Shirt",
+    "overall_time": "Total time"
+  },
+  "stations": {
+    "swim_finish": "Swim finish",
+    "transition_1_in": "Transition 1 Eidfjord",
+    "bike_start": "Bike Start Eidfjord",
+    "bike_6km_ovre_eidfjord": "Bike - 6 km Øvre Eidfjord",
+    "bike_11km_enter_gamlevegen": "Bike - 11 km Enter Gamlevegen",
+    "bike_16km_voringfossen": "Bike - 16 km Vøringfossen",
+    "bike_20km_garen": "Bike - 20 km Garen",
+    "bike_28km_bjoreio": "Bike - 28 km Bjoreio",
+    "bike_36km_dyranut": "Bike - 36 km Dyranut",
+    "bike_47km_halne": "Bike - 47 km Halne",
+    "bike_66km_haugastol": "Bike - 66 km Haugastøl",
+    "bike_90km_geilo": "Bike - 90 km Geilo",
+    "bike_94km_kikut": "Bike - 94 km Kikut",
+    "bike_101km_skurdalen": "Bike - 101 km Skurdalen",
+    "bike_113km_dagali": "Bike - 113 km Dagali",
+    "bike_123km_vasstulan": "Bike - 123 km Vasstulan",
+    "bike_134km_start_imingfjell": "Bike - 134 km Start Imingfjell",
+    "bike_142km_top_imingfjell": "Bike - 142 km Top Imingfjell",
+    "bike_152km_end_imingfjell": "Bike - 152 km End Imingfjell",
+    "bike_179km_austbygde": "Bike - 179 km Austbygde",
+    "bike_180km_finish": "Bike finish Austbygde",
+    "run_start": "Run start Austbygde",
+    "run_5km_atraa": "Run - 5 km Atraa",
+    "run_10km": "Run - 10K",
+    "run_15km_tinnsjo": "Run - 15 km Tinnsjø",
+    "run_20km_miland": "Run - 20 km Miland",
+    "run_25km_zombie_hill_base": "Run - 25 km Zombie Hill base",
+    "run_zombie_hill_1st_turn": "Run - Zombie Hill 1st turn",
+    "run_zombie_hill_2nd_turn": "Run - Zombie Hill 2nd turn",
+    "run_zombie_hill_3rd_turn": "Run - Zombie Hill 3rd turn",
+    "run_zombie_hill_4th_turn": "Run - Zombie Hill 4th turn",
+    "run_zombie_hill_5th_turn": "Run - Zombie Hill 5th turn",
+    "run_32_5km_langefonn": "Run - 32.5km Langefonn",
+    "run_37_5km_stavsro_cut_off": "Run - 37,5km Stavsro",
+    "run_40km_right_before_mt_gaustatoppen": "Run - 40km towards Mt. Gausta",
+    "finish_black_t_shirt": "Finish - 42km Mount Gausta (Black finish)"
+  },
+  "stations_missing": [
+    "finish_white_t_shirt"
+  ],
+  "raw_columns_unmapped": [
+    "Run - 33 km Svineroi"
+  ],
+  "n_starters_after_swim": 248,
+  "n_interpolated_cells": 178,
+  "source_list": "__details__|Splits aus der Detailansicht"
+}

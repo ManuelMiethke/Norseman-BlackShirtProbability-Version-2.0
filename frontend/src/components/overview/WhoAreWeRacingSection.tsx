@@ -92,7 +92,7 @@ export function WhoAreWeRacingSection() {
           <div className="section-note">
             <strong>Cut-off median</strong>
             <span>
-              2024-2025 median at 37.5 km: {formatHoursMinutes(frontierMedianHours)}
+              Median at 37.5 km cut-off: {formatHoursMinutes(frontierMedianHours)}
             </span>
           </div>
         ) : null}

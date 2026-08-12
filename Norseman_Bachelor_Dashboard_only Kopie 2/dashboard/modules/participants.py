@@ -88,8 +88,9 @@ def compute_stats(df: pd.DataFrame, selected_year):
         white = sub[sub["finish_type"] == "White"]["bib"].nunique()
         dnf_known = sub[sub["finish_type"] == "DNF"]["bib"].nunique()
 
-        # DNF-Regel
-        if y in (2019, 2025):
+        # DNF-Regel: wo die Quelldaten DNF explizit ausweisen (2019, 2025, 2026),
+        # diese Zahl verwenden - sonst aus Startern minus Finishern ableiten
+        if dnf_known > 0:
             dnf = dnf_known
         else:
             dnf = max(n_starters - black - white, 0)

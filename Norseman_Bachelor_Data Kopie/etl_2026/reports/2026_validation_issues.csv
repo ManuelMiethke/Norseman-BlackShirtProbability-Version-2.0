@@ -1,0 +1,14 @@
+row,check,severity,station,detail,value,reference,bib,name
+197,segment_speed,soft,bike_11km_enter_gamlevegen,bike_6km_ovre_eidfjord -> bike_11km_enter_gamlevegen: 5.3 km/h auffaellig (3.0-75.0),5.327019828351584,5.0,72,Sully LUEPKE
+197,segment_outlier,soft,bike_11km_enter_gamlevegen,bike_6km_ovre_eidfjord -> bike_11km_enter_gamlevegen: 3379s vs Median 1059s (robuster z=19.1),3379.0,1059.0,72,Sully LUEPKE
+242,segment_outlier,soft,bike_47km_halne,bike_36km_dyranut -> bike_47km_halne: 1894s vs Median 1038s (robuster z=7.2),1894.0,1038.0,77,Stine SPIDSBERG
+125,segment_outlier,soft,bike_66km_haugastol,bike_47km_halne -> bike_66km_haugastol: 3342s vs Median 1863s (robuster z=6.8),3342.0,1863.0,149,Riley BROWN
+199,segment_outlier,soft,bike_90km_geilo,bike_66km_haugastol -> bike_90km_geilo: 4090s vs Median 2273s (robuster z=6.7),4090.0,2273.0,253,Sean WISNER
+199,segment_outlier,soft,bike_101km_skurdalen,bike_94km_kikut -> bike_101km_skurdalen: 1811s vs Median 852s (robuster z=8.2),1811.140449438204,851.7583783783775,253,Sean WISNER
+199,segment_outlier,soft,bike_113km_dagali,bike_101km_skurdalen -> bike_113km_dagali: 3519s vs Median 1640s (robuster z=8.4),3518.567659990229,1640.0,253,Sean WISNER
+172,segment_outlier,soft,bike_134km_start_imingfjell,bike_123km_vasstulan -> bike_134km_start_imingfjell: 1458s vs Median 828s (robuster z=6.2),1458.0,828.5,38,Matthias BAUER
+242,segment_outlier,soft,bike_134km_start_imingfjell,bike_123km_vasstulan -> bike_134km_start_imingfjell: 1502s vs Median 828s (robuster z=6.6),1502.0,828.5,77,Stine SPIDSBERG
+243,segment_outlier,soft,bike_134km_start_imingfjell,bike_123km_vasstulan -> bike_134km_start_imingfjell: 1496s vs Median 828s (robuster z=6.5),1496.0,828.5,112,Julie BILLE HANSEN
+190,segment_outlier,soft,run_5km_atraa,run_start -> run_5km_atraa: 3297s vs Median 1630s (robuster z=7.8),3297.109573148031,1629.8499999999985,227,Einar FINØEN
+192,segment_outlier,soft,run_5km_atraa,run_start -> run_5km_atraa: 2935s vs Median 1630s (robuster z=6.1),2935.4000000000015,1629.8499999999985,148,Åge FRIVOLL
+190,segment_outlier,soft,run_10km,run_5km_atraa -> run_10km: 3231s vs Median 1596s (robuster z=6.3),3231.090426851966,1596.0,227,Einar FINØEN
