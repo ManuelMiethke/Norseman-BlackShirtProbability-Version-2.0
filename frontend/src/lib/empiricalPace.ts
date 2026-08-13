@@ -1,5 +1,6 @@
 import type { Data, Layout } from "plotly.js";
 
+import { CUTOFF_37_5_YEARS } from "@/config/raceRegistry";
 import type { CourseProfileRow, LongRow } from "@/types/data";
 
 const TARGET_TOTAL_SECS = 13 * 3600 + 51 * 60;

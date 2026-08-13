@@ -10,7 +10,12 @@ function parseCsv(url: string): Promise<Record<string, unknown>[]> {
     Papa.parse<Record<string, unknown>>(url, {
       download: true,
       header: true,
-      dynamicTyping: true,
+      // Bewusst aus: die Hooks (useLongData, useWideData, useModelData,
+      // useCourseProfileData) konvertieren jedes Feld ohnehin selbst mit
+      // Number() bzw. String() und behandeln "" und null bereits gleich.
+      // dynamicTyping wuerde diese Arbeit fuer ueber drei Millionen Zellen
+      // ein zweites Mal machen.
+      dynamicTyping: false,
       skipEmptyLines: true,
       complete: (results) => {
         if (results.errors.length > 0) {
