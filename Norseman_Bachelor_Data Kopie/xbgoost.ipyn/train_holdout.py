@@ -60,7 +60,14 @@ FEATURE_COLS = [
     "progress_perc",
 ]
 CAT_COLS = ["split_key", "leg"]
-META_COLS = ["bib", "year", "split_distance_km", "split_key", "finish_type"]
+# race_distance_km muss mit: split_distance_km ist leg-relativ (Rad bis 180,
+# Lauf bis 42), taugt also NICHT zum Sortieren entlang der Rennstrecke.
+META_COLS = ["bib", "year", "split_distance_km", "race_distance_km", "split_key", "finish_type"]
+
+# Jahres-Konstanten. Bei einem Jahres-Holdout liegt das Testjahr ausserhalb
+# des Trainingsbereichs, XGBoost schiebt es dann in denselben Ast wie das
+# letzte Trainingsjahr. Mit --drop-year-features laesst sich das abschalten.
+YEAR_LEVEL_COLS = ["year", "n_starters_year"]
 
 PARAMS = dict(
     objective="binary:logistic",
@@ -102,10 +109,14 @@ def build_matrix(df: pd.DataFrame):
 
 
 def athlete_level(df_eval: pd.DataFrame) -> dict:
-    """Entscheidung je Athlet am letzten verfuegbaren Split vor dem Cut-off."""
-    last = df_eval.sort_values(["bib", "split_distance_km"]).groupby("bib").tail(1)
+    """Entscheidung je Athlet am letzten verfuegbaren Split vor dem Cut-off.
+
+    Sortiert wird nach race_distance_km (kumuliert). Mit split_distance_km
+    (leg-relativ) landet man sonst beim Rad-Ziel, weil 180 > 37.5."""
+    last = df_eval.sort_values(["bib", "race_distance_km"]).groupby("bib").tail(1)
     return {
         "n_athletes": int(len(last)),
+        "measured_at": last["split_key"].value_counts().to_dict(),
         "accuracy": float(accuracy_score(last["y_true"], last["y_pred"])),
         "roc_auc": float(roc_auc_score(last["y_true"], last["y_proba"]))
         if last["y_true"].nunique() > 1 else float("nan"),
@@ -114,11 +125,50 @@ def athlete_level(df_eval: pd.DataFrame) -> dict:
     }
 
 
+def leave_one_year_out(X: pd.DataFrame, y: pd.Series, years: pd.Series):
+    """Je Jahr ein eigenes Modell, das dieses Jahr nie gesehen hat.
+
+    Fuer die Diagramme ist das der ehrliche Weg: wuerde man ein einziges
+    Modell nehmen und nur 2026 zurueckhalten, waeren 2018-2025 In-Sample
+    und damit kuenstlich gut - ein Vergleich der Fehlerquoten ueber die
+    Jahre wuerde 2026 systematisch schlechter aussehen lassen, ohne dass
+    das Rennen schwerer war."""
+    proba = np.full(len(X), np.nan)
+    per_year = []
+
+    for year in sorted(years.unique()):
+        mask = (years == year).to_numpy()
+        model = XGBClassifier(**PARAMS)
+        model.fit(X[~mask], y[~mask])
+        p = model.predict_proba(X[mask])[:, 1]
+        proba[mask] = p
+
+        y_true = y[mask]
+        pred = (p >= 0.5).astype(int)
+        per_year.append({
+            "year": int(year),
+            "n_rows": int(mask.sum()),
+            "black_share": round(float(y_true.mean()), 3),
+            "accuracy": round(float(accuracy_score(y_true, pred)), 4),
+            "roc_auc": round(float(roc_auc_score(y_true, p)), 4)
+            if y_true.nunique() > 1 else float("nan"),
+            "log_loss": round(float(log_loss(y_true, p)), 4),
+            "missed_black": int(((y_true == 1) & (pred == 0)).sum()),
+            "false_black": int(((y_true == 0) & (pred == 1)).sum()),
+        })
+
+    return proba, pd.DataFrame(per_year)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--test-year", type=int, default=2026)
     ap.add_argument("--write-dashboard-csv", action="store_true",
                     help="xgb_black_probs_long_with_errors.csv neu schreiben")
+    ap.add_argument("--drop-year-features", action="store_true",
+                    help="year und n_starters_year weglassen (kein Extrapolieren)")
+    ap.add_argument("--leave-one-year-out", action="store_true",
+                    help="je Jahr ein Modell ohne dieses Jahr; alle Jahre out-of-sample")
     args = ap.parse_args()
     test_year = args.test_year
 
@@ -138,10 +188,37 @@ def main() -> int:
         raise SystemExit(f"Jahr {test_year} nicht in den Daten.")
 
     X = build_matrix(df)
+    if args.drop_year_features:
+        X = X.drop(columns=[c for c in YEAR_LEVEL_COLS if c in X.columns])
+        print(f"Ohne Jahres-Features: {YEAR_LEVEL_COLS}")
     y = df["label_black"]
     meta = df[META_COLS].copy()
     if "name" in df.columns:
         meta["name"] = df["name"]
+
+    if args.leave_one_year_out:
+        years = df["year"].astype(int)
+        print(f"\nLeave-one-year-out ueber {sorted(years.unique())} "
+              f"- {years.nunique()} Modelle")
+        proba_all, per_year = leave_one_year_out(X, y, years)
+
+        print("\n" + "=" * 78)
+        print("Jedes Jahr vorhergesagt von einem Modell, das es nie gesehen hat")
+        print("=" * 78)
+        print(per_year.to_string(index=False))
+
+        pred_all = (proba_all >= 0.5).astype(int)
+        print(f"\nGesamt out-of-sample: Accuracy {accuracy_score(y, pred_all):.4f} | "
+              f"ROC AUC {roc_auc_score(y, proba_all):.4f}")
+        per_year.to_csv(OUT_DIR / "leave_one_year_out_metrics.csv", index=False)
+
+        if args.write_dashboard_csv:
+            # Alle Zeilen sind out-of-sample, also alle als "test" markiert -
+            # Dashboard und Frontend filtern genau darauf.
+            write_dashboard(df, y, proba_all, np.full(len(df), "test"))
+
+        print(f"\nReports: {OUT_DIR}")
+        return 0
 
     is_test = df["year"].astype(int) == test_year
     X_train, X_test = X[~is_test], X[is_test]
@@ -198,6 +275,7 @@ def main() -> int:
     print("=" * 62)
     print(f"Athleten-Ebene - Entscheidung am letzten Split vor dem Cut-off")
     print("=" * 62)
+    print(f"Gemessen an: {a['measured_at']}")
     print(f"Athleten   : {a['n_athletes']}")
     print(f"Accuracy   : {a['accuracy']:.4f}  ({a['n_wrong']} falsch)")
     print(f"ROC AUC    : {a['roc_auc']:.4f}")
@@ -240,33 +318,48 @@ def main() -> int:
         proba_all = np.empty(len(X)); proba_all[:] = np.nan
         proba_all[is_test.values] = proba
         proba_all[~is_test.values] = model.predict_proba(X_train)[:, 1]
-        out = pd.DataFrame({
-            "year": df["year"].astype(int),
-            "bib": df["bib"],
-            "name": df["name"] if "name" in df.columns else "",
-            "finish_type": df["finish_type"].str.lower(),
-            "split_key": df["split_key"],
-            "leg": df["leg"],
-            "race_distance_km": df["race_distance_km"],
-            "cum_time_seconds": df["cum_time_seconds"],
-            "segment_speed_kmh": df["segment_speed_kmh"],
-            "split_rank": df["split_rank"],
-            "split_rank_relative": df["split_rank_relative"],
-            "y_true": y.values,
-            "p_black": proba_all,
-        })
-        out["y_pred"] = (out["p_black"] >= 0.5).astype(int)
-        out["is_error"] = (out["y_true"] != out["y_pred"]).astype(int)
-        out["error_type"] = np.where(
-            out["is_error"] == 0, "correct",
-            np.where(out["y_true"] == 1, "missed_black", "false_black"))
-        out["set"] = np.where(is_test.values, "test", "train")
-        out.to_csv(MODEL_CSV, index=False)
-        print(f"\nDashboard-Datei geschrieben: {MODEL_CSV}")
-        print(f"  Jahre: {sorted(out['year'].unique())}, {len(out)} Zeilen")
+        write_dashboard(df, y, proba_all, np.where(is_test.values, "test", "train"))
 
     print(f"\nReports: {OUT_DIR}")
     return 0
+
+
+def write_dashboard(df: pd.DataFrame, y: pd.Series, proba_all, set_labels) -> None:
+    """Modell-CSV fuer Dashboard und Frontend schreiben.
+
+    Beide filtern auf set == "test" - nur diese Zeilen landen in den
+    Diagrammen."""
+    out = pd.DataFrame({
+        "year": df["year"].astype(int),
+        "bib": df["bib"],
+        "name": df["name"] if "name" in df.columns else "",
+        "finish_type": df["finish_type"].str.lower(),
+        "split_key": df["split_key"],
+        "leg": df["leg"],
+        "race_distance_km": df["race_distance_km"],
+        "cum_time_seconds": df["cum_time_seconds"],
+        "segment_speed_kmh": df["segment_speed_kmh"],
+        "split_rank": df["split_rank"],
+        "split_rank_relative": df["split_rank_relative"],
+        "y_true": y.values,
+        "p_black": proba_all,
+    })
+    out["y_pred"] = (out["p_black"] >= 0.5).astype(int)
+    out["is_error"] = (out["y_true"] != out["y_pred"]).astype(int)
+    out["error_type"] = np.where(
+        out["is_error"] == 0, "correct",
+        np.where(out["y_true"] == 1, "missed_black", "false_black"))
+    out["set"] = set_labels
+
+    if MODEL_CSV.exists():
+        backup = MODEL_CSV.with_suffix(".csv.bak")
+        MODEL_CSV.replace(backup)
+        print(f"\nSicherung der alten Datei: {backup.name}")
+
+    out.to_csv(MODEL_CSV, index=False)
+    print(f"Dashboard-Datei geschrieben: {MODEL_CSV}")
+    print(f"  Jahre: {sorted(out['year'].unique())}, {len(out)} Zeilen, "
+          f"davon in den Diagrammen sichtbar: {int((out['set'] == 'test').sum())}")
 
 
 if __name__ == "__main__":

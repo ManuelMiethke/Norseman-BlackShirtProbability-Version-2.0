@@ -1,0 +1,45 @@
+{
+  "test_year": 2026,
+  "n_rows_train": 41023,
+  "n_rows_test": 8017,
+  "black_share_train": 0.6543158715842332,
+  "black_share_test": 0.6700760883123363,
+  "split_level": {
+    "accuracy": 0.8901085193962829,
+    "roc_auc": 0.9623566923359518,
+    "pr_auc": 0.9817654933494863,
+    "log_loss": 0.24434686301751096,
+    "brier": 0.07779042480524274,
+    "confusion": [
+      [
+        2309,
+        336
+      ],
+      [
+        545,
+        4827
+      ]
+    ],
+    "baseline_majority": 0.6700760883123363
+  },
+  "athlete_level": {
+    "n_athletes": 236,
+    "measured_at": {
+      "run_37_5km_stavsro_cut_off": 234,
+      "run_32_5km_langefonn": 2
+    },
+    "accuracy": 0.9364406779661016,
+    "roc_auc": 0.9999188575137943,
+    "confusion": [
+      [
+        78,
+        0
+      ],
+      [
+        15,
+        143
+      ]
+    ],
+    "n_wrong": 15
+  }
+}

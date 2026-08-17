@@ -224,6 +224,47 @@ def check_duplicates(wide: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def check_leading_gaps(sec: pd.DataFrame) -> pd.DataFrame:
+    """Zeiten an spaeteren Stationen, aber keine am Schwimmausstieg.
+
+    Rennlogisch unmoeglich: ohne Schwimmen kein Rad. In der Praxis ein
+    Matten- oder Chipausfall am Schwimmausstieg und in T1.
+
+    Bewusst 'soft' und nicht 'hard': auto_fix() verwirft harte Werte und
+    interpoliert neu. Hier sind die vorhandenen Radzeiten aber echt, und
+    die Luecke davor laesst sich nicht interpolieren, weil der Anker vor
+    ihr fehlt. Die Meldung ist also ein Hinweis zum Nachschlagen, kein
+    Auftrag zum Ueberschreiben.
+    """
+    stations = [s for s in C.STATION_ORDER if s in sec.columns]
+    if not stations:
+        return pd.DataFrame()
+
+    rows = []
+    for idx in sec.index:
+        values = sec.loc[idx, stations]
+        known = [s for s in stations if pd.notna(values[s])]
+        if not known:
+            continue
+        first = stations.index(known[0])
+        if first == 0:
+            continue
+        missing = stations[:first]
+        rows.append(
+            {
+                "row": int(sec.index.get_loc(idx)),
+                "check": "leading_gap",
+                "severity": "soft",
+                "station": known[0],
+                "detail": f"Erste Zeit erst bei {known[0]}; ohne Messung davor: "
+                          f"{', '.join(missing)}",
+                "value": float(values[known[0]]),
+                "reference": np.nan,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def check_outliers(sec: pd.DataFrame) -> pd.DataFrame:
     """Robuster Ausreisser-Test (MAD) je Segment - faengt 'komische Werte',
     die innerhalb der harten Grenzen liegen."""
@@ -311,6 +352,7 @@ def validate(sec: pd.DataFrame, wide: pd.DataFrame, year: int, apply_fixes: bool
             check_speeds(sec, grades),
             check_transitions(sec),
             check_duplicates(wide),
+            check_leading_gaps(sec),
             check_outliers(sec),
         ],
         ignore_index=True,

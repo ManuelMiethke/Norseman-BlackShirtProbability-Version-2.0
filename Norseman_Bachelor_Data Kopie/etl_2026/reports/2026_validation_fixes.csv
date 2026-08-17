@@ -1,1 +1,3 @@
-
+row,station,old_s,reason,new_s,old_hms,new_hms
+1,bike_66km_haugastol,10130.339703905945,bike_66km_haugastol liegt vor bike_47km_halne,13259.62798758905,02:48:50,03:41:00
+2,run_10km,30733.373859798703,run_5km_atraa -> run_10km: 900.0 km/h ausserhalb harter Grenzen (1.0-25.0),32723.650071460634,08:32:13,09:05:24

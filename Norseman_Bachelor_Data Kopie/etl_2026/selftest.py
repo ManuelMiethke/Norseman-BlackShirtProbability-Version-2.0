@@ -163,6 +163,40 @@ def test_validation() -> None:
     check("Nach Auto-Fix monoton", bool((diffs.fillna(0) >= -1e-6).all().all()))
 
 
+def test_leading_gap() -> None:
+    """Rad-Zeit ohne Schwimmzeit ist rennlogisch unmoeglich und muss auffallen.
+
+    2026 traf das drei Athleten (Mattenausfall am Schwimmausstieg). In den
+    Jahren davor wurde so etwas von Hand aufgefuellt, war also unsichtbar -
+    genau deshalb prueft die Pipeline es jetzt selbst."""
+    sec = _synthetic_seconds(n=10)
+    stations = [s for s in C.STATION_ORDER if s in sec.columns]
+
+    # Athlet 3 verliert Schwimmen, T1 und Rad-Start
+    for station in stations[:3]:
+        sec.iat[3, sec.columns.get_loc(station)] = np.nan
+
+    found = V.check_leading_gaps(sec)
+    check("Leading-Gap erkannt", len(found) == 1, f"{len(found)} Treffer")
+    check("Leading-Gap trifft den richtigen Athleten",
+          not found.empty and int(found.iloc[0]["row"]) == 3)
+    check("Leading-Gap nennt die fehlenden Stationen",
+          not found.empty and stations[0] in found.iloc[0]["detail"])
+    check("Leading-Gap ist weich (kein Auto-Fix auf echten Werten)",
+          not found.empty and found.iloc[0]["severity"] == "soft")
+
+    # Vollstaendige Datensaetze duerfen keine Meldung ausloesen
+    clean = V.check_leading_gaps(_synthetic_seconds(n=10))
+    check("Leading-Gap meldet keine sauberen Zeilen", clean.empty, f"{len(clean)}")
+
+    # Ein DNF mit Abbruch mittendrin ist kein Leading-Gap
+    tail = _synthetic_seconds(n=10)
+    for station in stations[20:]:
+        tail.iat[5, tail.columns.get_loc(station)] = np.nan
+    check("DNF hinten raus ist kein Leading-Gap",
+          V.check_leading_gaps(tail).empty)
+
+
 def test_long_format() -> None:
     sec = _synthetic_seconds(n=12)
     base = pd.DataFrame({
@@ -257,8 +291,9 @@ def test_paths() -> None:
 
 def main() -> int:
     for test in [test_time_parsing, test_interpolation, test_list_parser,
-                 test_station_guessing, test_validation, test_long_format,
-                 test_identity_guard, test_master_alignment, test_paths]:
+                 test_station_guessing, test_validation, test_leading_gap,
+                 test_long_format, test_identity_guard, test_master_alignment,
+                 test_paths]:
         print(f"\n--- {test.__name__} ---")
         try:
             test()
