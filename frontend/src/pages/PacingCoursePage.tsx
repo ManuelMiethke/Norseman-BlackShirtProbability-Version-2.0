@@ -7,13 +7,11 @@ import { CourseOverview3DSection } from "@/components/pacing/CourseOverview3DSec
 export function PacingCoursePage() {
   return (
     <div className="dashboard-page">
-      <div className="dashboard-grid">
-        <CourseOverview3DSection />
-        <CourseWeatherSpeedSection />
-        <AccumulatedProgressSection />
-        <PaceDistributionSection />
-        <PacingHeatmapSection />
-      </div>
+      <CourseOverview3DSection />
+      <CourseWeatherSpeedSection />
+      <AccumulatedProgressSection />
+      <PaceDistributionSection />
+      <PacingHeatmapSection />
     </div>
   );
 }

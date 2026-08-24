@@ -788,27 +788,33 @@ select {
 
 .pace-table {
   width: 100%;
-  min-width: 520px;
+  min-width: 0;
+  max-width: 100%;
   border-collapse: collapse;
+  font-size: 0.6rem;
+  table-layout: fixed;
 }
 
 .pace-table th,
 .pace-table td {
-  padding: 0.8rem 0.9rem;
+  padding: 0.35rem 0.2rem;
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .pace-table th {
   color: var(--muted);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  font-size: 0.56rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 .pace-table__metric {
+  width: 15%;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -822,7 +828,7 @@ select {
 }
 
 .pace-table__group--top10 {
-  background: rgba(213, 255, 90, 0.8);
+  background: rgba(0, 255, 0, 0.8);
   color: #08111a;
 }
 
@@ -1470,13 +1476,13 @@ body {
 }
 
 .plot-card--pace {
-  height: 180px;
-  min-height: 180px;
+  height: 210px;
+  min-height: 210px;
 }
 
 .plot-card--heatmap {
-  height: 260px;
-  min-height: 260px;
+  height: 520px;
+  min-height: 520px;
 }
 
 .plot-card__loading {
@@ -1746,6 +1752,28 @@ body {
 
 .pace-table td,
 .data-table td {
+  color: #ffffff;
+}
+
+/*
+ * Tone-specific group cells carry their own background (lime/black/white)
+ * and need matching text color regardless of the generic th/td color above.
+ * Scoped to .pace-table so the cascade order above can't win by accident
+ * (this stays readable both on-screen and when the table is pasted
+ * elsewhere, e.g. into PowerPoint, where it loses its surrounding page bg).
+ */
+.pace-table th.pace-table__group--top10,
+.pace-table td.pace-table__group--top10 {
+  color: #08111a;
+}
+
+.pace-table th.pace-table__group--white,
+.pace-table td.pace-table__group--white {
+  color: #08111a;
+}
+
+.pace-table th.pace-table__group--black,
+.pace-table td.pace-table__group--black {
   color: #ffffff;
 }
 

@@ -385,11 +385,11 @@ function buildFigure(rows: PreparedWideRow[], config: PaceLegConfig): PlotFigure
       paper_bgcolor: BG_GRAY,
       plot_bgcolor: BG_GRAY,
       font: {
-        color: "#111111",
+        color: "#ffffff",
       },
       height: 280,
       margin: {
-        l: 14,
+        l: 44,
         r: 14,
         t: 44,
         b: 12,
@@ -407,7 +407,7 @@ function buildFigure(rows: PreparedWideRow[], config: PaceLegConfig): PlotFigure
                 yref: "paper",
                 showarrow: false,
                 font: {
-                  color: "#111111",
+                  color: "#ffffff",
                   size: 14,
                 },
               },
@@ -430,12 +430,14 @@ function buildFigure(rows: PreparedWideRow[], config: PaceLegConfig): PlotFigure
           font: {
             color: "#ffffff",
           },
+          standoff: 8,
         },
         gridcolor: "rgba(0,0,0,0.18)",
         zerolinecolor: "rgba(0,0,0,0.18)",
         tickfont: {
           color: "#ffffff",
         },
+        automargin: true,
       },
     },
   };
@@ -536,9 +538,6 @@ export function buildPaceDistributionModel(
     zombieHill: zombieConfig
       ? buildLegModel(preparedRows, zombieConfig, selectedGroup)
       : null,
-    warning:
-      selectedYear === "All"
-        ? "All years are combined."
-        : null,
+    warning: null,
   };
 }

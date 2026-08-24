@@ -282,6 +282,7 @@ export function buildModelAccuracyModel(
       height: 740,
       paper_bgcolor: COURSE_BG,
       plot_bgcolor: COURSE_BG,
+      font: { color: "#ffffff" },
       margin: {
         l: 80,
         r: 110,
@@ -304,6 +305,7 @@ export function buildModelAccuracyModel(
       xaxis: {
         title: {
           text: "Distance (km)",
+          font: { color: "#ffffff" },
         },
         range: [0, xMax],
         tickmode: "array",
@@ -314,26 +316,31 @@ export function buildModelAccuracyModel(
         automargin: true,
         showgrid: false,
         zeroline: false,
+        tickfont: { color: "#ffffff" },
       },
       yaxis: {
         title: {
           text: "Model accuracy (%)",
+          font: { color: "#ffffff" },
         },
         range: [accuracyMin, accuracyMax],
         tickformat: ".0f",
         showgrid: true,
         gridcolor: "rgba(255,255,255,0.2)",
         zeroline: false,
+        tickfont: { color: "#ffffff" },
       },
       yaxis2: {
         title: {
           text: "Elevation (m)",
+          font: { color: "#ffffff" },
         },
         overlaying: "y",
         side: "right",
         rangemode: "tozero",
         showgrid: false,
         zeroline: false,
+        tickfont: { color: "#ffffff" },
       },
       shapes: accuracyRows.map((row) => ({
         type: "line",

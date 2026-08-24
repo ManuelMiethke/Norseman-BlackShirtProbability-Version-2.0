@@ -145,6 +145,12 @@ function median(values: number[]): number | undefined {
   return sorted[middle];
 }
 
+function roundKm(value: number): number {
+  // Avoids floating-point noise like 9.8 - 3.8 === 6.000000000000001
+  // when rendering leg-relative distance labels.
+  return Math.round(value * 100) / 100;
+}
+
 function modeValue(values: Array<string | undefined>) {
   const counts = new Map<string, number>();
   for (const value of values) {
@@ -584,12 +590,12 @@ function buildCourseWeatherSpeedFigure(
       return null;
     }
     if (distance <= SWIM_KM) {
-      return `${distance}`;
+      return `${roundKm(distance)}`;
     }
     if (distance <= SWIM_KM + BIKE_KM) {
-      return `${distance - SWIM_KM}`;
+      return `${roundKm(distance - SWIM_KM)}`;
     }
-    return `${distance - SWIM_KM - BIKE_KM}`;
+    return `${roundKm(distance - SWIM_KM - BIKE_KM)}`;
   };
 
   const data: Data[] = [];
@@ -842,6 +848,7 @@ function buildCourseWeatherSpeedFigure(
     layout: {
       paper_bgcolor: "#7A7A7A",
       plot_bgcolor: "#7A7A7A",
+      font: { color: "#ffffff" },
       margin: { l: 46, r: 88, t: 88, b: 50 },
       height: 560,
       hovermode: "x unified",
@@ -852,35 +859,35 @@ function buildCourseWeatherSpeedFigure(
         xanchor: "left",
         x: 1.02,
         bgcolor: "rgba(0,0,0,0)",
-        font: { size: 11 },
+        font: { color: "#ffffff", size: 11 },
       },
       annotations,
       shapes,
       xaxis: {
-        title: { text: "Distance (km)", font: { size: 15 } },
+        title: { text: "Distance (km)", font: { color: "#ffffff", size: 15 } },
         range: [0, xMax],
         tickmode: "array",
         tickvals: pairs.map((pair) => pair.value),
         ticktext: pairs.map((pair) => pair.label),
-        tickfont: { size: 11 },
+        tickfont: { color: "#ffffff", size: 11 },
       },
       yaxis: {
-        title: { text: "Speed (km/h)", font: { size: 15 } },
+        title: { text: "Speed (km/h)", font: { color: "#ffffff", size: 15 } },
         range: [0, 70],
         tickmode: "array",
         tickvals: [0, 10, 20, 30, 40, 50, 60, 70],
         showgrid: true,
         zeroline: false,
-        tickfont: { size: 11 },
+        tickfont: { color: "#ffffff", size: 11 },
       },
       yaxis2: {
-        title: { text: "Elevation (m)", font: { size: 15 } },
+        title: { text: "Elevation (m)", font: { color: "#ffffff", size: 15 } },
         overlaying: "y",
         side: "right",
         rangemode: "tozero",
         showgrid: false,
         zeroline: false,
-        tickfont: { size: 11 },
+        tickfont: { color: "#ffffff", size: 11 },
       },
     },
   };

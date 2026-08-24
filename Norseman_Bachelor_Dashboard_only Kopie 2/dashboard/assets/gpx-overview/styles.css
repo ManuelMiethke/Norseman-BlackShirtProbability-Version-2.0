@@ -224,6 +224,56 @@ h1 {
   pointer-events: none;
 }
 
+.canvas-progress {
+  position: absolute;
+  left: 16px;
+  bottom: 10px;
+  z-index: 2;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: rgba(31, 36, 48, 0.72);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+  color: rgba(255, 250, 240, 0.92);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.canvas-hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  pointer-events: none;
+  min-width: 108px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(12, 22, 31, 0.96);
+  border: 1px solid rgba(167, 194, 218, 0.12);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+}
+
+.canvas-hover strong {
+  display: block;
+  font-size: 0.86rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.canvas-hover span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
 .canvas-caption {
   display: none;
 }
@@ -282,21 +332,44 @@ h1 {
 }
 
 .stat-grid--compact {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .stat-card {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 4px 10px 3px;
+  padding: 5px 10px 4px;
   border-radius: 14px;
   background: rgb(122, 122, 122);
   border: 1px solid rgba(167, 194, 218, 0.06);
+  border-top: 2px solid transparent;
 }
 
 .stat-card--compact {
   min-height: 30px;
+}
+
+/* Same grade language as the terrain wall and elevation profile: warm for
+   gain, green for loss, neutral for plain distance. */
+.stat-card--distance {
+  border-top-color: rgba(230, 224, 210, 0.55);
+}
+
+.stat-card--gain {
+  border-top-color: rgb(216, 104, 45);
+}
+
+.stat-card--gain strong {
+  color: rgb(255, 178, 138);
+}
+
+.stat-card--loss {
+  border-top-color: rgb(56, 163, 114);
+}
+
+.stat-card--loss strong {
+  color: rgb(148, 224, 190);
 }
 
 .stat-card strong {

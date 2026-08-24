@@ -45,10 +45,11 @@ const messageEl = document.getElementById("message");
 const titleEl = document.getElementById("route-title");
 const subtitleEl = document.getElementById("route-subtitle");
 const interactionHintEl = document.getElementById("canvas-interaction-hint");
+const canvasHoverEl = document.getElementById("canvas-hover");
+const canvasProgressEl = document.getElementById("canvas-progress");
 const ascentEl = document.getElementById("ascent-value");
 const distanceEl = document.getElementById("distance-value");
 const descentEl = document.getElementById("descent-value");
-const maxEleEl = document.getElementById("max-ele-value");
 const elevationRangeEl = document.getElementById("elevation-range");
 const profileEl = document.getElementById("elevation-profile");
 const profileLegendEl = document.getElementById("profile-legend");
@@ -56,7 +57,6 @@ const profileHoverEl = document.getElementById("profile-hover");
 const primaryStatLabelEl = document.getElementById("primary-stat-label");
 const distanceLabelEl = document.getElementById("distance-label");
 const descentLabelEl = document.getElementById("descent-label");
-const maxEleLabelEl = document.getElementById("max-ele-label");
 
 let loadedEvents = [];
 let activeEventId = "norseman";
@@ -73,12 +73,15 @@ const cameraState = {
   pointerId: null,
   lastX: 0,
   lastY: 0,
-  overallUnlocked: false
+  overallUnlocked: false,
+  // 0 = swim/start pinned to the left edge, 1 = run/finish pinned to the
+  // right edge. Only has room to move once zoomed in past the "whole
+  // course" fit, see createProjector's isOverallRoute branch.
+  overallPan: 0
 };
 
 const DRAG_YAW_RANGE = Math.PI * 0.75;
 const DRAG_PITCH_RANGE = Math.PI * 0.55;
-const OVERALL_VERTICAL_TILT_LIMIT = degreesToRadians(90);
 const FREE_ORBIT_PITCH_LIMIT = degreesToRadians(85);
 
 function degreesToRadians(value) {
@@ -155,8 +158,13 @@ function getDefaultCamera(route) {
   if (route?.id === "overall") {
     return {
       yaw: -0.03,
-      pitch: degreesToRadians(11),
-      zoom: 1.92
+      // A bit steeper than before so climbs stay readable while zoomed in
+      // and scrubbing along the course, not just at the full-course fit.
+      pitch: degreesToRadians(16),
+      // 1 = the whole course fits the canvas width exactly. Scrolling the
+      // wheel zooms in from there; dragging then pans left/right (see
+      // updateCameraFromDrag and createProjector's isOverallRoute branch).
+      zoom: 1
     };
   }
 
@@ -173,6 +181,7 @@ function applyDefaultCamera(route) {
   cameraState.pitch = defaults.pitch;
   cameraState.rotation = buildDefaultRotation(cameraState.yaw, cameraState.pitch);
   cameraState.zoom = defaults.zoom;
+  cameraState.overallPan = 0;
   cameraState.overallUnlocked = route?.id !== "overall";
   updateCanvasInteractionHint(route);
 }
@@ -190,15 +199,25 @@ function updateCameraFromDrag(deltaX, deltaY) {
   }
 
   if (activeRoute?.id === "overall") {
+    // The whole-course view reads better as a lane you scrub through
+    // (swim → bike → run) than as something you tilt, so horizontal drag
+    // pans along the course instead of rotating it. The pitch stays fixed
+    // at the tuned default so elevation is always legible.
     const defaults = getDefaultCamera(activeRoute);
     cameraState.yaw = defaults.yaw;
-    cameraState.pitch -= (deltaY / safeHeight) * DRAG_PITCH_RANGE;
-    cameraState.pitch = clamp(
-      cameraState.pitch,
-      defaults.pitch - OVERALL_VERTICAL_TILT_LIMIT,
-      defaults.pitch + OVERALL_VERTICAL_TILT_LIMIT
-    );
+    cameraState.pitch = defaults.pitch;
     cameraState.rotation = buildDefaultRotation(cameraState.yaw, cameraState.pitch);
+
+    const safeWidth = Math.max(width, 320);
+    const panRangePx = (cameraState.zoom - 1) * safeWidth;
+    // At zoom 1 the whole course already fits, so there is nothing to pan —
+    // guard against dividing by a near-zero range instead of flooring it,
+    // which would otherwise make a drag snap straight to either end.
+    if (panRangePx > 1) {
+      // Dragging left pulls the next section into view (pan increases
+      // towards the run finish); dragging right pulls back towards swim.
+      cameraState.overallPan = clamp(cameraState.overallPan - deltaX / panRangePx, 0, 1);
+    }
     return;
   }
 
@@ -219,6 +238,21 @@ function updateCanvasInteractionHint(route) {
 
   if (interactionHintEl) {
     interactionHintEl.hidden = !showHint;
+  }
+}
+
+function updateCanvasProgress(route) {
+  if (!canvasProgressEl) {
+    return;
+  }
+
+  // Only meaningful once zoomed in past the whole-course fit — at zoom 1
+  // there's nowhere to pan, so the badge would just sit at a static value.
+  const showProgress = route?.id === "overall" && cameraState.zoom > 1.02;
+  canvasProgressEl.hidden = !showProgress;
+
+  if (showProgress) {
+    canvasProgressEl.textContent = `Course position: ${Math.round(cameraState.overallPan * 100)}%`;
   }
 }
 
@@ -320,11 +354,23 @@ function projectToMeters(points) {
   const centerLat = points.reduce((sum, point) => sum + point.lat, 0) / points.length;
   const centerLon = points.reduce((sum, point) => sum + point.lon, 0) / points.length;
 
-  return points.map((point) => ({
-    x: (point.lon - centerLon) * lonFactor,
-    y: (point.lat - centerLat) * latFactor,
-    z: point.ele
-  }));
+  // Cumulative distance travelled so far (leg-relative), carried alongside
+  // x/y/z so hover and grade-coloring downstream can answer "how far along
+  // the course, and how high" without re-deriving it from lat/lon.
+  let total = 0;
+
+  return points.map((point, index) => {
+    if (index > 0) {
+      total += haversineMeters(points[index - 1], point);
+    }
+
+    return {
+      x: (point.lon - centerLon) * lonFactor,
+      y: (point.lat - centerLat) * latFactor,
+      z: point.ele,
+      distanceM: total
+    };
+  });
 }
 
 function rotateForRaceView(points) {
@@ -335,6 +381,7 @@ function rotateForRaceView(points) {
   const sin = Math.sin(-angle);
 
   const rotated = points.map((point) => ({
+    ...point,
     x: point.x * cos - point.y * sin,
     y: point.x * sin + point.y * cos,
     z: point.z
@@ -344,6 +391,7 @@ function rotateForRaceView(points) {
   const meanY = rotated.reduce((sum, point) => sum + point.y, 0) / rotated.length;
 
   return rotated.map((point) => ({
+    ...point,
     x: point.x - minX,
     y: (point.y - meanY) * 0.72,
     z: point.z
@@ -353,17 +401,22 @@ function rotateForRaceView(points) {
 function stitchPlotGroups(groups) {
   let cursorX = 0;
   let cursorY = 0;
+  let cursorDistanceM = 0;
 
   return groups.map((points) => {
     const first = points[0];
+    const legDistanceM = points[points.length - 1]?.distanceM ?? 0;
     const shifted = points.map((point) => ({
+      ...point,
       x: point.x - first.x + cursorX,
       y: point.y - first.y + cursorY,
-      z: point.z
+      z: point.z,
+      distanceM: cursorDistanceM + (point.distanceM ?? 0)
     }));
     const last = shifted[shifted.length - 1];
     cursorX = last.x;
     cursorY = last.y;
+    cursorDistanceM += legDistanceM;
     return shifted;
   });
 }
@@ -639,6 +692,28 @@ function getProfileSegmentColor(gradePct) {
   }
 
   return "rgba(188, 164, 126, 0.68)";
+}
+
+// Same grade language as getProfileSegmentColor above, as plain RGB triples
+// so the 3D terrain wall can tint by grade (steep climb / climb / descent /
+// flat) instead of a single flat grey, at a caller-chosen alpha.
+const TERRAIN_GRADE_RGB = {
+  steep: [193, 58, 44],
+  climb: [216, 104, 45],
+  descent: [56, 163, 114],
+  flat: [188, 164, 126]
+};
+
+function terrainWallColor(gradePct, alpha) {
+  const tone =
+    gradePct >= 1.2
+      ? TERRAIN_GRADE_RGB.steep
+      : gradePct >= 0.18
+        ? TERRAIN_GRADE_RGB.climb
+        : gradePct <= -0.18
+          ? TERRAIN_GRADE_RGB.descent
+          : TERRAIN_GRADE_RGB.flat;
+  return `rgba(${tone[0]}, ${tone[1]}, ${tone[2]}, ${alpha})`;
 }
 
 function formatPercent(value) {
@@ -1064,7 +1139,11 @@ function createProjector(points, width, height, route) {
   const perspectiveDistance = modelRadius * 2.6;
   let scale = isOverallRoute ? scaleBase * 1.12 : scaleBase;
   const baseZ = bounds.minZ;
-  const verticalScale = isOverallRoute ? 1.22 : 1.95;
+  // The overall route is ~225 km long but only ~1.8 km of vertical relief,
+  // so the raw elevation gets visually flattened next to that horizontal
+  // span. Exaggerate it more than the per-leg views (which are shorter and
+  // already read fine) so climbs stay legible in the combined 3D overview.
+  const verticalScale = isOverallRoute ? 2.6 : 1.95;
 
   const rawProjectAtScale = (point, zOverride, scaleValue) => {
     const z = typeof zOverride === "number" ? zOverride : point.z;
@@ -1106,7 +1185,10 @@ function createProjector(points, width, height, route) {
     const endUnit = projectOverallAtPitch(points[points.length - 1], defaults.pitch);
     const routeWidthAtUnit = Math.max(Math.abs(endUnit.x - startUnit.x), 1);
     const widthScale = (width - 18) / routeWidthAtUnit;
-    scale = widthScale * 0.998;
+    // cameraState.zoom === 1 fits the whole course to the canvas width;
+    // zooming in beyond that is what gives horizontal panning somewhere
+    // to go (see the anchorX interpolation below).
+    scale = widthScale * 0.998 * cameraState.zoom;
   }
 
   const rawProject = (point, zOverride) => rawProjectAtScale(point, zOverride, scale);
@@ -1148,8 +1230,14 @@ function createProjector(points, width, height, route) {
       }
     );
   const projectedStart = rawProject(points[0], points[0].z);
+  const projectedEnd = rawProject(points[points.length - 1], points[points.length - 1].z);
+  // At zoom 1 these two coincide (nothing to pan). Zoomed in, overallPan
+  // slides smoothly from "start pinned to the left edge" (0) to "finish
+  // pinned to the right edge" (1) — swim first, run last.
+  const anchorXStart = horizontalPad - projectedStart.x;
+  const anchorXEnd = width - horizontalPad - projectedEnd.x;
   const anchorX = isOverallRoute
-    ? 4 - projectedStart.x
+    ? anchorXStart + (anchorXEnd - anchorXStart) * cameraState.overallPan
     : width * 0.5 - (projectedBounds.minX + projectedBounds.maxX) / 2;
   const anchorY = isOverallRoute
     ? height * 0.52 - (routeProjectedBounds.minY + routeProjectedBounds.maxY) / 2
@@ -1249,6 +1337,75 @@ function drawAxisCaptions(ctx2d, route, projector) {
   ctx2d.restore();
 }
 
+function hideCanvasHover() {
+  if (canvasHoverEl) {
+    canvasHoverEl.hidden = true;
+  }
+}
+
+// Ports the 2D elevation profile's "hover to see distance + elevation"
+// function onto the 3D canvas itself, so the two views no longer duplicate
+// the same job — you can read the climb heights directly on the route.
+function updateCanvasHover(event) {
+  if (!canvasHoverEl || !activeRoute || cameraState.dragging) {
+    return;
+  }
+
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) {
+    hideCanvasHover();
+    return;
+  }
+
+  const allPoints = activeRoute.plotGroups.flatMap((group) => group.points);
+  if (allPoints.length === 0) {
+    hideCanvasHover();
+    return;
+  }
+
+  const cursorX = event.clientX - rect.left;
+  const cursorY = event.clientY - rect.top;
+  const projector = createProjector(allPoints, rect.width, rect.height, activeRoute);
+
+  let nearest = null;
+  let nearestDistSq = Infinity;
+  for (const point of allPoints) {
+    const projected = projector.project(point);
+    const dx = projected.x - cursorX;
+    const dy = projected.y - cursorY;
+    const distSq = dx * dx + dy * dy;
+
+    if (distSq < nearestDistSq) {
+      nearestDistSq = distSq;
+      nearest = point;
+    }
+  }
+
+  if (!nearest || typeof nearest.distanceM !== "number") {
+    hideCanvasHover();
+    return;
+  }
+
+  const distanceLabel = `${(nearest.distanceM / 1000).toFixed(1)} km`;
+  const elevationLabel = `${Math.round(nearest.z).toLocaleString("en-US")} m`;
+  canvasHoverEl.innerHTML = `<strong>${distanceLabel}</strong><span>${elevationLabel}</span>`;
+  canvasHoverEl.hidden = false;
+
+  const stage = canvas.closest(".canvas-stage");
+  const stageRect = (stage ?? canvas).getBoundingClientRect();
+  const hoverRect = canvasHoverEl.getBoundingClientRect();
+  const offsetX = 18;
+  const offsetY = 18;
+  const maxLeft = Math.max(8, stageRect.width - hoverRect.width - 8);
+  const maxTop = Math.max(8, stageRect.height - hoverRect.height - 8);
+  const preferredLeft = event.clientX - stageRect.left + offsetX;
+  const preferredTop = event.clientY - stageRect.top - hoverRect.height - offsetY;
+  const fallbackTop = event.clientY - stageRect.top + 14;
+
+  canvasHoverEl.style.left = `${clamp(preferredLeft, 8, maxLeft)}px`;
+  canvasHoverEl.style.top = `${clamp(preferredTop < 8 ? fallbackTop : preferredTop, 8, maxTop)}px`;
+}
+
 function drawRoute(route) {
   resizeCanvas();
   const width = canvas.getBoundingClientRect().width;
@@ -1277,32 +1434,39 @@ function drawRoute(route) {
       const prev = group.points[index - 1];
       const prevTop = projector.project(prev);
       const prevBase = projector.project(prev, projector.baseZ);
+      const distanceDeltaM = Math.max((point.distanceM ?? 0) - (prev.distanceM ?? 0), 1);
+      const gradePct = ((point.z - prev.z) / distanceDeltaM) * 100;
       sideSegments.push({
         top1: prevTop,
         top2: top,
         base1: prevBase,
         base2: base,
         depth: (top.depth + base.depth + prevTop.depth + prevBase.depth) / 4,
-        tone: point.z - projector.baseZ
+        tone: point.z - projector.baseZ,
+        gradePct
       });
     });
 
     return { ...group, topPoints, shadowPoints };
   });
 
+  // Tint the terrain wall by grade (steep climb / climb / descent / flat),
+  // the same language the 2D elevation profile below already uses, and let
+  // it brighten toward the peaks so climbs stand out instead of reading as
+  // one flat grey mass.
   sideSegments
     .sort((a, b) => b.depth - a.depth)
     .forEach((segment) => {
-      const shade = Math.min(0.78, 0.28 + segment.tone / 2300);
+      const shade = Math.min(0.95, 0.55 + segment.tone / 1900);
       ctx.beginPath();
       ctx.moveTo(segment.base1.x, segment.base1.y);
       ctx.lineTo(segment.top1.x, segment.top1.y);
       ctx.lineTo(segment.top2.x, segment.top2.y);
       ctx.lineTo(segment.base2.x, segment.base2.y);
       ctx.closePath();
-      ctx.fillStyle = `rgba(88, 90, 96, ${shade})`;
+      ctx.fillStyle = terrainWallColor(segment.gradePct, shade);
       ctx.fill();
-      ctx.strokeStyle = "rgba(40, 41, 45, 0.1)";
+      ctx.strokeStyle = "rgba(40, 41, 45, 0.12)";
       ctx.lineWidth = 0.6;
       ctx.stroke();
     });
@@ -1337,11 +1501,15 @@ function drawRoute(route) {
         ctx.lineTo(point.x, point.y);
       }
     });
+    ctx.save();
+    ctx.shadowColor = group.accent;
+    ctx.shadowBlur = 6;
     ctx.strokeStyle = gradient;
-    ctx.lineWidth = 3.2;
+    ctx.lineWidth = 3.8;
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.stroke();
+    ctx.restore();
   });
 
   const firstGroup = projectedGroups[0];
@@ -1680,10 +1848,8 @@ function getRouteStats(route) {
       primaryValue: formatMeters(route.metrics.ascentM),
       distanceLabel: "Distance",
       distanceValue: formatDistance(route.metrics.distanceKm),
-      descentLabel: "Descent",
-      descentValue: formatMeters(route.metrics.descentM),
-      maxEleLabel: "Highest Point",
-      maxEleValue: formatMeters(route.metrics.maxEleM)
+      descentLabel: "Elevation Loss",
+      descentValue: formatMeters(route.metrics.descentM)
     }
   );
 }
@@ -1700,11 +1866,9 @@ function updateStats(route) {
   primaryStatLabelEl.textContent = stats.primaryLabel;
   distanceLabelEl.textContent = stats.distanceLabel;
   descentLabelEl.textContent = stats.descentLabel;
-  maxEleLabelEl.textContent = stats.maxEleLabel;
   ascentEl.textContent = stats.primaryValue;
   distanceEl.textContent = stats.distanceValue;
   descentEl.textContent = stats.descentValue;
-  maxEleEl.textContent = stats.maxEleValue;
   elevationRangeEl.textContent = route.elevationRangeLabel
     ? `${route.elevationRangeLabel}: ${formatMeters(route.metrics.minEleM)} to ${formatMeters(
         route.metrics.maxEleM
@@ -1778,6 +1942,7 @@ function renderActiveRoute() {
 
   activeRoute = route;
   updateCanvasInteractionHint(route);
+  updateCanvasProgress(route);
   updateEventCopy(event);
   document.documentElement.style.setProperty("--accent", route.accent);
   updateStats(route);
@@ -1801,9 +1966,11 @@ function setupCanvasInteraction() {
 
   canvas.addEventListener("pointermove", (event) => {
     if (!cameraState.dragging || event.pointerId !== cameraState.pointerId) {
+      updateCanvasHover(event);
       return;
     }
 
+    hideCanvasHover();
     const deltaX = event.clientX - cameraState.lastX;
     const deltaY = event.clientY - cameraState.lastY;
     updateCameraFromDrag(deltaX, deltaY);
@@ -1812,6 +1979,10 @@ function setupCanvasInteraction() {
     cameraState.lastY = event.clientY;
 
     renderActiveRoute();
+  });
+
+  canvas.addEventListener("pointerleave", () => {
+    hideCanvasHover();
   });
 
   const releasePointer = (event) => {
@@ -1839,13 +2010,15 @@ function setupCanvasInteraction() {
 
       event.preventDefault();
       const zoomFactor = Math.exp(-event.deltaY * 0.0022);
-      cameraState.zoom = clamp(cameraState.zoom * zoomFactor, 0.14, 12);
+      const [zoomMin, zoomMax] = activeRoute?.id === "overall" ? [1, 6] : [0.14, 12];
+      cameraState.zoom = clamp(cameraState.zoom * zoomFactor, zoomMin, zoomMax);
       renderActiveRoute();
     },
     { passive: false }
   );
 
   canvas.addEventListener("dblclick", () => {
+    hideCanvasHover();
     applyDefaultCamera(activeRoute);
     renderActiveRoute();
   });

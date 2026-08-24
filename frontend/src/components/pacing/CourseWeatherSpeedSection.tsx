@@ -51,14 +51,14 @@ export function CourseWeatherSpeedSection() {
   return (
     <SectionCard title="Course / Weather / Speed" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="section-note">
-          <strong>Year</strong>
-          <span>
-            {selectedYear === "All"
-              ? `All uses the latest year: ${effectiveYear ?? "unknown"}.`
-              : `The chart is currently rendered for ${effectiveYear ?? selectedYear} with group filter "${selectedGroup}".`}
-          </span>
-        </div>
+        {selectedYear !== "All" ? (
+          <div className="section-note">
+            <strong>Year</strong>
+            <span>
+              {`The chart is currently rendered for ${effectiveYear ?? selectedYear} with group filter "${selectedGroup}".`}
+            </span>
+          </div>
+        ) : null}
 
         {warning ? (
           <StateBlock

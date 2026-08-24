@@ -6,10 +6,8 @@ import { Probability3DSection } from "@/components/predictions/Probability3DSect
 export function ModelPredictionsPage() {
   return (
     <div className="dashboard-page">
-      <div className="dashboard-grid dashboard-grid--two">
-        <ModelAccuracySection />
-        <BlackShirtProbabilitySection />
-      </div>
+      <ModelAccuracySection />
+      <BlackShirtProbabilitySection />
       <FrontierPaceSection />
       <Probability3DSection />
     </div>

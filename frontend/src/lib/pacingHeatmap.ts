@@ -217,7 +217,15 @@ export function buildPacingHeatmapModel(
   selectedYear: number | "All",
   selectedGroup: GroupOption,
 ): PacingHeatmapModel {
-  const preparedRows = filterRowsByYear(rows, selectedYear)
+  // The heatmap is one row per split and one column per athlete, so combining
+  // every race year makes it far too dense to read. Always render a single
+  // year: the selected one, or the latest available year when "All" is picked.
+  const effectiveYear =
+    selectedYear === "All"
+      ? Math.max(...rows.map((row) => Number(row.year)).filter((year) => Number.isFinite(year)))
+      : selectedYear;
+
+  const preparedRows = filterRowsByYear(rows, effectiveYear)
     .map((row) => {
       const category = toCategory(row);
       const segmentTimeSeconds =
@@ -341,7 +349,9 @@ export function buildPacingHeatmapModel(
           colorbar: {
             title: {
               text: "Δ Time (%) vs. Median",
+              font: { color: "#ffffff" },
             },
+            tickfont: { color: "#ffffff" },
           },
           hoverongaps: false,
           zsmooth: false,
@@ -351,6 +361,9 @@ export function buildPacingHeatmapModel(
       ],
       layout: {
         height: 850,
+        paper_bgcolor: "#7A7A7A",
+        plot_bgcolor: "#7A7A7A",
+        font: { color: "#ffffff" },
         margin: {
           l: 60,
           r: 20,
@@ -360,22 +373,26 @@ export function buildPacingHeatmapModel(
         xaxis: {
           title: {
             text:
-              `Athletes (Top 10: ${counts["Top 10"]} | ` +
+              `Athletes ${effectiveYear} (Top 10: ${counts["Top 10"]} | ` +
               `Black Shirt: ${counts["Black Shirt"]} | ` +
               `White Shirt: ${counts["White Shirt"]} | ` +
               `DNF: ${counts.DNF})`,
+            font: { color: "#ffffff" },
           },
           tickmode: "array",
           tickvals,
           ticktext,
           tickangle: 0,
           automargin: true,
+          tickfont: { color: "#ffffff" },
         },
         yaxis: {
           title: {
             text: "Split",
+            font: { color: "#ffffff" },
           },
           automargin: true,
+          tickfont: { color: "#ffffff" },
         },
         shapes: boundaryKeys.map((athleteKey) => ({
           type: "line",
@@ -393,9 +410,6 @@ export function buildPacingHeatmapModel(
         })),
       },
     },
-    warning:
-      selectedYear === "All"
-        ? "All years are combined."
-        : null,
+    warning: null,
   };
 }

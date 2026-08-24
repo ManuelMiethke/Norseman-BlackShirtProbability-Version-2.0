@@ -33,8 +33,10 @@
               id="canvas-interaction-hint"
               hidden
             >
-              Drag up or down to tilt 3D
+              Scroll to zoom, drag to pan through the course
             </div>
+            <div class="canvas-progress" id="canvas-progress" hidden></div>
+            <div class="canvas-hover" id="canvas-hover" hidden></div>
             <div class="canvas-caption">
               <span id="route-title">Lade Route...</span>
               <span id="route-subtitle"></span>
@@ -54,21 +56,17 @@
 
         <section class="stats-panel">
           <div class="stat-grid stat-grid--compact">
-            <article class="stat-card stat-card--compact">
-              <span class="stat-label" id="primary-stat-label">Elevation Gain</span>
-              <strong id="ascent-value">--</strong>
-            </article>
-            <article class="stat-card stat-card--compact">
+            <article class="stat-card stat-card--compact stat-card--distance">
               <span class="stat-label" id="distance-label">Distance</span>
               <strong id="distance-value">--</strong>
             </article>
-            <article class="stat-card stat-card--compact">
-              <span class="stat-label" id="descent-label">Descent</span>
-              <strong id="descent-value">--</strong>
+            <article class="stat-card stat-card--compact stat-card--gain">
+              <span class="stat-label" id="primary-stat-label">Elevation Gain</span>
+              <strong id="ascent-value">--</strong>
             </article>
-            <article class="stat-card stat-card--compact">
-              <span class="stat-label" id="max-ele-label">Highest Point</span>
-              <strong id="max-ele-value">--</strong>
+            <article class="stat-card stat-card--compact stat-card--loss">
+              <span class="stat-label" id="descent-label">Elevation Loss</span>
+              <strong id="descent-value">--</strong>
             </article>
           </div>
         </section>

@@ -403,6 +403,7 @@ export function buildBlackShirtProbabilityModel(
   const layout: Record<string, unknown> = {
     paper_bgcolor: "#7A7A7A",
     plot_bgcolor: "#7A7A7A",
+    font: { color: "#ffffff" },
     height: 650,
     margin: {
       l: 50,
@@ -412,6 +413,7 @@ export function buildBlackShirtProbabilityModel(
     },
     legend: {
       font: {
+        color: "#ffffff",
         size: 18,
       },
     },
@@ -429,6 +431,7 @@ export function buildBlackShirtProbabilityModel(
       range: [0, axisEnd],
       title: {
         text: "Leg Distance (km)",
+        font: { color: "#ffffff" },
       },
       tickmode: "array",
       tickvals: [
@@ -447,6 +450,7 @@ export function buildBlackShirtProbabilityModel(
         "Run 21",
         `Run ${runLegMax.toFixed(1)}`,
       ],
+      tickfont: { color: "#ffffff" },
       anchor: `y${axisId}`,
     };
 
@@ -454,7 +458,9 @@ export function buildBlackShirtProbabilityModel(
       range: [0, 1],
       title: {
         text: groupIndex === 0 ? "P(Black Shirt)" : "",
+        font: { color: "#ffffff" },
       },
+      tickfont: { color: "#ffffff" },
       anchor: `x${axisId}`,
       showticklabels: true,
     };
