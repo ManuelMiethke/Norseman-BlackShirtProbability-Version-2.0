@@ -1,5 +1,7 @@
 import Papa from "papaparse";
 
+import { assetUrl } from "@/lib/assets";
+
 let wideDataPromise: Promise<Record<string, unknown>[]> | null = null;
 let longDataPromise: Promise<Record<string, unknown>[]> | null = null;
 let modelDataPromise: Promise<Record<string, unknown>[]> | null = null;
@@ -31,28 +33,30 @@ function parseCsv(url: string): Promise<Record<string, unknown>[]> {
 
 export async function loadWideCsv() {
   if (!wideDataPromise) {
-    wideDataPromise = parseCsv("/nxtri_data_all_years.csv");
+    wideDataPromise = parseCsv(assetUrl("nxtri_data_all_years.csv"));
   }
   return wideDataPromise;
 }
 
 export async function loadLongCsv() {
   if (!longDataPromise) {
-    longDataPromise = parseCsv("/nxtri_data_all_years_long_ready_featured.csv");
+    longDataPromise = parseCsv(assetUrl("nxtri_data_all_years_long_ready_featured.csv"));
   }
   return longDataPromise;
 }
 
 export async function loadModelCsv() {
   if (!modelDataPromise) {
-    modelDataPromise = parseCsv("/xgb_black_probs_long_with_errors.csv");
+    // 2018–2025 from the earlier random-split model, 2026 from the holdout run
+    // (see build_dashboard_model_csv.py in the data folder).
+    modelDataPromise = parseCsv(assetUrl("xgb_black_probs_dashboard.csv"));
   }
   return modelDataPromise;
 }
 
 export async function loadCourseProfileCsv() {
   if (!courseProfilePromise) {
-    courseProfilePromise = parseCsv("/course_profile.csv");
+    courseProfilePromise = parseCsv(assetUrl("course_profile.csv"));
   }
   return courseProfilePromise;
 }

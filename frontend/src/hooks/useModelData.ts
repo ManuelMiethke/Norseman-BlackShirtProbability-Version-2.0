@@ -61,6 +61,7 @@ function toModelRow(record: Record<string, unknown>): ModelRow {
         : Number(record.is_error),
     error_type: record.error_type ? String(record.error_type) : undefined,
     set: record.set ? String(record.set) : undefined,
+    model: record.model ? String(record.model) : undefined,
   };
 }
 

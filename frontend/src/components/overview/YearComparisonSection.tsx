@@ -103,6 +103,7 @@ export function YearComparisonSection() {
             layout={comparisonFigure.layout}
             previewLayout={comparisonFigure.previewLayout}
             className="plot-card--year-comparison"
+            htmlLegend
           />
         ) : (
           <StateBlock

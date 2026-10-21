@@ -58,6 +58,8 @@ export type ModelRow = {
   is_error?: number;
   error_type?: string;
   set?: string;
+  /** "random_split" (2018–2025, earlier model) or "holdout_2026". */
+  model?: string;
 };
 
 export type CourseProfileRow = {

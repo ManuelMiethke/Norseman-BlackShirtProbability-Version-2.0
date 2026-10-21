@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import type { ReactNode } from "react";
 
 import { FilterToolbar } from "@/components/layout/FilterToolbar";
+import { assetUrl } from "@/lib/assets";
 
 const navigation = [
   { label: "Overview", to: "/overview" },
@@ -18,7 +19,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="app-topbar__brand">
             <img
               className="app-topbar__logo"
-              src="/logos/black-shirt_icon.jpg"
+              src={assetUrl("logos/black-shirt_icon.jpg")}
               alt=""
               width={32}
               height={32}

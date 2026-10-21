@@ -6,6 +6,7 @@ import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
 import { COURSE_OVERVIEW_3D_INFO } from "@/content/chartInfo";
+import { assetUrl } from "@/lib/assets";
 import {
   buildCourseOverviewModel,
   cameraScaleFor,
@@ -37,7 +38,7 @@ function useCourseGpx(): GpxState {
     let cancelled = false;
     Promise.all(
       GPX_FILES.map(async ({ leg, file }) => {
-        const response = await fetch(file);
+        const response = await fetch(assetUrl(file));
         if (!response.ok) {
           throw new Error(`Could not load ${file} (${response.status}).`);
         }

@@ -162,8 +162,12 @@ function deriveLegend(data: Data[]): ChartLegendItem[] {
     const color =
       (trace.fill ? pickColor(trace.fillcolor) ?? pickColor(trace.line?.color) : undefined) ??
       pickColor(trace.line?.color) ??
-      pickColor(trace.marker?.color) ??
-      PALETTE.other;
+      pickColor(trace.marker?.color);
+    if (!color) {
+      // Per-point colours (e.g. faster/slower bars) cannot be summarised in one
+      // swatch – such charts keep their Plotly legend instead.
+      return [];
+    }
     const dash = trace.line?.dash && trace.line.dash !== "solid";
 
     items.push({

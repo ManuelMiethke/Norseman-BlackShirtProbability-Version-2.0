@@ -2,21 +2,23 @@ import type { Data, Layout } from "plotly.js";
 
 import { RACE_YEAR_REGISTRY, RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
 import { isBlackFinishType, isDnfFinishType, isWhiteFinishType, isInRankBand } from "@/lib/groups";
+import { PALETTE } from "@/lib/theme";
 import type { LongRow } from "@/types/data";
 
 const SWIM_KM = 3.8;
 const BIKE_KM = 180.0;
+// Ten distinguishable colours that sit well on the slate chart panels.
 const TOP10_COLORS = [
-  "#1F77B4",
-  "#FF7F0E",
-  "#2CA02C",
-  "#D62728",
-  "#9467BD",
-  "#17BECF",
-  "#BCBD22",
-  "#E377C2",
-  "#8C564B",
-  "#AEC7E8",
+  "#5ab0ff",
+  "#ff9f1c",
+  "#4ade80",
+  "#f2594b",
+  "#b07cff",
+  "#2dd4bf",
+  "#facc15",
+  "#f472b6",
+  "#d6b38a",
+  "#a5b4fc",
 ];
 const CONTENDER_COLOR = "rgba(60, 60, 60, 0.85)";
 const GRID_COLOR = "rgba(255,255,255,0.25)";
@@ -206,11 +208,11 @@ function buildSharedLayout(height: number): Partial<Layout> {
 
 function athleteColor(finishType: string, top10AtCutoff: boolean): string {
   if (isDnfFinishType(finishType)) {
-    return "#FF0000";
+    return PALETTE.dnf;
   }
 
   if (top10AtCutoff) {
-    return "#00C853";
+    return PALETTE.top10;
   }
 
   if (isBlackFinishType(finishType)) {

@@ -57,6 +57,8 @@ const FLAT_WINDOW_SAMPLES = 10;
 const FLAT_GRADE = 0.01;
 const MIN_CLIMB_GAIN_M = 80;
 const MIN_CLIMB_LENGTH_M = 800;
+/** Black Shirt cut-off at Stavsro, measured on the run (since 2024). */
+const CUTOFF_RUN_KM = 37.5;
 
 /** Gradient classes for the wall – same language as Model Accuracy (blue = down, purple = up). */
 export const COURSE_SLOPE_CLASSES = [
@@ -460,11 +462,56 @@ function buildFigure(samples: Sample[], climbs: Climb[]): CourseOverviewModel["f
     borderpad: 3,
     font: { color: "#0a0c0e", size: 10 },
   });
+  // Orange X at the Black Shirt cut-off (Stavsro, 37.5 km into the run).
+  const runStart = legBreaks[1];
+  const cutoffIndex =
+    runStart === undefined
+      ? -1
+      : samples.findIndex(
+          (sample) => sample.distanceM >= samples[runStart].distanceM + CUTOFF_RUN_KM * 1000,
+        );
+  const cutoff = cutoffIndex >= 0 ? samples[cutoffIndex] : null;
+  if (cutoff) {
+    data.push(
+      {
+        type: "scatter3d",
+        mode: "lines",
+        x: [cutoff.x, cutoff.x],
+        y: [cutoff.y, cutoff.y],
+        z: [0, cutoff.smoothEle + 6],
+        line: { color: PALETTE.accent, width: 4, dash: "dash" },
+        hoverinfo: "skip",
+        showlegend: false,
+      } as Data,
+      {
+        type: "scatter3d",
+        mode: "markers",
+        x: [cutoff.x],
+        y: [cutoff.y],
+        z: [cutoff.smoothEle + 8],
+        marker: { symbol: "x", size: 13, color: PALETTE.accent, line: { color: PALETTE.accent, width: 3 } },
+        hovertemplate:
+          `<b>Black Shirt cut-off</b> · Stavsro (since 2024; 2018–2022: Langefonn, run 32.5 km)<br>Run ${CUTOFF_RUN_KM} km · race km ${(cutoff.distanceM / 1000).toFixed(1)}` +
+          `<br>Elevation %{z:.0f} m<extra></extra>`,
+        showlegend: false,
+      } as Data,
+    );
+  }
+
   const legAnnotations = [
     markerAnnotation(samples[0], "<b>Start</b> · Eidfjord", -40, 26),
     ...(legBreaks[0] !== undefined ? [markerAnnotation(samples[legBreaks[0]], "<b>T1</b>", 18, 26)] : []),
     ...(legBreaks[1] !== undefined ? [markerAnnotation(samples[legBreaks[1]], "<b>T2</b>", -10, 30)] : []),
     markerAnnotation(samples[n - 1], "<b>Finish</b> · Gaustatoppen", -30, 64),
+    ...(cutoff
+      ? [
+          {
+            ...markerAnnotation(cutoff, `<b>✕ Cut-off</b> · Stavsro ${CUTOFF_RUN_KM} km`, -95, 34),
+            bgcolor: PALETTE.accent,
+            arrowcolor: PALETTE.accent,
+          },
+        ]
+      : []),
   ];
 
   const xs = samples.map((sample) => sample.x);

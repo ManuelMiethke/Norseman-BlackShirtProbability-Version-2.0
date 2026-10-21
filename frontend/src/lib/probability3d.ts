@@ -40,12 +40,13 @@ const PANEL_BG = "rgba(0,0,0,0)";
 const TEXT_COLOR = "#eef5fb";
 
 const PROBABILITY_COLORSCALE: Array<[number, string]> = [
-  [0.0, "#ffffff"],
-  [0.2, "#f2f2f2"],
-  [0.4, "#d9d9d9"],
-  [0.5, "#bfbfbf"],
-  [0.65, "#8c8c8c"],
-  [0.8, "#4d4d4d"],
+  // Light grey (not white) for low probabilities, so the surface reads on the panel.
+  [0.0, "#d4d8dc"],
+  [0.2, "#c4c9cf"],
+  [0.4, "#acb2b9"],
+  [0.5, "#959ca4"],
+  [0.65, "#6f767e"],
+  [0.8, "#3d4247"],
   [1.0, "#000000"],
 ];
 
