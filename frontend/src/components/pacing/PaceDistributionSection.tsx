@@ -19,10 +19,29 @@ function toneFromGroup(group: PaceStatsCell["group"]) {
   if (group === "Black Shirt") {
     return "black";
   }
-  if (group === "Places 120–160") {
+  if (group === "Places 140–180") {
     return "band";
   }
   return "white";
+}
+
+const UNIT_PATTERN = /\s*(min\/100m|min\/km|km\/h)$/;
+
+/** Moves the unit into the column header so every cell fits on one line. */
+function stripUnit(line: string) {
+  return line.replace(UNIT_PATTERN, "");
+}
+
+function unitOf(leg: PaceLegModel) {
+  for (const row of leg.table.rows) {
+    for (const cell of row.cells) {
+      for (const line of cell.secondaryLines) {
+        const match = line.match(UNIT_PATTERN);
+        if (match) return match[1];
+      }
+    }
+  }
+  return null;
 }
 
 function PaceCellGroup({
@@ -42,7 +61,7 @@ function PaceCellGroup({
           {cell.secondaryLines.length > 0 ? (
             <div className="pace-table__stack">
               {cell.secondaryLines.map((line) => (
-                <span key={line}>{line}</span>
+                <span key={line}>{stripUnit(line)}</span>
               ))}
             </div>
           ) : (
@@ -54,8 +73,18 @@ function PaceCellGroup({
   );
 }
 
-function PaceLegPanel({ leg }: { leg: PaceLegModel }) {
+function PaceLegPanel({
+  leg,
+  statsOpen,
+  onStatsToggle,
+}: {
+  leg: PaceLegModel;
+  statsOpen: boolean;
+  onStatsToggle: (open: boolean) => void;
+}) {
   const hasSecondaryColumn = leg.table.secondaryLabel !== null;
+  const unit = unitOf(leg);
+  const secondaryHeader = unit ?? leg.table.secondaryLabel;
 
   return (
     <article className="pacing-leg-panel">
@@ -65,7 +94,17 @@ function PaceLegPanel({ leg }: { leg: PaceLegModel }) {
         className="plot-card--pace"
       />
 
-      <details className="disclosure-panel">
+      {/* All legs share one open state, so the tables expand together and line up. */}
+      <details
+        className="disclosure-panel"
+        open={statsOpen}
+        onToggle={(event) => {
+          const { open } = event.currentTarget;
+          if (open !== statsOpen) {
+            onStatsToggle(open);
+          }
+        }}
+      >
         <summary>
           <span>Median / Std / Min / Max</span>
           <span className="disclosure-panel__chevron">⌄</span>
@@ -101,7 +140,7 @@ function PaceLegPanel({ leg }: { leg: PaceLegModel }) {
                         </th>
                         {hasSecondaryColumn ? (
                           <th className={`pace-table__subhead pace-table__group--${group.tone}`}>
-                            {leg.table.secondaryLabel}
+                            {secondaryHeader}
                           </th>
                         ) : null}
                       </Fragment>
@@ -140,6 +179,7 @@ export function PaceDistributionSection() {
     error,
   } = useDashboard();
   const [showZombieHill, setShowZombieHill] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
   const headerActions = <ChartInfoPopover title="Pace Distribution" info={PACE_DISTRIBUTION_INFO} />;
   const footerControls = (
     <div className="section-controls section-controls--footer">
@@ -193,10 +233,19 @@ export function PaceDistributionSection() {
         {model.primaryLegs.length > 0 ? (
           <div className="pacing-grid">
             {model.primaryLegs.map((leg) => (
-              <PaceLegPanel key={leg.id} leg={leg} />
+              <PaceLegPanel
+                key={leg.id}
+                leg={leg}
+                statsOpen={statsOpen}
+                onStatsToggle={setStatsOpen}
+              />
             ))}
             {showZombieHill && model.zombieHill ? (
-              <PaceLegPanel leg={model.zombieHill} />
+              <PaceLegPanel
+                leg={model.zombieHill}
+                statsOpen={statsOpen}
+                onStatsToggle={setStatsOpen}
+              />
             ) : null}
           </div>
         ) : (

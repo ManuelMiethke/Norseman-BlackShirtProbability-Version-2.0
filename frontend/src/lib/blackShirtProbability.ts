@@ -227,7 +227,7 @@ function buildGroups(
   }
 
   if (selectedGroup === RANK_BAND_GROUP) {
-    // Athletes ranked 120–160 at their last split (the Black Shirt cut-off),
+    // Athletes ranked 140–180 at their last split (the Black Shirt cut-off),
     // split by the shirt they eventually received.
     const bandKeys = athletesByLastRank(rows, selectedYear, isInRankBand);
     const inBand = (row: ProbabilityRow) => bandKeys.has(athleteKey(row, selectedYear === "All"));

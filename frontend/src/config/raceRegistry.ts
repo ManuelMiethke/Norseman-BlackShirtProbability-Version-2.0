@@ -1,10 +1,10 @@
 /**
  * Rank band used to compare yourself with the athletes who fight for the last
- * Black Shirt places (the cut-off is rank 160). Change min/max here to move
- * the band, e.g. to 140–160.
+ * Black Shirt places around the cut-off (rank 160). Change min/max here to
+ * move the band, e.g. to 120–160.
  */
-export const RANK_BAND = { min: 120, max: 160 } as const;
-export const RANK_BAND_GROUP = "Places 120–160" as const;
+export const RANK_BAND = { min: 140, max: 180 } as const;
+export const RANK_BAND_GROUP = "Places 140–180" as const;
 
 export type GroupOption =
   | "All"

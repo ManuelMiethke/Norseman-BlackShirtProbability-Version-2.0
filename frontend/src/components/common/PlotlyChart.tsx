@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState, type ReactNode } from "react";
+import { Suspense, lazy, useState, type KeyboardEvent, type ReactNode } from "react";
 import type { Data, Layout, Config } from "plotly.js";
 
 import { ChartLegend, type ChartLegendItem } from "@/components/common/ChartLegend";
@@ -198,6 +198,7 @@ export function PlotlyChart({
   legend,
   headerExtra,
   htmlLegend = false,
+  interactive = false,
 }: {
   data: Data[];
   layout: Partial<Layout>;
@@ -213,6 +214,11 @@ export function PlotlyChart({
   headerExtra?: ReactNode;
   /** Replace the Plotly legend with an HTML legend derived from the traces. */
   htmlLegend?: boolean;
+  /**
+   * For charts you rotate or drag (3D): clicking the chart does not open the
+   * fullscreen view; a dedicated expand button does instead.
+   */
+  interactive?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const defaultLayoutWithoutFixedHeight = stripHeight(layout);
@@ -243,8 +249,11 @@ export function PlotlyChart({
   const mergedConfig = {
     displayModeBar: false,
     responsive: true,
+    // Wheel zoom inside the page would hijack scrolling; it is enabled in fullscreen.
+    ...(interactive ? { scrollZoom: false } : {}),
     ...config,
   };
+  const expandedConfig = interactive ? { ...mergedConfig, scrollZoom: true } : mergedConfig;
   const hasHeader = Boolean(title || legendItems?.length || headerExtra);
   const header = hasHeader ? (
     <div className="plot-panel__header">
@@ -256,20 +265,36 @@ export function PlotlyChart({
     </div>
   ) : null;
 
-  const card = (
-      <div
-        className={className ? `plot-card ${className}` : "plot-card"}
-        role="button"
-        tabIndex={0}
-        aria-label="Open chart fullscreen"
-        onClick={() => setIsExpanded(true)}
-        onKeyDown={(event) => {
+  const openFullscreen = () => setIsExpanded(true);
+  const cardProps = interactive
+    ? { className: className ? `plot-card plot-card--interactive ${className}` : "plot-card plot-card--interactive" }
+    : {
+        className: className ? `plot-card ${className}` : "plot-card",
+        role: "button",
+        tabIndex: 0,
+        "aria-label": "Open chart fullscreen",
+        onClick: openFullscreen,
+        onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            setIsExpanded(true);
+            openFullscreen();
           }
-        }}
-      >
+        },
+      };
+
+  const card = (
+      <div {...cardProps}>
+        {interactive ? (
+          <button
+            type="button"
+            className="plot-card__expand"
+            onClick={openFullscreen}
+            aria-label="Open chart fullscreen"
+            title="Fullscreen"
+          >
+            ⤢
+          </button>
+        ) : null}
         <Suspense fallback={<div className="plot-card__loading">Loading chart…</div>}>
           <Plot
             data={data}
@@ -317,7 +342,7 @@ export function PlotlyChart({
                 <Plot
                   data={data}
                   layout={mergedExpandedLayout}
-                  config={mergedConfig}
+                  config={expandedConfig}
                   useResizeHandler
                   style={{ width: "100%", height: "100%" }}
                 />

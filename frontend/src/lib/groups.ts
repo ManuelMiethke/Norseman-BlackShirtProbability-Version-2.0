@@ -34,7 +34,7 @@ export function isTop10Rank(value: unknown): boolean {
   return rank !== null && rank <= 10;
 }
 
-/** True when a rank lies inside the configurable comparison band (e.g. 120–160). */
+/** True when a rank lies inside the configurable comparison band (e.g. 140–180). */
 export function isInRankBand(value: unknown): boolean {
   const rank = normalizeRank(value);
   return rank !== null && rank >= RANK_BAND.min && rank <= RANK_BAND.max;

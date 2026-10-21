@@ -20,7 +20,7 @@ export const PALETTE = {
   accent: "#ff9f1c", // medians, highlights
   accentSoft: "rgba(255, 159, 28, 0.18)",
   mean: "#5ab0ff",
-  band: "#f472b6", // "Places 120–160" comparison group
+  band: "#f472b6", // "Places 140–180" comparison group
   frontier: "#b07cff", // 50 % Black Shirt frontier (pace + accumulated time)
 
   // Race legs
@@ -43,6 +43,19 @@ export const PALETTE = {
   axisLine: "rgba(255, 255, 255, 0.28)",
   transparent: "rgba(0,0,0,0)",
   hoverBg: "#0f1215",
+} as const;
+
+/**
+ * Gradient colours (taken from the Streamlit dashboard) used wherever terrain
+ * is shaded by slope: blue = descent (lighter = steeper), grey = flat,
+ * pink → purple = climb (darker purple = steeper).
+ */
+export const SLOPE_COLORS = {
+  steepDescent: "rgba(0, 200, 255, 0.60)",
+  descent: "rgba(0, 160, 255, 0.50)",
+  flat: "rgba(255, 255, 255, 0.14)",
+  climb: "rgba(255, 80, 200, 0.55)",
+  steepClimb: "rgba(180, 0, 255, 0.60)",
 } as const;
 
 export const FONT_BODY = "Inter, 'IBM Plex Sans', system-ui, sans-serif";

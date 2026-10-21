@@ -922,6 +922,41 @@ select {
   min-height: 640px;
 }
 
+.plot-card--course {
+  height: clamp(460px, 62vh, 620px);
+  min-height: 460px;
+}
+
+.plot-card--interactive {
+  cursor: grab;
+}
+
+.plot-card--interactive:active {
+  cursor: grabbing;
+}
+
+.plot-card__expand {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: rgba(10, 12, 14, 0.62);
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+
+.plot-card__expand:hover {
+  background: rgba(10, 12, 14, 0.9);
+}
+
 .plot-card__loading {
   display: grid;
   place-items: center;
@@ -1307,8 +1342,20 @@ select {
 
 .pacing-leg-panel {
   display: grid;
+  align-content: start;
   gap: 0.65rem;
   padding: 0.65rem;
+}
+
+/* Rows have the same height in every leg table so the expanded tables line
+   up across Swim, T1, Bike, … (cells hold up to two lines of pace text). */
+.pace-table tbody td {
+  height: 4.3em;
+  white-space: nowrap;
+}
+
+.pace-table__stack {
+  gap: 0.05rem !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -1393,7 +1440,8 @@ select {
 }
 
 .pace-table__subhead {
-  white-space: nowrap;
+  height: 2.9em;
+  vertical-align: bottom !important;
 }
 
 .pace-table__group {

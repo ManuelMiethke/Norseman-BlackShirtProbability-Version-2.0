@@ -9,9 +9,9 @@ import {
   isWhiteFinishType,
   isInRankBand,
 } from "@/lib/groups";
+import { PALETTE, SLOPE_COLORS } from "@/lib/theme";
 import type { CourseProfileRow, ModelRow } from "@/types/data";
 
-import { PALETTE } from "@/lib/theme";
 type PlotFigure = {
   data: Data[];
   layout: Partial<Layout>;
@@ -98,13 +98,13 @@ function computeAccuracyByStation(rows: ModelRow[]): AccuracyRow[] {
 }
 
 function colorForSlopePct(slopePct: number) {
-  // Calm terrain shading so the orange accuracy line stays the focus:
-  // blue = descent, white = climb, intensity = gradient.
-  if (slopePct <= -4) return "rgba(90, 169, 230, 0.70)";
-  if (slopePct <= -1) return "rgba(90, 169, 230, 0.42)";
-  if (slopePct < 1) return "rgba(255, 255, 255, 0.12)";
-  if (slopePct < 4) return "rgba(255, 255, 255, 0.30)";
-  return "rgba(255, 255, 255, 0.52)";
+  // Same colours as the Streamlit dashboard: blue = descent (lighter = steeper),
+  // grey = flat, pink → purple = climb (darker purple = steeper).
+  if (slopePct <= -4) return SLOPE_COLORS.steepDescent;
+  if (slopePct <= -1) return SLOPE_COLORS.descent;
+  if (slopePct < 1) return SLOPE_COLORS.flat;
+  if (slopePct < 4) return SLOPE_COLORS.climb;
+  return SLOPE_COLORS.steepClimb;
 }
 
 function buildGradientElevationTraces(courseRows: CourseProfileRow[]) {

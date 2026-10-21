@@ -293,18 +293,19 @@ export const COURSE_OVERVIEW_3D_INFO: ChartInfoSpec = {
     {
       heading: "What is shown",
       bullets: [
-        "This card stitches the Norseman swim, bike and run GPX tracks into one continuous 3D course view.",
-        "The upper panel shows the spatial route, while the lower profile compresses the full climbing story into a single elevation strip.",
-        "The summary cards underneath keep the main course facts visible: total distance, ascent, descent and highest point.",
+        "The swim, bike and run GPX tracks are stitched into one 3D course: the white line is the route, the wall below it shows the elevation down to sea level.",
+        "The wall is shaded by gradient: blue = descent (lighter = steeper), grey = flat, pink → purple = climb (darker = steeper).",
+        "Every relevant climb is labelled at its summit with length, average gradient, elevation gain and race kilometres.",
+        "The header shows total distance, ascent, descent and the highest point.",
       ],
     },
     {
       heading: "How to use it",
       bullets: [
-        "The chart opens in a fixed overview angle first, so the full Norseman course is immediately readable.",
-        "Click and drag inside the 3D route to unlock a controlled tilt view, then drag up or down to rotate the course vertically while Swim and Run stay fixed left and right.",
-        "Use the mouse wheel to zoom and double-click to reset the preview.",
-        "The profile below marks each meaningful climb segment with its length so the course rhythm stays readable at a glance.",
+        "Drag to rotate the course, double-click to return to the default view.",
+        "Hover the route for kilometre, elevation and local gradient.",
+        "Open the fullscreen view with the button in the corner; there the mouse wheel zooms.",
+        "Climbs are detected automatically: an ascent ends when the road drops more than 25 m, flat stretches (< 1 % over 2 km) split long ascents, and only climbs with at least 80 m gain are labelled.",
       ],
     },
     {
