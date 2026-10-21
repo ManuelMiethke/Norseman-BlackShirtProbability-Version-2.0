@@ -5,8 +5,9 @@ import { secondsToPaddedHms, timeToSeconds } from "@/lib/time";
 import type { WideRow } from "@/types/data";
 import type { GroupOption } from "@/config/raceRegistry";
 
+import { PALETTE } from "@/lib/theme";
 const BACKGROUND = "rgba(0,0,0,0)";
-const TOP10_COLOR = "lightgreen";
+const TOP10_COLOR = PALETTE.top10;
 
 export type HistogramScaleMode =
   | "Absolute (hh:mm:ss)"
@@ -228,7 +229,7 @@ function buildHistogramFigure(
   const chartRows = [
     { key: "Black", rows: traces.baseBlack, color: "black", bins: 40, opacity: 0.7 },
     { key: "White", rows: traces.baseWhite, color: "white", bins: 40, opacity: 0.7 },
-    { key: "DNF", rows: traces.baseDnf, color: "red", bins: 80, opacity: 0.65 },
+    { key: "DNF", rows: traces.baseDnf, color: PALETTE.dnf, bins: 80, opacity: 0.65 },
     { key: "Top 10", rows: traces.top10, color: TOP10_COLOR, bins: 40, opacity: 0.79 },
   ];
 
@@ -377,7 +378,7 @@ function buildHistogramFigure(
               xref: "x",
               yref: "paper",
               line: {
-                color: "orange",
+                color: PALETTE.accent,
                 width: 2,
                 dash: "dot",
               },
@@ -394,7 +395,7 @@ function buildHistogramFigure(
               xref: "x",
               yref: "paper",
               showarrow: false,
-              font: { color: "orange", size: 12 },
+              font: { color: PALETTE.accent, size: 12 },
               yshift: 12,
             },
           ]

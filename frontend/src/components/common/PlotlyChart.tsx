@@ -1,7 +1,68 @@
 import { Suspense, lazy, useState } from "react";
 import type { Data, Layout, Config } from "plotly.js";
 
+import { FONT_BODY, PALETTE } from "@/lib/theme";
+
 const Plot = lazy(() => import("react-plotly.js"));
+
+type LooseLayout = Record<string, any>;
+
+const AXIS_KEY = /^[xy]axis\d*$/;
+const SCENE_KEY = /^scene\d*$/;
+
+/**
+ * Applies the shared dark chart theme on top of each chart's own layout.
+ * Backgrounds become transparent (the panel colour comes from `.plot-card`
+ * in global.css), and grid lines, fonts and hover labels are unified so every
+ * chart reads as part of one system. Chart-specific colours for traces and
+ * annotations are left untouched.
+ */
+function applyTheme(layout: Partial<Layout>): Partial<Layout> {
+  const source = layout as LooseLayout;
+  const next: LooseLayout = {
+    ...source,
+    paper_bgcolor: PALETTE.transparent,
+    plot_bgcolor: PALETTE.transparent,
+    font: {
+      ...(source.font ?? {}),
+      family: FONT_BODY,
+      color: source.font?.color ?? PALETTE.text,
+    },
+    hoverlabel: {
+      bgcolor: PALETTE.hoverBg,
+      bordercolor: "rgba(255, 255, 255, 0.18)",
+      ...(source.hoverlabel ?? {}),
+      font: {
+        family: FONT_BODY,
+        color: PALETTE.text,
+        size: 12,
+        ...(source.hoverlabel?.font ?? {}),
+      },
+    },
+  };
+
+  if (source.legend) {
+    next.legend = {
+      ...source.legend,
+      font: { ...(source.legend.font ?? {}), family: FONT_BODY },
+    };
+  }
+
+  for (const key of Object.keys(source)) {
+    if (AXIS_KEY.test(key) && source[key]) {
+      next[key] = {
+        ...source[key],
+        gridcolor: PALETTE.grid,
+        zerolinecolor: PALETTE.axisLine,
+        linecolor: PALETTE.axisLine,
+      };
+    } else if (SCENE_KEY.test(key) && source[key]) {
+      next[key] = { ...source[key], bgcolor: PALETTE.transparent };
+    }
+  }
+
+  return next as Partial<Layout>;
+}
 
 function stripHeight(layout: Partial<Layout> | undefined) {
   if (!layout) {
@@ -34,16 +95,16 @@ export function PlotlyChart({
     previewLayout ? stripHeight(previewLayout) : defaultLayoutWithoutFixedHeight;
   const expandedLayoutWithoutFixedHeight =
     expandedLayout ? stripHeight(expandedLayout) : defaultLayoutWithoutFixedHeight;
-  const mergedPreviewLayout = {
+  const mergedPreviewLayout = applyTheme({
     autosize: true,
     ...defaultLayoutWithoutFixedHeight,
     ...previewLayoutWithoutFixedHeight,
-  };
-  const mergedExpandedLayout = {
+  });
+  const mergedExpandedLayout = applyTheme({
     autosize: true,
     ...defaultLayoutWithoutFixedHeight,
     ...expandedLayoutWithoutFixedHeight,
-  };
+  });
   const mergedConfig = {
     displayModeBar: false,
     responsive: true,

@@ -4,6 +4,7 @@ import type { GroupOption } from "@/config/raceRegistry";
 import { athleteKey, classifyFinishGroup, filterRowsByYear, isTop10Rank } from "@/lib/groups";
 import type { ModelRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 type PlotFigure = {
   data: Data[];
   layout: Partial<Layout>;
@@ -356,7 +357,7 @@ function build2dFigure(
         name: marker.name,
         marker: {
           size: 10,
-          color: "#ff8c00",
+          color: PALETTE.accent,
           symbol: marker.symbol === "x" ? "x" : "circle",
           line: { color: "#111111", width: 1 },
         },
@@ -436,7 +437,7 @@ function build3dFigure(
         name: marker.name,
         marker: {
           size: 9,
-          color: "#ff8c00",
+          color: PALETTE.accent,
           symbol: marker.symbol,
           line: { color: "#111111", width: 1 },
         },

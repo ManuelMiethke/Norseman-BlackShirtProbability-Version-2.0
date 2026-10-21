@@ -4,6 +4,7 @@ import type { GroupOption } from "@/config/raceRegistry";
 import { classifyFinishGroup, filterRowsByYear } from "@/lib/groups";
 import type { LongRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 type PlotFigure = {
   data: Data[];
   layout: Partial<Layout>;
@@ -142,11 +143,11 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
 
   const categoryOrder: Array<AccumulatedRow["category"]> = ["DNF", "White", "Black", "Top10", "Other"];
   const categoryColor: Record<AccumulatedRow["category"], string> = {
-    DNF: "#FF4B4B",
+    DNF: PALETTE.dnf,
     White: "#FFFFFF",
     Black: "#000000",
-    Top10: "#2ECC71",
-    Other: "#9b9b9b",
+    Top10: PALETTE.top10,
+    Other: PALETTE.other,
   };
 
   const data: Data[] = [];
@@ -228,8 +229,8 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
   return {
     data,
     layout: {
-      plot_bgcolor: "#7A7A7A",
-      paper_bgcolor: "#7A7A7A",
+      plot_bgcolor: PALETTE.transparent,
+      paper_bgcolor: PALETTE.transparent,
       font: { color: "white", family: "IBM Plex Sans, sans-serif" },
       legend: {
         orientation: "h",
@@ -237,7 +238,7 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
         y: 1.02,
         xanchor: "left",
         yanchor: "bottom",
-        bgcolor: "#7A7A7A",
+        bgcolor: PALETTE.transparent,
         font: { color: "white", size: 12 },
       },
       margin: { l: 40, r: 20, t: 20, b: 40 },

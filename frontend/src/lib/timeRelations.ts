@@ -11,12 +11,13 @@ import {
 import { formatDelta, secondsToHms, timeToSeconds } from "@/lib/time";
 import type { WideRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 const SEGMENT_LABELS = ["Swim", "Bike", "Run"];
 const SEGMENT_DISTANCES = [3.8, 180.2, 42.2];
 const SEGMENT_COLORS = {
-  Swim: "#64b5f6",
-  Bike: "#4A4A4A",
-  Run: "#2e7d32",
+  Swim: PALETTE.swim,
+  Bike: PALETTE.bike,
+  Run: PALETTE.run,
 };
 
 type GroupFigure = {

@@ -10,6 +10,7 @@ import {
 } from "@/lib/groups";
 import type { ModelRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 type PlotFigure = {
   data: Data[];
   layout: Partial<Layout>;
@@ -55,8 +56,8 @@ const GROUP_COLORS = {
   "White Shirt": "#ffffff",
 } as const;
 
-const MEDIAN_COLOR = "#FF8C00";
-const MEAN_COLOR = "#1f77ff";
+const MEDIAN_COLOR = PALETTE.accent;
+const MEAN_COLOR = PALETTE.mean;
 
 function isFiniteNumber(value: number | null | undefined): value is number {
   return value !== null && value !== undefined && Number.isFinite(value);
@@ -283,12 +284,13 @@ export function buildBlackShirtProbabilityModel(
     annotations.push({
       text: group.title,
       x: (domainStart + domainEnd) / 2,
-      y: 1.08,
+      y: 1.02,
+      yanchor: "bottom",
       xref: "paper",
       yref: "paper",
       showarrow: false,
       font: {
-        size: 18,
+        size: 14,
         color: "#ffffff",
       },
     });
@@ -414,7 +416,7 @@ export function buildBlackShirtProbabilityModel(
     legend: {
       font: {
         color: "#ffffff",
-        size: 18,
+        size: 13,
       },
     },
     annotations,

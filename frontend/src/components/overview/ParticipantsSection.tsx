@@ -6,6 +6,7 @@ import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
 import { PARTICIPATION_INFO } from "@/content/chartInfo";
 
+import { PALETTE } from "@/lib/theme";
 function RatioBar({
   segments,
   className,
@@ -138,8 +139,8 @@ export function ParticipantsSection() {
           <RatioBar
             className="ratio-bar--gender"
             segments={[
-              { label: "Men", value: stats.genderCounts.men, color: "#4d82e8" },
-              { label: "Women", value: stats.genderCounts.women, color: "#ec6bbb" },
+              { label: "Men", value: stats.genderCounts.men, color: PALETTE.men },
+              { label: "Women", value: stats.genderCounts.women, color: PALETTE.women },
             ]}
           />
           <SegmentLegend
@@ -149,14 +150,14 @@ export function ParticipantsSection() {
                 label: "Men",
                 count: stats.genderCounts.men.toLocaleString(),
                 percentage: `${stats.genderPercentages.men.toFixed(1)}%`,
-                color: "#4d82e8",
+                color: PALETTE.men,
                 weight: stats.genderCounts.men,
               },
               {
                 label: "Women",
                 count: stats.genderCounts.women.toLocaleString(),
                 percentage: `${stats.genderPercentages.women.toFixed(1)}%`,
-                color: "#ec6bbb",
+                color: PALETTE.women,
                 weight: stats.genderCounts.women,
               },
             ]}
@@ -171,7 +172,7 @@ export function ParticipantsSection() {
             segments={[
               { label: "Black", value: stats.finishCounts.black, color: "#111111" },
               { label: "White", value: stats.finishCounts.white, color: "#f3f7fb" },
-              { label: "DNF", value: stats.finishCounts.dnf, color: "#ef4444" },
+              { label: "DNF", value: stats.finishCounts.dnf, color: PALETTE.dnf },
             ]}
           />
           <SegmentLegend
@@ -195,7 +196,7 @@ export function ParticipantsSection() {
                 label: "DNF",
                 count: stats.finishCounts.dnf.toLocaleString(),
                 percentage: `${stats.finishPercentages.dnf.toFixed(1)}%`,
-                color: "#ef4444",
+                color: PALETTE.dnf,
                 weight: stats.finishCounts.dnf,
               },
             ]}

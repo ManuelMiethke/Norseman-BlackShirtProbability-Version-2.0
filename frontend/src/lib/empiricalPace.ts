@@ -3,6 +3,7 @@ import type { Data, Layout } from "plotly.js";
 import { CUTOFF_37_5_YEARS } from "@/config/raceRegistry";
 import type { CourseProfileRow, LongRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 const TARGET_TOTAL_SECS = 13 * 3600 + 51 * 60;
 const PREF_OPTIONS = ["p10", "p25", "p50", "p75", "p90"] as const;
 
@@ -433,8 +434,8 @@ export function buildEmpiricalDetailChart(
         path: pathParts.join(" "),
         xref: "x",
         yref: "y2",
-        fillcolor: "rgba(31, 111, 178, 0.18)",
-        line: { color: "rgba(31, 111, 178, 0.60)", width: 2 },
+        fillcolor: PALETTE.elevationFill,
+        line: { color: PALETTE.elevationLine, width: 2 },
         layer: "below",
       });
     }
@@ -496,7 +497,7 @@ export function buildEmpiricalDetailChart(
         y: ySpeed,
         mode: "lines",
         name: "Recommended speed (km/h)",
-        line: { width: 5, color: "orange" },
+        line: { width: 5, color: PALETTE.accent },
         hovertemplate: "Speed: %{y:.1f} km/h<extra></extra>",
         connectgaps: false,
       },

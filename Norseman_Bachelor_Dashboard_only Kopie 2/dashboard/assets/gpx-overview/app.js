@@ -1266,8 +1266,8 @@ function drawFloor(ctx2d, projector, width, height) {
   ].map((point) => project(point, baseZ));
 
   const floorGradient = ctx2d.createLinearGradient(0, height * 0.24, width, height);
-  floorGradient.addColorStop(0, "rgba(228, 219, 198, 0.34)");
-  floorGradient.addColorStop(1, "rgba(190, 178, 148, 0.18)");
+  floorGradient.addColorStop(0, "rgba(214, 224, 234, 0.20)");
+  floorGradient.addColorStop(1, "rgba(150, 164, 178, 0.10)");
 
   ctx2d.beginPath();
   corners.forEach((corner, index) => {
@@ -1281,7 +1281,7 @@ function drawFloor(ctx2d, projector, width, height) {
   ctx2d.fillStyle = floorGradient;
   ctx2d.fill();
 
-  ctx2d.strokeStyle = "rgba(107, 97, 80, 0.18)";
+  ctx2d.strokeStyle = "rgba(255, 255, 255, 0.14)";
   ctx2d.lineWidth = 1;
   ctx2d.stroke();
 
@@ -1301,7 +1301,7 @@ function drawFloor(ctx2d, projector, width, height) {
     ctx2d.beginPath();
     ctx2d.moveTo(p1.x, p1.y);
     ctx2d.lineTo(p2.x, p2.y);
-    ctx2d.strokeStyle = "rgba(107, 97, 80, 0.12)";
+    ctx2d.strokeStyle = "rgba(255, 255, 255, 0.08)";
     ctx2d.stroke();
   }
 }
@@ -1320,7 +1320,7 @@ function drawAxisCaptions(ctx2d, route, projector) {
   );
 
   ctx2d.save();
-  ctx2d.fillStyle = "rgba(77, 69, 57, 0.88)";
+  ctx2d.fillStyle = "rgba(238, 241, 244, 0.85)";
   ctx2d.font = "12px 'Avenir Next', 'Segoe UI', sans-serif";
   ctx2d.fillText("Distance", lowerBase.x - 34, lowerBase.y + 26);
 
@@ -1331,7 +1331,7 @@ function drawAxisCaptions(ctx2d, route, projector) {
   ctx2d.restore();
 
   ctx2d.font = "11px 'Avenir Next', 'Segoe UI', sans-serif";
-  ctx2d.fillStyle = "rgba(77, 69, 57, 0.64)";
+  ctx2d.fillStyle = "rgba(238, 241, 244, 0.6)";
   ctx2d.fillText(`${Math.round(route.metrics.maxEleM)} m`, upperBase.x - 28, upperBase.y - 10);
   ctx2d.fillText(`${Math.round(route.metrics.minEleM)} m`, leftBase.x - 28, leftBase.y + 2);
   ctx2d.restore();

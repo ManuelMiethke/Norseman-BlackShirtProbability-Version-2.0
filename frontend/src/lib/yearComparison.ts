@@ -5,11 +5,12 @@ import { filterRowsByGroup } from "@/lib/groups";
 import { secondsToHms, secondsToPaddedHms, timeToSeconds } from "@/lib/time";
 import type { WideRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 const LEG_ORDER = ["Swim", "Bike", "Run (to 32.5 km)"] as const;
 const SEGMENT_COLORS = {
-  Swim: "#64b5f6",
-  Bike: "#4A4A4A",
-  "Run (to 32.5 km)": "#2e7d32",
+  Swim: PALETTE.swim,
+  Bike: PALETTE.bike,
+  "Run (to 32.5 km)": PALETTE.run,
 } as const;
 // Basis ist immer das juengste Renn-Jahr, damit der Vergleich nicht
 // veraltet, sobald ein neues Jahr dazukommt
@@ -155,10 +156,10 @@ function buildYearCompareFigure(
               return "#bdbdbd";
             }
             if (row.medianSeconds < baselineSeconds) {
-              return "#2e7d32";
+              return PALETTE.top10;
             }
             if (row.medianSeconds > baselineSeconds) {
-              return "#c62828";
+              return PALETTE.dnf;
             }
             return "#bdbdbd";
           });
@@ -345,7 +346,7 @@ function buildTrendFigure(
         x: yearly.map((entry) => entry.year),
         y: yearly.map((entry) => entry.medianHours),
         width: 0.2,
-        marker: { color: "#4A4A4A" },
+        marker: { color: PALETTE.bike },
         text: yearly.map((entry) => entry.label),
         textposition: "outside",
         hovertemplate: "<b>Year</b>: %{x}<br><b>Median finish</b>: %{text}<extra></extra>",
@@ -355,8 +356,8 @@ function buildTrendFigure(
         mode: "lines+markers",
         x: yearly.map((entry) => entry.year),
         y: yearly.map((entry) => entry.medianHours),
-        marker: { color: "orange" },
-        line: { color: "orange", width: 3 },
+        marker: { color: PALETTE.accent },
+        line: { color: PALETTE.accent, width: 3 },
         text: yearly.map((entry) => entry.label),
         hovertemplate: "<b>Year</b>: %{x}<br><b>Median finish</b>: %{text}<extra></extra>",
       },

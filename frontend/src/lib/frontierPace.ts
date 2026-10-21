@@ -4,6 +4,7 @@ import type { GroupOption } from "@/config/raceRegistry";
 import { athleteKey, classifyFinishGroup, filterRowsByYear, isBlackFinishType, isDnfFinishType, isTop10Rank, isWhiteFinishType } from "@/lib/groups";
 import type { CourseProfileRow, LongRow, ModelRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 type PlotFigure = {
   data: Data[];
   layout: Partial<Layout>;
@@ -62,7 +63,7 @@ const ACCUMULATED_GAP_KM = 6.0;
 const GRID_COLOR = "rgba(255,255,255,0.22)";
 const TEXT_COLOR = "#eef5fb";
 const PANEL_BG = "rgba(0,0,0,0)";
-const FRONTIER_COLOR = "#ff8c00";
+const FRONTIER_COLOR = PALETTE.accent;
 
 const ORDERED_SPLIT_KEYS = [
   "swim_finish",
@@ -429,9 +430,9 @@ function buildFrontierChartFigure(points: FrontierPoint[], courseRows: CoursePro
         y: course.map((row) => row.elev_norseman_m ?? null),
         mode: "lines",
         name: "Elevation",
-        line: { width: 2, color: "rgba(99,210,255,0.72)" },
+        line: { width: 2, color: PALETTE.elevationLine },
         fill: "tozeroy",
-        fillcolor: "rgba(99,210,255,0.14)",
+        fillcolor: PALETTE.elevationFill,
         yaxis: "y2",
         hovertemplate: "km %{x:.1f}<br>Elev %{y:.0f} m<extra></extra>",
       },
@@ -524,11 +525,11 @@ function buildAbsoluteAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
   }
 
   const categoryColors: Record<AbsoluteAccumulatedRow["category"], string> = {
-    Top10: "#7cff92",
+    Top10: PALETTE.top10,
     Black: "#000000",
     White: "#ffffff",
-    DNF: "#ff5959",
-    Other: "#9b9b9b",
+    DNF: PALETTE.dnf,
+    Other: PALETTE.other,
   };
 
   const data: Data[] = [];
@@ -736,11 +737,11 @@ function buildRelativeAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
   }
 
   const groupColors: Record<RelativePoint["groupLabel"], string> = {
-    "Top 10": "#7cff92",
+    "Top 10": PALETTE.top10,
     "Black Shirt": "#000000",
     "White Shirt": "#ffffff",
-    DNF: "#ff5959",
-    Other: "#9b9b9b",
+    DNF: PALETTE.dnf,
+    Other: PALETTE.other,
   };
 
   const data: Data[] = [];

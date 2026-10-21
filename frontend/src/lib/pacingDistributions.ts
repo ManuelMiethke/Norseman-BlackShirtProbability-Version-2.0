@@ -14,6 +14,7 @@ import {
 } from "@/lib/time";
 import type { WideRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 type PaceMode = "min_per_100m" | "min_per_km" | "kmh" | null;
 type PaceTone = "top10" | "black" | "white";
 type PaceGroupKey = "Top 10" | "Black Shirt" | "White Shirt";
@@ -99,7 +100,7 @@ const GROUP_CONFIG: Record<
 > = {
   "Top 10": {
     tone: "top10",
-    fill: "#00ff00",
+    fill: PALETTE.top10,
     traceLabel: "Top 10",
   },
   "Black Shirt": {

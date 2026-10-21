@@ -4,6 +4,7 @@ import type { GroupOption } from "@/config/raceRegistry";
 import { classifyFinishGroup, filterRowsByYear } from "@/lib/groups";
 import type { CourseProfileRow, LongRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 const COL_GROUP = "group";
 const GROUP_TOP10 = "Top 10";
 const GROUP_BLACK = "Black Shirt";
@@ -254,7 +255,7 @@ function windArrowFromDeg(value?: number) {
 }
 
 function windColorFromEffect(effect?: string) {
-  return effect && effect.toLowerCase().includes("tail") ? "limegreen" : "red";
+  return effect && effect.toLowerCase().includes("tail") ? PALETTE.top10 : PALETTE.dnf;
 }
 
 function aggregateWeather(rows: LongRow[], year: number): WeatherRow[] {
@@ -634,7 +635,7 @@ function buildCourseWeatherSpeedFigure(
     mode: "markers",
     marker: {
       symbol: "arrow-up",
-      color: "limegreen",
+      color: PALETTE.top10,
       size: 14,
       line: { color: "white", width: 1 },
     },
@@ -655,7 +656,7 @@ function buildCourseWeatherSpeedFigure(
     [GROUP_WHITE]: 0,
   };
   const colorMap: Record<string, string> = {
-    [GROUP_TOP10]: "#00ff00",
+    [GROUP_TOP10]: PALETTE.top10,
     [GROUP_BLACK]: "#000000",
     [GROUP_WHITE]: "#ffffff",
   };
@@ -727,7 +728,7 @@ function buildCourseWeatherSpeedFigure(
       x1: xTransform(xValue),
       y0: 0,
       y1: 1,
-      line: { color: "orange", width: 2, dash: "dash" },
+      line: { color: PALETTE.accent, width: 2, dash: "dash" },
       layer: "above",
     });
   }

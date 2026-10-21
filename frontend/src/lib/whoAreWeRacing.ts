@@ -3,6 +3,7 @@ import type { Data, Layout } from "plotly.js";
 import { CUTOFF_37_5_YEARS, RACE_YEAR_REGISTRY } from "@/config/raceRegistry";
 import type { LongRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 // Jahre und Cut-off-Splits kommen aus der Registry, damit ein neues
 // Renn-Jahr nicht an mehreren Stellen nachgetragen werden muss
 const YEARS_TO_PLOT = Object.values(RACE_YEAR_REGISTRY)
@@ -117,7 +118,7 @@ function buildOutcomesFigure(outcomes: OutcomeRow[]): PlotFigure {
         x: yearLabels,
         y: outcomes.map((row) => row.dnf),
         name: "DNF",
-        marker: { color: "red" },
+        marker: { color: PALETTE.dnf },
       },
       {
         type: "bar",
@@ -272,7 +273,7 @@ function buildFrontierFigure(rows: LongRow[]): {
             xref: "x",
             yref: "paper",
             line: {
-              color: "red",
+              color: PALETTE.dnf,
               width: 4,
               dash: "dot",
             },

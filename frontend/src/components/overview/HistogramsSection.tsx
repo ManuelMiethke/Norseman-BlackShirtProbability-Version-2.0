@@ -9,6 +9,7 @@ import type { GroupOption } from "@/config/raceRegistry";
 import { buildHistogramModel, type HistogramScaleMode } from "@/lib/histograms";
 import { useDashboard } from "@/state/DashboardContext";
 
+import { PALETTE } from "@/lib/theme";
 const SCALE_OPTIONS: HistogramScaleMode[] = [
   "Absolute (hh:mm:ss)",
   "Relative (% vs median)",
@@ -25,13 +26,13 @@ const HISTOGRAM_LEGEND_ITEMS: Record<GroupOption, HistogramLegendItem[]> = {
   All: [
     { label: "Black", color: "#1a1a1a" },
     { label: "White", color: "#f3f3f3", borderColor: "rgba(0, 0, 0, 0.24)" },
-    { label: "DNF", color: "#db4437" },
-    { label: "Top 10", color: "#86dc81" },
+    { label: "DNF", color: PALETTE.dnf },
+    { label: "Top 10", color: PALETTE.top10 },
   ],
-  "Top 10": [{ label: "Top 10", color: "#86dc81" }],
+  "Top 10": [{ label: "Top 10", color: PALETTE.top10 }],
   "Black Shirt": [{ label: "Black", color: "#1a1a1a" }],
   "White Shirt": [{ label: "White", color: "#f3f3f3", borderColor: "rgba(0, 0, 0, 0.24)" }],
-  DNF: [{ label: "DNF", color: "#db4437" }],
+  DNF: [{ label: "DNF", color: PALETTE.dnf }],
 };
 
 export function HistogramsSection() {

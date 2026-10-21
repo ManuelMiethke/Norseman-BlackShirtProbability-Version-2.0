@@ -10,6 +10,7 @@ import {
 } from "@/lib/groups";
 import type { CourseProfileRow, ModelRow } from "@/types/data";
 
+import { PALETTE } from "@/lib/theme";
 type PlotFigure = {
   data: Data[];
   layout: Partial<Layout>;
@@ -116,11 +117,13 @@ function makeSparseTickLabels(rows: AccuracyRow[], minSpacingKm = 6) {
 }
 
 function colorForSlopePct(slopePct: number) {
-  if (slopePct <= -4) return "rgba(0, 200, 255, 0.60)";
-  if (slopePct <= -1) return "rgba(0, 160, 255, 0.50)";
-  if (slopePct < 1) return "rgba(255, 255, 255, 0.14)";
-  if (slopePct < 4) return "rgba(255, 80, 200, 0.55)";
-  return "rgba(180, 0, 255, 0.60)";
+  // Calm terrain shading so the orange accuracy line stays the focus:
+  // blue = descent, white = climb, intensity = gradient.
+  if (slopePct <= -4) return "rgba(90, 169, 230, 0.70)";
+  if (slopePct <= -1) return "rgba(90, 169, 230, 0.42)";
+  if (slopePct < 1) return "rgba(255, 255, 255, 0.12)";
+  if (slopePct < 4) return "rgba(255, 255, 255, 0.30)";
+  return "rgba(255, 255, 255, 0.52)";
 }
 
 function buildGradientElevationTraces(courseRows: CourseProfileRow[]) {
@@ -213,7 +216,7 @@ function buildGradientElevationTraces(courseRows: CourseProfileRow[]) {
     mode: "lines",
     line: {
       width: 1.5,
-      color: "#4C5FD7",
+      color: PALETTE.elevationLine,
     },
     hovertemplate: "km %{x:.1f}<br>Elev: %{y:.0f} m<extra></extra>",
     yaxis: "y2",
@@ -263,11 +266,11 @@ export function buildModelAccuracyModel(
         mode: "lines+markers",
         line: {
           width: 4,
-          color: "#FFB000",
+          color: PALETTE.accent,
         },
         marker: {
           size: 8,
-          color: "#FFB000",
+          color: PALETTE.accent,
         },
         name: "Model accuracy",
         customdata: accuracyRows.map((row) => [row.splitKey, row.nObs]),
@@ -280,8 +283,8 @@ export function buildModelAccuracyModel(
     ],
     layout: {
       height: 740,
-      paper_bgcolor: COURSE_BG,
-      plot_bgcolor: COURSE_BG,
+      paper_bgcolor: PALETTE.transparent,
+      plot_bgcolor: PALETTE.transparent,
       font: { color: "#ffffff" },
       margin: {
         l: 80,
@@ -291,10 +294,10 @@ export function buildModelAccuracyModel(
       },
       hovermode: "x unified",
       legend: {
-        bgcolor: COURSE_BG,
+        bgcolor: PALETTE.transparent,
         font: {
           color: "#ffffff",
-          size: 18,
+          size: 13,
         },
         yanchor: "top",
         y: 1,
