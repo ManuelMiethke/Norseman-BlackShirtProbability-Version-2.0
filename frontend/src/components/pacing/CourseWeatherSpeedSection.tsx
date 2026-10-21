@@ -73,6 +73,7 @@ export function CourseWeatherSpeedSection() {
             data={figure.data}
             layout={figure.layout}
             className="plot-card--panorama"
+            htmlLegend
           />
         ) : null}
       </div>

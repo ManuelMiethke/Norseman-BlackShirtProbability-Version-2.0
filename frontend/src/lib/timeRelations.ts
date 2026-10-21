@@ -1,6 +1,6 @@
 import type { Layout, Data } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
 import {
   filterRowsByYear,
   isBlackFinishType,
@@ -169,7 +169,9 @@ function figureForGroup(
       ? { background: "#b7ffb7", color: "#000000" }
       : group === "Black Shirt"
         ? { background: "#000000", color: "#ffffff" }
-        : { background: "#ffffff", color: "#000000" };
+        : group === RANK_BAND_GROUP
+          ? { background: PALETTE.band, color: "#000000" }
+          : { background: "#ffffff", color: "#000000" };
 
   return buildPieFigure(group, percentages, text, style.background, style.color);
 }

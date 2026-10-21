@@ -1,7 +1,13 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
-import { athleteKey, classifyFinishGroup, filterRowsByYear, isTop10Rank } from "@/lib/groups";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
+import {
+  athleteKey,
+  classifyFinishGroup,
+  filterRowsByYear,
+  isTop10Rank,
+  isInRankBand,
+} from "@/lib/groups";
 import type { ModelRow } from "@/types/data";
 
 import { PALETTE } from "@/lib/theme";
@@ -127,9 +133,10 @@ function filterModelRowsByGroup(rows: ModelRow[], selectedGroup: GroupOption) {
       latestByAthlete.set(key, row);
     }
   }
+  const inGroup = selectedGroup === RANK_BAND_GROUP ? isInRankBand : isTop10Rank;
   const top10Athletes = new Set(
     [...latestByAthlete.entries()]
-      .filter(([, row]) => isTop10Rank(row.split_rank))
+      .filter(([, row]) => inGroup(row.split_rank))
       .map(([key]) => key),
   );
   return rows.filter((row) => top10Athletes.has(athleteKey(row)));
@@ -327,7 +334,7 @@ function build2dFigure(
       zmax: 1,
       colorscale: PROBABILITY_COLORSCALE,
       customdata: yPlot.map(() => splitLabels),
-      colorbar: { title: { text: "P(Black Shirt)" }, tickformat: ".0%" },
+      colorbar: { title: { text: "P(Black Shirt)", side: "right" }, tickformat: ".0%", thickness: 12, len: 0.9, outlinewidth: 0 },
       contours: {
         coloring: "heatmap",
         showlines: false,
@@ -413,7 +420,7 @@ function build3dFigure(
       cmax: 1,
       colorscale: PROBABILITY_COLORSCALE,
       customdata: yValues.map(() => splitLabels),
-      colorbar: { title: { text: "P(Black Shirt)" }, tickformat: ".0%" },
+      colorbar: { title: { text: "P(Black Shirt)", side: "right" }, tickformat: ".0%", thickness: 12, len: 0.9, outlinewidth: 0 },
       hovertemplate: "Distance: %{customdata}<br>Time: %{y:.2f} h<br>P(Black): %{z:.1%}<extra></extra>",
       opacity: 0.98,
     } as Data,
@@ -458,7 +465,7 @@ function build3dFigure(
         margin: { l: 0, r: 0, t: 10, b: 0 },
         scene: {
           bgcolor: PANEL_BG,
-          camera: { eye: { x: 1.65, y: 1.45, z: 0.95 } },
+          camera: { eye: { x: 1.3, y: 1.15, z: 0.75 } },
           xaxis: {
             title: { text: "Split distance (Bike / Run)" },
             tickmode: "array" as const,

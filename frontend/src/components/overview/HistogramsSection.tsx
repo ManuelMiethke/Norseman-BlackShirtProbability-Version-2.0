@@ -32,6 +32,10 @@ const HISTOGRAM_LEGEND_ITEMS: Record<GroupOption, HistogramLegendItem[]> = {
   "Top 10": [{ label: "Top 10", color: PALETTE.top10 }],
   "Black Shirt": [{ label: "Black", color: "#1a1a1a" }],
   "White Shirt": [{ label: "White", color: "#f3f3f3", borderColor: "rgba(0, 0, 0, 0.24)" }],
+  "Places 120–160": [
+    { label: "Black", color: "#1a1a1a" },
+    { label: "White", color: "#f3f3f3", borderColor: "rgba(0, 0, 0, 0.24)" },
+  ],
   DNF: [{ label: "DNF", color: PALETTE.dnf }],
 };
 

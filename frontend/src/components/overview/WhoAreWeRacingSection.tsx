@@ -1,10 +1,19 @@
 import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
+import type { ChartLegendItem } from "@/components/common/ChartLegend";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
 import { OUTCOME_MIX_INFO } from "@/content/chartInfo";
 import { useLongData } from "@/hooks/useLongData";
+import { PALETTE } from "@/lib/theme";
 import { buildWhoAreWeRacingModel } from "@/lib/whoAreWeRacing";
+
+const OUTCOME_LEGEND: ChartLegendItem[] = [
+  { label: "Black Shirt", color: PALETTE.black },
+  { label: "Missed (rank > 160)", color: "#ffffff", pattern: "hatched" },
+  { label: "White (no cut-off)", color: PALETTE.white },
+  { label: "DNF", color: PALETTE.dnf },
+];
 
 function formatHoursMinutes(hours: number) {
   const totalMinutes = Math.round(hours * 60);
@@ -61,7 +70,7 @@ export function WhoAreWeRacingSection() {
       className={cardClassName}
       headerActions={headerActions}
     >
-      <div className="section-stack">
+      <div className="section-stack section-stack--fill">
         {warning ? (
           <StateBlock
             title="Note"
@@ -70,12 +79,14 @@ export function WhoAreWeRacingSection() {
           />
         ) : null}
 
-        <div className="plot-grid plot-grid--stack">
+        <div className="plot-grid plot-grid--stack plot-grid--fill">
           {outcomesFigure ? (
             <PlotlyChart
               data={outcomesFigure.data}
               layout={outcomesFigure.layout}
-              className="plot-card--tall"
+              className="plot-card--fill"
+              title="Finishers per year"
+              legend={OUTCOME_LEGEND}
             />
           ) : null}
 
@@ -83,19 +94,18 @@ export function WhoAreWeRacingSection() {
             <PlotlyChart
               data={frontierFigure.data}
               layout={frontierFigure.layout}
-              className="plot-card--tall"
+              className="plot-card--fill"
+              title="Time of rank ~160 at the cut-off"
+              headerExtra={
+                frontierMedianHours !== null ? (
+                  <>
+                    Median <strong>{formatHoursMinutes(frontierMedianHours)}</strong>
+                  </>
+                ) : null
+              }
             />
           ) : null}
         </div>
-
-        {frontierMedianHours !== null ? (
-          <div className="section-note">
-            <strong>Cut-off median</strong>
-            <span>
-              Median at 37.5 km cut-off: {formatHoursMinutes(frontierMedianHours)}
-            </span>
-          </div>
-        ) : null}
       </div>
     </SectionCard>
   );

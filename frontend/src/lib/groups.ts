@@ -1,4 +1,4 @@
-import type { GroupOption } from "@/config/raceRegistry";
+import { RANK_BAND, RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
 
 type YearOption = number | "All";
 type FinishLike = { finish_type: unknown };
@@ -6,7 +6,7 @@ type RankLike = { overall_rank?: unknown };
 type YearLike = { year: unknown };
 type AthleteLike = { year: unknown; bib: unknown };
 
-export type ExclusiveGroup = Exclude<GroupOption, "All"> | "Other";
+export type ExclusiveGroup = Exclude<GroupOption, "All" | typeof RANK_BAND_GROUP> | "Other";
 
 function normalizeRank(value: unknown): number | null {
   const rank = typeof value === "number" ? value : Number(value ?? Number.NaN);
@@ -32,6 +32,12 @@ export function isDnfFinishType(value: unknown): boolean {
 export function isTop10Rank(value: unknown): boolean {
   const rank = normalizeRank(value);
   return rank !== null && rank <= 10;
+}
+
+/** True when a rank lies inside the configurable comparison band (e.g. 120–160). */
+export function isInRankBand(value: unknown): boolean {
+  const rank = normalizeRank(value);
+  return rank !== null && rank >= RANK_BAND.min && rank <= RANK_BAND.max;
 }
 
 export function isCompleteFinisher(row: FinishLike): boolean {
@@ -100,6 +106,10 @@ export function matchesGroup<T extends FinishLike & RankLike>(row: T, group: Gro
 
   if (group === "Top 10") {
     return isTop10Rank(row.overall_rank);
+  }
+
+  if (group === RANK_BAND_GROUP) {
+    return isInRankBand(row.overall_rank);
   }
 
   return true;

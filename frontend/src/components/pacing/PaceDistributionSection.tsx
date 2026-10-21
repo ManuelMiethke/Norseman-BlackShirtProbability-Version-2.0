@@ -19,6 +19,9 @@ function toneFromGroup(group: PaceStatsCell["group"]) {
   if (group === "Black Shirt") {
     return "black";
   }
+  if (group === "Places 120–160") {
+    return "band";
+  }
   return "white";
 }
 

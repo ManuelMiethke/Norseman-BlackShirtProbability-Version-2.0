@@ -18,6 +18,11 @@
   --surface-3: #232930;
   --plot-bg: #565e67;
   --plot-bg-top: #5b636c;
+  --panel-bg: linear-gradient(180deg, var(--plot-bg-top) 0%, var(--plot-bg) 100%);
+  --panel-ring: inset 0 0 0 1px rgba(255, 255, 255, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --on-panel: rgba(255, 255, 255, 0.86);
+  --on-panel-muted: rgba(255, 255, 255, 0.74);
+  --on-panel-divider: rgba(255, 255, 255, 0.16);
 
   /* Lines */
   --border: rgba(255, 255, 255, 0.07);
@@ -40,6 +45,8 @@
   --black-shirt: #0b0c0e;
   --white-shirt: #f4f5f6;
   --dnf: #f2594b;
+  --frontier: #b07cff;
+  --band: #f472b6;
 
   /* Shape */
   --radius-xl: 20px;
@@ -107,19 +114,18 @@ select {
 
 .app-shell {
   min-height: 100vh;
-  padding: 0.9rem 1rem 2rem;
+  padding: 0.6rem 0.75rem 1.25rem;
 }
 
 .app-main {
   display: grid;
-  gap: 1rem;
-  max-width: 1680px;
-  margin: 0 auto;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 .app-topbar {
   position: sticky;
-  top: 0.9rem;
+  top: 0.6rem;
   z-index: 20;
   display: flex;
   align-items: center;
@@ -296,15 +302,15 @@ select {
 .dashboard-page,
 .page-stack {
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .dashboard-grid,
 .dashboard-grid--two {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  align-items: start;
+  gap: 0.75rem;
+  align-items: stretch;
 }
 
 .dashboard-grid > *,
@@ -314,6 +320,10 @@ select {
 
 .dashboard-grid--overview {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.dashboard-grid--top {
+  align-items: start;
 }
 
 .overview-card {
@@ -361,7 +371,10 @@ select {
    -------------------------------------------------------------------------- */
 
 .section-card {
-  padding: 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.85rem;
   border-radius: var(--radius-xl);
   border: 1px solid var(--border);
   background: linear-gradient(180deg, #161a1f 0%, var(--surface) 100%);
@@ -373,13 +386,22 @@ select {
   justify-content: space-between;
   align-items: flex-start;
   gap: 0.75rem;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.7rem;
   min-height: 1.75rem;
 }
 
 .section-card__copy {
   flex: 1 1 auto;
   min-width: 0;
+}
+
+/* Content below the header grows to fill cards that are stretched by the grid. */
+.section-card > :not(.section-card__header) {
+  flex: 1 1 auto;
+}
+
+.section-card > .section-stack {
+  align-content: start;
 }
 
 .section-card__header h3 {
@@ -718,6 +740,133 @@ select {
   outline-offset: 3px;
 }
 
+/* A slate panel that holds a small title row (with an HTML legend) and a
+   chart that grows to fill the remaining height. */
+.section-stack--fill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.plot-grid--fill {
+  flex: 1 1 auto;
+  grid-auto-rows: minmax(200px, 1fr);
+}
+
+.plot-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 0.55rem 0.6rem 0.15rem;
+  border-radius: var(--radius-lg);
+  background: var(--panel-bg);
+  box-shadow: var(--panel-ring);
+}
+
+.plot-panel__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 0.9rem;
+  padding: 0.1rem 0.25rem 0.15rem;
+}
+
+.plot-panel__lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  min-width: 0;
+}
+
+.plot-panel__extra {
+  margin-left: auto;
+  color: var(--on-panel-muted);
+  font-size: 0.78rem;
+}
+
+.plot-panel__extra strong {
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.plot-modal__header {
+  padding: 0 2.5rem 0.4rem 0.25rem;
+}
+
+.plot-modal__header .plot-panel__title {
+  font-size: 0.85rem;
+}
+
+.plot-modal__header .chart-legend__item {
+  color: var(--on-panel);
+  font-size: 0.85rem;
+}
+
+.plot-modal__body {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.plot-panel__title {
+  color: var(--on-panel);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.plot-panel__stat {
+  color: var(--on-panel-muted);
+  font-size: 0.78rem;
+}
+
+.plot-panel__stat strong {
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.plot-panel .chart-legend {
+  justify-content: flex-start;
+  gap: 0.3rem 0.85rem;
+}
+
+.plot-panel .chart-legend__item {
+  color: var(--on-panel);
+  font-size: 0.74rem;
+}
+
+.plot-panel .plot-card {
+  background: transparent;
+  box-shadow: none;
+  border-radius: var(--radius-md);
+}
+
+.plot-card--fill {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 150px;
+}
+
+.chart-legend__swatch--hatched {
+  background: repeating-linear-gradient(135deg, #ffffff 0 2px, #1a1d21 2px 4px);
+}
+
+.chart-legend__swatch--line,
+.chart-legend__swatch--dash {
+  width: 1.1rem;
+  height: 3px;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.chart-legend__swatch--dash {
+  background: linear-gradient(90deg, currentColor 0 40%, transparent 40% 60%, currentColor 60% 100%) !important;
+}
+
 .plot-card--tall {
   height: 220px;
   min-height: 220px;
@@ -769,8 +918,8 @@ select {
 }
 
 .plot-card--heatmap {
-  height: 520px;
-  min-height: 520px;
+  height: 640px;
+  min-height: 640px;
 }
 
 .plot-card__loading {
@@ -815,6 +964,8 @@ select {
 
 .plot-modal__panel {
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: min(1400px, 100%);
   height: min(84vh, 900px);
   padding: 1rem;
@@ -848,16 +999,21 @@ select {
    Inner panels: notes, tables, disclosures, state blocks
    -------------------------------------------------------------------------- */
 
+/* Every content panel uses the same light slate as the chart panels so the
+   whole dashboard reads as one surface system. */
 .section-note,
 .table-panel,
 .disclosure-panel,
 .state-block,
 .metric-card,
-.tool-field,
+.participation-summary,
+.tool-panel,
 .pacing-leg-panel {
+  border: 0;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
+  background: var(--panel-bg);
+  box-shadow: var(--panel-ring);
+  color: var(--on-panel);
 }
 
 .section-note,
@@ -890,7 +1046,7 @@ select {
 .table-panel__header p,
 .state-block p {
   margin: 0;
-  color: var(--muted);
+  color: var(--on-panel-muted);
   line-height: 1.5;
   font-size: 0.86rem;
 }
@@ -901,13 +1057,11 @@ select {
 }
 
 .state-block--warning {
-  border-color: rgba(255, 159, 28, 0.28);
-  background: rgba(255, 159, 28, 0.07);
+  box-shadow: var(--panel-ring), inset 4px 0 0 var(--accent);
 }
 
 .state-block--error {
-  border-color: rgba(242, 89, 75, 0.35);
-  background: rgba(242, 89, 75, 0.08);
+  box-shadow: var(--panel-ring), inset 4px 0 0 var(--dnf);
 }
 
 .year-comparison-grid .state-block {
@@ -932,7 +1086,6 @@ select {
 
 .disclosure-panel {
   overflow: hidden;
-  background: var(--bg-raise);
 }
 
 .disclosure-panel summary {
@@ -948,7 +1101,7 @@ select {
 }
 
 .disclosure-panel summary:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .disclosure-panel summary::-webkit-details-marker {
@@ -956,7 +1109,7 @@ select {
 }
 
 .disclosure-panel__chevron {
-  color: var(--muted);
+  color: var(--on-panel-muted);
   transition: transform 140ms ease;
 }
 
@@ -965,7 +1118,7 @@ select {
 }
 
 .disclosure-panel[open] summary {
-  border-bottom: 1px solid var(--divider);
+  border-bottom: 1px solid var(--on-panel-divider);
 }
 
 /* --------------------------------------------------------------------------
@@ -993,52 +1146,59 @@ select {
 .metric-card__header h4 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--on-panel);
 }
 
 .metric-card__header span {
-  color: var(--muted);
+  color: var(--on-panel-muted);
+  font-size: 0.8rem;
+}
+
+/* Participation fills the full height of the first overview row:
+   the summary and the two split panels share the available space. */
+.overview-card--participants > .section-stack {
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .participation-panel {
-  gap: 0.55rem;
-  padding: 0.8rem 1rem 0.7rem;
+  align-content: center;
+  gap: 0.7rem;
+  padding: 0.9rem 1rem 0.8rem;
 }
 
 .participation-summary {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: stretch;
+  align-items: center;
   width: 100%;
   min-width: 0;
   overflow: hidden;
   padding: 0.3rem;
-  border-radius: var(--radius-lg);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
 }
 
 .participation-stat {
   display: grid;
   justify-items: center;
-  gap: 0.3rem;
+  align-content: center;
+  gap: 0.35rem;
   min-width: 0;
+  height: 100%;
   padding: 0.85rem 0.6rem 0.75rem;
   text-align: center;
   overflow: hidden;
 }
 
 .participation-stat + .participation-stat {
-  border-left: 1px solid var(--divider);
+  border-left: 1px solid var(--on-panel-divider);
 }
 
 .participation-stat strong {
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 2.2vw, 2.3rem);
+  font-size: clamp(2rem, 2.6vw, 2.9rem);
   font-weight: 700;
   line-height: 0.9;
   color: var(--text-strong);
@@ -1047,8 +1207,8 @@ select {
 }
 
 .participation-stat span {
-  color: var(--muted);
-  font-size: 0.64rem;
+  color: var(--on-panel-muted);
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1058,52 +1218,48 @@ select {
 .ratio-bar {
   display: flex;
   overflow: hidden;
-  min-height: 14px;
+  min-height: 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .ratio-bar__segment {
-  min-height: 14px;
+  min-height: 18px;
 }
 
 .ratio-bar__segment + .ratio-bar__segment {
-  border-left: 2px solid var(--surface-2);
-}
-
-.ratio-bar--gender,
-.ratio-bar--gender .ratio-bar__segment {
-  min-height: 14px;
+  border-left: 2px solid var(--plot-bg);
 }
 
 .participation-legend {
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--legend-columns, 2), minmax(0, 1fr));
+  gap: 0.5rem;
   width: 100%;
-  min-height: 3.6rem;
-  overflow: visible;
-  padding-top: 0.15rem;
-}
-
-.participation-legend--gender {
-  min-height: 3.4rem;
 }
 
 .participation-split {
-  position: absolute;
-  left: var(--split-left);
-  transform: translateX(-50%);
   display: grid;
-  gap: 0.15rem;
-  width: max-content;
-  text-align: center;
+  gap: 0.2rem;
+  min-width: 0;
   justify-items: center;
-  padding-inline: 0.15rem;
+  text-align: center;
+}
+
+.participation-split:first-child {
+  justify-items: start;
+  text-align: left;
+}
+
+.participation-split:last-child {
+  justify-items: end;
+  text-align: right;
 }
 
 .participation-split strong {
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+  font-size: clamp(1.25rem, 1.5vw, 1.55rem);
   font-weight: 700;
   line-height: 1;
   color: var(--text-strong);
@@ -1113,8 +1269,8 @@ select {
 
 .participation-split p {
   margin: 0;
-  color: var(--text);
-  font-size: 0.76rem;
+  color: var(--on-panel);
+  font-size: 0.8rem;
   line-height: 1;
   font-weight: 600;
   white-space: nowrap;
@@ -1122,13 +1278,23 @@ select {
 }
 
 .participation-split span {
-  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--on-panel-muted);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   line-height: 1.05;
   white-space: nowrap;
+}
+
+.participation-split__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
 /* --------------------------------------------------------------------------
@@ -1146,7 +1312,7 @@ select {
 }
 
 /* --------------------------------------------------------------------------
-   Tables
+   Tables (always rendered on the light slate panels)
    -------------------------------------------------------------------------- */
 
 .data-table {
@@ -1158,21 +1324,21 @@ select {
 
 .data-table th,
 .data-table td {
-  padding: 0.65rem 0.8rem;
+  padding: 0.6rem 0.8rem;
   text-align: left;
-  border-bottom: 1px solid var(--divider);
+  border-bottom: 1px solid var(--on-panel-divider);
 }
 
 .data-table th {
-  color: var(--faint);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  color: var(--on-panel-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 .data-table td {
-  color: var(--text);
+  color: #ffffff;
   font-size: 0.88rem;
 }
 
@@ -1181,7 +1347,7 @@ select {
 }
 
 .data-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .empirical-table td {
@@ -1203,13 +1369,13 @@ select {
   padding: 0.35rem 0.25rem;
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid var(--divider);
+  border-bottom: 1px solid var(--on-panel-divider);
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
 .pace-table th {
-  color: var(--faint);
+  color: var(--on-panel-muted);
   font-size: 0.56rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1217,7 +1383,7 @@ select {
 }
 
 .pace-table td {
-  color: var(--text);
+  color: #ffffff;
 }
 
 .pace-table__metric {
@@ -1256,6 +1422,12 @@ select {
   color: #ffffff;
 }
 
+.pace-table th.pace-table__group--band,
+.pace-table td.pace-table__group--band {
+  background: var(--band);
+  color: #0a0c0e;
+}
+
 .pace-table th.pace-table__group--white,
 .pace-table td.pace-table__group--white {
   background: var(--white-shirt);
@@ -1266,49 +1438,88 @@ select {
    Tools
    -------------------------------------------------------------------------- */
 
-.tool-grid {
+.tool-panel {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1.05rem 1.1rem;
+}
+
+.tool-panel__intro,
+.tool-caption {
+  margin: 0;
+  color: var(--on-panel-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.tool-caption {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.tool-grid,
+.tool-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.tool-form {
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.25fr);
 }
 
 .tool-field {
   display: grid;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  min-width: 0;
 }
 
-.tool-field--wide {
-  grid-column: span 1;
-}
-
-.tool-field span {
-  color: var(--faint);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
+.tool-field > span,
+.tool-choice__label {
+  color: var(--on-panel);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 700;
+}
+
+.tool-field small {
+  color: var(--on-panel-muted);
+  font-size: 0.72rem;
 }
 
 .tool-field input,
 .tool-field select {
   width: 100%;
-  border: 1px solid var(--border-strong);
+  min-width: 0;
+  height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-sm);
-  background: var(--bg);
+  background: var(--surface);
   color: var(--text-strong);
-  padding: 0.7rem 0.8rem;
-  font-size: 0.92rem;
+  padding: 0 0.85rem;
+  font-size: 1.02rem;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   transition: border-color 140ms ease, box-shadow 140ms ease;
+  -moz-appearance: textfield;
+}
+
+.tool-field input::-webkit-outer-spin-button,
+.tool-field input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
 }
 
 .tool-field input::placeholder {
-  color: var(--faint);
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
 }
 
 .tool-field input:hover,
 .tool-field select:hover {
-  border-color: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
 .tool-field input:focus,
@@ -1318,15 +1529,166 @@ select {
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
+/* Input with a unit suffix ("km", "h", "min"). */
+.tool-input {
+  position: relative;
+  min-width: 0;
+}
+
+.tool-input input {
+  padding-right: 2.6rem;
+}
+
+.tool-input em {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
+  transform: translateY(-50%);
+  color: var(--faint);
+  font-size: 0.8rem;
+  font-style: normal;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.tool-time {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.segmented-control--compact .segmented-control__button {
+  height: 2.35rem;
+  padding: 0 1.1rem;
+}
+
+.tool-field .segmented-control {
+  background: var(--surface);
+}
+
+/* Training level pickers (Pace Planner) */
+.tool-choice-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tool-choice {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.segmented-control--stretch {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  background: var(--surface);
+}
+
+.segmented-control--stretch .segmented-control__button {
+  padding: 0.55rem 0.4rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Results */
+.tool-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.tool-result {
+  grid-column: auto;
+  align-content: start;
+  gap: 0.55rem;
+}
+
+.tool-result--feature {
+  box-shadow: var(--panel-ring), inset 0 3px 0 var(--accent);
+}
+
+.tool-result__hint {
+  margin: 0;
+  color: var(--on-panel-muted);
+  font-size: 0.76rem;
+}
+
+.tool-meter {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.tool-meter__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 240ms ease;
+}
+
 .tool-metric {
   display: block;
-  margin-top: 0.2rem;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.2vw, 2.4rem);
+  font-size: clamp(2rem, 2.4vw, 2.6rem);
   font-weight: 700;
   line-height: 1;
   color: var(--text-strong);
   font-variant-numeric: tabular-nums;
+}
+
+/* Pace plan leg tiles */
+.plan-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.plan-tile {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.7rem 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--panel-bg);
+  box-shadow: var(--panel-ring);
+}
+
+.plan-tile span {
+  color: var(--on-panel-muted);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plan-tile strong {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.plan-tile em {
+  color: var(--on-panel-muted);
+  font-size: 0.74rem;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.plan-tile--feature {
+  box-shadow: var(--panel-ring), inset 0 3px 0 var(--accent);
 }
 
 /* --------------------------------------------------------------------------
@@ -1402,6 +1764,15 @@ select {
   .tool-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .tool-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tool-form > :first-child {
+    grid-column: 1 / -1;
+  }
+
 }
 
 @media (max-width: 980px) {
@@ -1479,8 +1850,26 @@ select {
     width: 100%;
   }
 
-  .tool-grid {
+  .segmented-control--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .segmented-control--stretch {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .segmented-control--stretch .segmented-control__button {
+    white-space: normal;
+  }
+
+  .tool-grid,
+  .tool-form,
+  .tool-results {
     grid-template-columns: 1fr;
+  }
+
+  .plan-tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

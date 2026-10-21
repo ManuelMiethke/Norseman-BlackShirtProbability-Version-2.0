@@ -1,12 +1,13 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
 import {
   filterRowsByYear,
   isBlackFinishType,
   isDnfFinishType,
   isTop10Rank,
   isWhiteFinishType,
+  isInRankBand,
 } from "@/lib/groups";
 import type { CourseProfileRow, ModelRow } from "@/types/data";
 
@@ -53,6 +54,9 @@ function applyFilters(rows: ModelRow[], year: number | "All", group: GroupOption
       if (group === "DNF") {
         return isDnfFinishType(row.finish_type);
       }
+      if (group === RANK_BAND_GROUP) {
+        return isInRankBand(row.split_rank);
+      }
       return true;
     });
 }
@@ -91,29 +95,6 @@ function computeAccuracyByStation(rows: ModelRow[]): AccuracyRow[] {
       accuracyPct: (row.correct / row.total) * 100,
       nObs: row.total,
     }));
-}
-
-function makeSparseTickLabels(rows: AccuracyRow[], minSpacingKm = 6) {
-  const tickvals = rows.map((row) => row.raceDistanceKm);
-  const ticktext = new Array<string>(tickvals.length).fill("");
-  let lastLabeled: number | null = null;
-
-  for (let index = 0; index < rows.length; index += 1) {
-    const distance = rows[index].raceDistanceKm;
-    if (lastLabeled === null || distance - lastLabeled >= minSpacingKm) {
-      ticktext[index] = rows[index].splitKey;
-      lastLabeled = distance;
-    }
-  }
-
-  if (ticktext.length > 0) {
-    ticktext[ticktext.length - 1] = rows[rows.length - 1].splitKey;
-  }
-
-  return {
-    tickvals,
-    ticktext,
-  };
 }
 
 function colorForSlopePct(slopePct: number) {
@@ -241,7 +222,6 @@ export function buildModelAccuracyModel(
     };
   }
 
-  const tickConfig = makeSparseTickLabels(accuracyRows);
   const courseTraces = buildGradientElevationTraces(courseRows);
   const accuracyMin = Math.max(
     0,
@@ -265,11 +245,11 @@ export function buildModelAccuracyModel(
         y: accuracyRows.map((row) => row.accuracyPct),
         mode: "lines+markers",
         line: {
-          width: 4,
+          width: 3,
           color: PALETTE.accent,
         },
         marker: {
-          size: 8,
+          size: 6,
           color: PALETTE.accent,
         },
         name: "Model accuracy",
@@ -286,37 +266,15 @@ export function buildModelAccuracyModel(
       paper_bgcolor: PALETTE.transparent,
       plot_bgcolor: PALETTE.transparent,
       font: { color: "#ffffff" },
-      margin: {
-        l: 80,
-        r: 110,
-        t: 30,
-        b: 90,
-      },
+      margin: { l: 8, r: 8, t: 8, b: 8 },
       hovermode: "x unified",
-      legend: {
-        bgcolor: PALETTE.transparent,
-        font: {
-          color: "#ffffff",
-          size: 13,
-        },
-        yanchor: "top",
-        y: 1,
-        xanchor: "left",
-        x: 1.02,
-        traceorder: "reversed",
-      },
       xaxis: {
         title: {
-          text: "Distance (km)",
+          text: "Race distance (km)",
           font: { color: "#ffffff" },
         },
         range: [0, xMax],
-        tickmode: "array",
-        tickvals: tickConfig.tickvals,
-        ticktext: tickConfig.ticktext,
-        tickangle: -60,
-        ticklabelposition: "outside",
-        automargin: true,
+        dtick: 25,
         showgrid: false,
         zeroline: false,
         tickfont: { color: "#ffffff" },
@@ -368,6 +326,8 @@ export function buildModelAccuracyModel(
     warning:
       selectedGroup === "Top 10"
         ? "Top 10 is evaluated by split rank at each station."
-        : null,
+        : selectedGroup === RANK_BAND_GROUP
+          ? `${RANK_BAND_GROUP} is evaluated by split rank at each station.`
+          : null,
   };
 }

@@ -81,6 +81,7 @@ export function Probability3DSection() {
   return (
     <SectionCard title="Probability Surface" headerActions={headerActions}>
       <div className="section-stack">
+        <div className="tool-panel">
         <div className="tool-grid">
           <label className="tool-field">
             <span>Bike km</span>
@@ -106,6 +107,7 @@ export function Probability3DSection() {
               placeholder="e.g. 10:30"
             />
           </label>
+        </div>
         </div>
 
         {deferredBikeKmText.trim().length > 0 && bikeKm === null ? (

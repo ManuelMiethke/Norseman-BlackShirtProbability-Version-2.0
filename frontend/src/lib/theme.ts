@@ -17,9 +17,11 @@ export const PALETTE = {
   other: "#9aa3ad",
 
   // Signal colours
-  accent: "#ff9f1c", // medians, frontier pace, highlights
+  accent: "#ff9f1c", // medians, highlights
   accentSoft: "rgba(255, 159, 28, 0.18)",
   mean: "#5ab0ff",
+  band: "#f472b6", // "Places 120–160" comparison group
+  frontier: "#b07cff", // 50 % Black Shirt frontier (pace + accumulated time)
 
   // Race legs
   swim: "#5aa9e6",

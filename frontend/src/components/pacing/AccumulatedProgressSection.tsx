@@ -58,6 +58,7 @@ export function AccumulatedProgressSection() {
 
         {figure ? (
           <PlotlyChart
+            htmlLegend
             data={figure.data}
             layout={figure.layout}
             className="plot-card--hero"

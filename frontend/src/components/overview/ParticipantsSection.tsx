@@ -54,31 +54,21 @@ function SegmentLegend({
   items: Array<{ label: string; count: string; percentage: string; color: string; weight: number }>;
   className?: string;
 }) {
-  const total = items.reduce((sum, item) => sum + item.weight, 0) || 1;
-  let cumulative = 0;
-
   return (
-    <div className={className ? `participation-legend ${className}` : "participation-legend"}>
-      {items.map((item) => {
-        const midpoint = ((cumulative + item.weight / 2) / total) * 100;
-        cumulative += item.weight;
-
-        return (
-          <div
-            key={item.label}
-            className="participation-split"
-            style={
-              {
-                "--split-left": `${midpoint}%`,
-              } as CSSProperties
-            }
-          >
-            <strong>{item.count}</strong>
-            <p>{item.percentage}</p>
-            <span>{item.label}</span>
-          </div>
-        );
-      })}
+    <div
+      className={className ? `participation-legend ${className}` : "participation-legend"}
+      style={{ "--legend-columns": items.length } as CSSProperties}
+    >
+      {items.map((item) => (
+        <div key={item.label} className="participation-split">
+          <strong>{item.count}</strong>
+          <p>{item.percentage}</p>
+          <span>
+            <i className="participation-split__dot" style={{ background: item.color }} aria-hidden="true" />
+            {item.label}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -170,8 +160,8 @@ export function ParticipantsSection() {
           </div>
           <RatioBar
             segments={[
-              { label: "Black", value: stats.finishCounts.black, color: "#111111" },
-              { label: "White", value: stats.finishCounts.white, color: "#f3f7fb" },
+              { label: "Black", value: stats.finishCounts.black, color: PALETTE.black },
+              { label: "White", value: stats.finishCounts.white, color: PALETTE.white },
               { label: "DNF", value: stats.finishCounts.dnf, color: PALETTE.dnf },
             ]}
           />
@@ -182,14 +172,14 @@ export function ParticipantsSection() {
                 label: "Black",
                 count: stats.finishCounts.black.toLocaleString(),
                 percentage: `${stats.finishPercentages.black.toFixed(1)}%`,
-                color: "#111111",
+                color: PALETTE.black,
                 weight: stats.finishCounts.black,
               },
               {
                 label: "White",
                 count: stats.finishCounts.white.toLocaleString(),
                 percentage: `${stats.finishPercentages.white.toFixed(1)}%`,
-                color: "#f3f7fb",
+                color: PALETTE.white,
                 weight: stats.finishCounts.white,
               },
               {

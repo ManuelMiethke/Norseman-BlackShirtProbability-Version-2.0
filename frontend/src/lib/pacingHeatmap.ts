@@ -1,13 +1,7 @@
 import type { Data, Layout } from "plotly.js";
 
-import {
-  RACE_YEAR_REGISTRY,
-  type GroupOption,
-} from "@/config/raceRegistry";
-import {
-  classifyFinishGroup,
-  filterRowsByYear,
-} from "@/lib/groups";
+import { RACE_YEAR_REGISTRY, RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
+import { classifyFinishGroup, filterRowsByYear, isInRankBand } from "@/lib/groups";
 import type { LongRow } from "@/types/data";
 
 type HeatmapCategory = "Top 10" | "Black Shirt" | "White Shirt" | "DNF";
@@ -245,7 +239,11 @@ export function buildPacingHeatmapModel(
         : null;
     })
     .filter((row): row is PreparedHeatmapRow => row !== null)
-    .filter((row) => matchesSelectedGroup(row.category, selectedGroup))
+    .filter((row) =>
+      selectedGroup === RANK_BAND_GROUP
+        ? isInRankBand(row.overallRankNum)
+        : matchesSelectedGroup(row.category, selectedGroup),
+    )
     .filter((row) => !FINISH_SPLITS.has(row.split_key))
     .filter((row) => keepByYearCutoff(row))
     .filter((row) => !DROP_SPLITS.has(row.split_key));
@@ -348,10 +346,15 @@ export function buildPacingHeatmapModel(
           colorscale: COLOR_SCALE,
           colorbar: {
             title: {
-              text: "Δ Time (%) vs. Median",
-              font: { color: "#ffffff" },
+              text: "Δ vs median (%)",
+              side: "right",
+              font: { color: "#ffffff", size: 11 },
             },
-            tickfont: { color: "#ffffff" },
+            tickfont: { color: "#ffffff", size: 10 },
+            thickness: 12,
+            len: 1,
+            outlinewidth: 0,
+            xpad: 6,
           },
           hoverongaps: false,
           zsmooth: false,
@@ -365,10 +368,10 @@ export function buildPacingHeatmapModel(
         plot_bgcolor: "#7A7A7A",
         font: { color: "#ffffff" },
         margin: {
-          l: 60,
-          r: 20,
-          t: 12,
-          b: 140,
+          l: 8,
+          r: 8,
+          t: 6,
+          b: 8,
         },
         xaxis: {
           title: {
@@ -387,10 +390,6 @@ export function buildPacingHeatmapModel(
           tickfont: { color: "#ffffff" },
         },
         yaxis: {
-          title: {
-            text: "Split",
-            font: { color: "#ffffff" },
-          },
           automargin: true,
           tickfont: { color: "#ffffff" },
         },

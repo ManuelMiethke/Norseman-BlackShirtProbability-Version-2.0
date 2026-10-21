@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
+import type { ChartLegendItem } from "@/components/common/ChartLegend";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
@@ -9,7 +10,16 @@ import { useCourseProfileData } from "@/hooks/useCourseProfileData";
 import { useLongData } from "@/hooks/useLongData";
 import { useModelData } from "@/hooks/useModelData";
 import { buildFrontierPaceModel } from "@/lib/frontierPace";
+import { PALETTE } from "@/lib/theme";
 import { useDashboard } from "@/state/DashboardContext";
+
+const RELATIVE_LEGEND: ChartLegendItem[] = [
+  { label: "Top 10", color: PALETTE.top10, shape: "line" },
+  { label: "Black Shirt", color: PALETTE.black, shape: "line" },
+  { label: "White Shirt", color: PALETTE.white, shape: "line" },
+  { label: "DNF", color: PALETTE.dnf, shape: "line" },
+  { label: "Frontier", color: PALETTE.frontier, shape: "dash" },
+];
 
 const VIEW_OPTIONS = [
   { label: "Accumulated overlay", value: "absolute" as const },
@@ -80,40 +90,16 @@ export function FrontierPaceSection() {
             data={model.chartFigure.data}
             layout={model.chartFigure.layout}
             className="plot-card--hero"
+            title="50 % frontier pace along the course"
+            htmlLegend
+            headerExtra={
+              model.totalTimeLabel ? (
+                <>
+                  Frontier time at cut-off <strong>{model.totalTimeLabel}</strong>
+                </>
+              ) : null
+            }
           />
-        ) : null}
-
-        {model.tableRows.length > 0 ? (
-          <div className="table-panel">
-            <div className="table-panel__header">
-              <h4>Frontier splits</h4>
-              {model.totalTimeLabel ? <p>Estimated total: {model.totalTimeLabel}</p> : null}
-            </div>
-            <div className="table-scroll">
-              <table className="data-table">
-                <thead>
-                  <tr>
-                    <th>Split</th>
-                    <th>Distance</th>
-                    <th>Segment time</th>
-                    <th>Cumulative time</th>
-                    <th>Frontier speed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {model.tableRows.map((row) => (
-                    <tr key={row.splitKey}>
-                      <td>{row.splitKey}</td>
-                      <td>{row.distanceKm} km</td>
-                      <td>{row.segmentTime}</td>
-                      <td>{row.cumulativeTime}</td>
-                      <td>{row.frontierSpeedKmh} km/h</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         ) : null}
 
         {model.accumulatedFigure ? (
@@ -121,6 +107,9 @@ export function FrontierPaceSection() {
             data={model.accumulatedFigure.data}
             layout={model.accumulatedFigure.layout}
             className="plot-card--hero"
+            title={mode === "absolute" ? "Accumulated time vs frontier" : "Time gap to the frontier"}
+            htmlLegend={mode === "absolute"}
+            legend={mode === "relative" ? RELATIVE_LEGEND : undefined}
           />
         ) : null}
 

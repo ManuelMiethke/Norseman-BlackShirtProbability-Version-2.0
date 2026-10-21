@@ -1,12 +1,13 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
 import {
   athleteKey,
   filterRowsByYear,
   isBlackFinishType,
   isTop10Rank,
   isWhiteFinishType,
+  isInRankBand,
 } from "@/lib/groups";
 import type { ModelRow } from "@/types/data";
 
@@ -143,6 +144,15 @@ function toProbabilityRows(rows: ModelRow[], selectedYear: number | "All") {
 }
 
 function determineTop10(rows: ProbabilityRow[], selectedYear: number | "All") {
+  return athletesByLastRank(rows, selectedYear, isTop10Rank);
+}
+
+/** Athletes whose rank at their last available split satisfies `test`. */
+function athletesByLastRank(
+  rows: ProbabilityRow[],
+  selectedYear: number | "All",
+  test: (rank: number | null) => boolean,
+) {
   const latestByAthlete = new Map<string, ProbabilityRow>();
   for (const row of rows) {
     const athleteId = athleteKey(row, selectedYear === "All");
@@ -152,13 +162,13 @@ function determineTop10(rows: ProbabilityRow[], selectedYear: number | "All") {
     }
   }
 
-  const top10 = new Set<string>();
+  const matches = new Set<string>();
   for (const [athleteId, row] of latestByAthlete.entries()) {
-    if (isTop10Rank(row.splitRank)) {
-      top10.add(athleteId);
+    if (test(row.splitRank)) {
+      matches.add(athleteId);
     }
   }
-  return top10;
+  return matches;
 }
 
 function buildGroups(
@@ -212,6 +222,23 @@ function buildGroups(
       {
         title: "White Shirt" as const,
         rows: rows.filter((row) => row.finishGroup === "White Shirt"),
+      },
+    ] satisfies GroupTraceConfig[];
+  }
+
+  if (selectedGroup === RANK_BAND_GROUP) {
+    // Athletes ranked 120–160 at their last split (the Black Shirt cut-off),
+    // split by the shirt they eventually received.
+    const bandKeys = athletesByLastRank(rows, selectedYear, isInRankBand);
+    const inBand = (row: ProbabilityRow) => bandKeys.has(athleteKey(row, selectedYear === "All"));
+    return [
+      {
+        title: "Black Shirt" as const,
+        rows: rows.filter((row) => inBand(row) && row.finishGroup === "Black Shirt"),
+      },
+      {
+        title: "White Shirt" as const,
+        rows: rows.filter((row) => inBand(row) && row.finishGroup === "White Shirt"),
       },
     ] satisfies GroupTraceConfig[];
   }
@@ -408,10 +435,10 @@ export function buildBlackShirtProbabilityModel(
     font: { color: "#ffffff" },
     height: 650,
     margin: {
-      l: 50,
-      r: 30,
-      t: 80,
-      b: 50,
+      l: 8,
+      r: 8,
+      t: 26,
+      b: 8,
     },
     legend: {
       font: {
@@ -431,27 +458,16 @@ export function buildBlackShirtProbabilityModel(
     layout[xaxisKey] = {
       domain: subplotDomains[groupIndex],
       range: [0, axisEnd],
-      title: {
-        text: "Leg Distance (km)",
-        font: { color: "#ffffff" },
-      },
       tickmode: "array",
       tickvals: [
         SWIM_LEN,
-        LEG_OFFSET.Bike + 36,
         LEG_OFFSET.Bike + 90,
         LEG_OFFSET.Bike + BIKE_LEN,
         LEG_OFFSET.Run + 21,
         LEG_OFFSET.Run + runLegMax,
       ],
-      ticktext: [
-        "Swim 3.8",
-        "Bike 36",
-        "Bike 90",
-        "Bike 180",
-        "Run 21",
-        `Run ${runLegMax.toFixed(1)}`,
-      ],
+      ticktext: ["Swim", "Bike 90", "T2", "Run 21", `${runLegMax.toFixed(1)}`],
+      tickangle: 0,
       tickfont: { color: "#ffffff" },
       anchor: `y${axisId}`,
     };
@@ -476,6 +492,8 @@ export function buildBlackShirtProbabilityModel(
     warning:
       selectedGroup === "Top 10"
         ? "Top 10 is derived from the last available split rank."
-        : null,
+        : selectedGroup === RANK_BAND_GROUP
+          ? `${RANK_BAND_GROUP} is derived from the rank at the last available split (the cut-off).`
+          : null,
   };
 }

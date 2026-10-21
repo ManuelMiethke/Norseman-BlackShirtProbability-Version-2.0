@@ -1,7 +1,7 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
-import { classifyFinishGroup, filterRowsByYear } from "@/lib/groups";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
+import { classifyFinishGroup, filterRowsByYear, isInRankBand } from "@/lib/groups";
 import type { LongRow } from "@/types/data";
 
 import { PALETTE } from "@/lib/theme";
@@ -20,6 +20,7 @@ type AccumulatedRow = {
   year: number;
   bib: number;
   category: "Top10" | "Black" | "White" | "DNF" | "Other";
+  overallRank: number | null;
   cumDistanceKm: number;
   cumTimeHours: number;
   xPlot: number;
@@ -81,6 +82,7 @@ function normalizeAccumulatedRows(rows: LongRow[]): AccumulatedRow[] {
         year,
         bib,
         category: toAccumulatedCategory(row),
+        overallRank: Number.isFinite(Number(row.overall_rank)) ? Number(row.overall_rank) : null,
         cumDistanceKm: Math.max(0, Math.min(cumDistanceKm, 226)),
         cumTimeHours: Number(row.cum_time_seconds) / 3600,
         xPlot,
@@ -124,6 +126,8 @@ function applyFilters(
     filtered = filtered.filter((row) => row.category === "White");
   } else if (selectedGroup === "DNF") {
     filtered = filtered.filter((row) => row.category === "DNF");
+  } else if (selectedGroup === RANK_BAND_GROUP) {
+    filtered = filtered.filter((row) => isInRankBand(row.overallRank));
   }
 
   return filtered;
@@ -232,20 +236,11 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
       plot_bgcolor: PALETTE.transparent,
       paper_bgcolor: PALETTE.transparent,
       font: { color: "white", family: "IBM Plex Sans, sans-serif" },
-      legend: {
-        orientation: "h",
-        x: 0.02,
-        y: 1.02,
-        xanchor: "left",
-        yanchor: "bottom",
-        bgcolor: PALETTE.transparent,
-        font: { color: "white", size: 12 },
-      },
-      margin: { l: 40, r: 20, t: 20, b: 40 },
+      margin: { l: 8, r: 8, t: 30, b: 8 },
       hovermode: "closest",
       shapes,
       xaxis: {
-        title: { text: "Distance (km)", font: { color: "white", size: 16 } },
+        title: { text: "Distance (km)", font: { color: "white" } },
         range: [0, xMax],
         showgrid: true,
         gridcolor: GRID_COLOR,
@@ -257,7 +252,7 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
         tickfont: { color: "white", size: 14 },
       },
       yaxis: {
-        title: { text: "Time (hours)", font: { color: "white", size: 16 } },
+        title: { text: "Time (hours)", font: { color: "white" } },
         showgrid: true,
         gridcolor: GRID_COLOR,
         griddash: "dot",
@@ -267,7 +262,9 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
       annotations: [
         {
           x: SWIM_KM / 2,
-          y: 1.06,
+          y: 1,
+          yshift: 10,
+          yanchor: "bottom",
           xref: "x",
           yref: "paper",
           text: "Swim",
@@ -276,7 +273,9 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
         },
         {
           x: bikeOffset + BIKE_KM / 2,
-          y: 1.06,
+          y: 1,
+          yshift: 10,
+          yanchor: "bottom",
           xref: "x",
           yref: "paper",
           text: "Bike",
@@ -285,7 +284,9 @@ function buildFigure(rows: AccumulatedRow[]): PlotFigure {
         },
         {
           x: runOffset + RUN_KM / 2,
-          y: 1.06,
+          y: 1,
+          yshift: 10,
+          yanchor: "bottom",
           xref: "x",
           yref: "paper",
           text: "Run",

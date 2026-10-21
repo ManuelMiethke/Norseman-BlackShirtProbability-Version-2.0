@@ -1,7 +1,16 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
-import { athleteKey, classifyFinishGroup, filterRowsByYear, isBlackFinishType, isDnfFinishType, isTop10Rank, isWhiteFinishType } from "@/lib/groups";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
+import {
+  athleteKey,
+  classifyFinishGroup,
+  filterRowsByYear,
+  isBlackFinishType,
+  isDnfFinishType,
+  isTop10Rank,
+  isWhiteFinishType,
+  isInRankBand,
+} from "@/lib/groups";
 import type { CourseProfileRow, LongRow, ModelRow } from "@/types/data";
 
 import { PALETTE } from "@/lib/theme";
@@ -63,7 +72,7 @@ const ACCUMULATED_GAP_KM = 6.0;
 const GRID_COLOR = "rgba(255,255,255,0.22)";
 const TEXT_COLOR = "#eef5fb";
 const PANEL_BG = "rgba(0,0,0,0)";
-const FRONTIER_COLOR = PALETTE.accent;
+const FRONTIER_COLOR = PALETTE.frontier;
 
 const ORDERED_SPLIT_KEYS = [
   "swim_finish",
@@ -175,6 +184,10 @@ function filterModelRowsByGroup(rows: ModelRow[], selectedGroup: GroupOption) {
     return rows.filter((row) => isDnfFinishType(row.finish_type));
   }
 
+  if (selectedGroup === RANK_BAND_GROUP) {
+    return rows.filter((row) => isInRankBand(row.split_rank));
+  }
+
   return rows;
 }
 
@@ -194,6 +207,9 @@ function filterLongRowsByGroup(rows: LongRow[], selectedGroup: GroupOption) {
   }
   if (selectedGroup === "DNF") {
     return rows.filter((row) => isDnfFinishType(row.finish_type));
+  }
+  if (selectedGroup === RANK_BAND_GROUP) {
+    return rows.filter((row) => isInRankBand(row.overall_rank));
   }
 
   return rows;
@@ -450,14 +466,7 @@ function buildFrontierChartFigure(points: FrontierPoint[], courseRows: CoursePro
       paper_bgcolor: PANEL_BG,
       plot_bgcolor: PANEL_BG,
       font: { color: TEXT_COLOR, family: "IBM Plex Sans, sans-serif" },
-      margin: { l: 40, r: 40, t: 26, b: 40 },
-      legend: {
-        orientation: "h",
-        x: 1,
-        y: 1.12,
-        xanchor: "right",
-        yanchor: "bottom",
-      },
+      margin: { l: 8, r: 8, t: 8, b: 8 },
       shapes,
       xaxis: {
         title: { text: "Distance (km)" },
@@ -576,14 +585,7 @@ function buildAbsoluteAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
       paper_bgcolor: PANEL_BG,
       plot_bgcolor: PANEL_BG,
       font: { color: TEXT_COLOR, family: "IBM Plex Sans, sans-serif" },
-      margin: { l: 40, r: 20, t: 20, b: 40 },
-      legend: {
-        orientation: "h",
-        x: 1,
-        y: 1.12,
-        xanchor: "right",
-        yanchor: "bottom",
-      },
+      margin: { l: 8, r: 8, t: 30, b: 8 },
       xaxis: {
         title: { text: "Accumulated race distance" },
         tickmode: "array",
@@ -622,7 +624,9 @@ function buildAbsoluteAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
       annotations: [
         {
           x: SWIM_KM / 2,
-          y: 1.06,
+          y: 1,
+          yshift: 10,
+          yanchor: "bottom",
           xref: "x",
           yref: "paper",
           text: "Swim",
@@ -630,7 +634,9 @@ function buildAbsoluteAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
         },
         {
           x: bikeOffset + BIKE_KM / 2,
-          y: 1.06,
+          y: 1,
+          yshift: 10,
+          yanchor: "bottom",
           xref: "x",
           yref: "paper",
           text: "Bike",
@@ -638,7 +644,9 @@ function buildAbsoluteAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
         },
         {
           x: runOffset + RUN_KM / 2,
-          y: 1.06,
+          y: 1,
+          yshift: 10,
+          yanchor: "bottom",
           xref: "x",
           yref: "paper",
           text: "Run",
@@ -770,7 +778,7 @@ function buildRelativeAccumulatedFigure(rows: LongRow[], frontierPoints: Frontie
       paper_bgcolor: PANEL_BG,
       plot_bgcolor: PANEL_BG,
       font: { color: TEXT_COLOR, family: "IBM Plex Sans, sans-serif" },
-      margin: { l: 40, r: 20, t: 20, b: 40 },
+      margin: { l: 8, r: 8, t: 30, b: 8 },
       xaxis: {
         title: { text: "Distance (km)" },
         gridcolor: GRID_COLOR,
@@ -874,7 +882,11 @@ export function buildFrontierPaceModel(
     chartFigure,
     accumulatedFigure,
     tableRows: toTableRows(frontierPoints),
-    totalTimeLabel: formatHms(frontierPoints[frontierPoints.length - 1]?.cumTimeSeconds ?? null),
+    totalTimeLabel: formatHms(
+      frontierPoints.length > 0
+        ? Math.max(...frontierPoints.map((point) => point.cumTimeSeconds))
+        : null,
+    ),
     warning: accumulatedFigure ? null : "Frontier pace is available, but the accumulated comparison view could not be generated for this filter.",
   };
 }

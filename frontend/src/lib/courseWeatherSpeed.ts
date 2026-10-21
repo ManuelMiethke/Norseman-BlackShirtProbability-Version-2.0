@@ -1,7 +1,7 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
-import { classifyFinishGroup, filterRowsByYear } from "@/lib/groups";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
+import { classifyFinishGroup, filterRowsByYear, isInRankBand } from "@/lib/groups";
 import type { CourseProfileRow, LongRow } from "@/types/data";
 
 import { PALETTE } from "@/lib/theme";
@@ -607,7 +607,7 @@ function buildCourseWeatherSpeedFigure(
     fill: "tozeroy",
     name: "Norseman elevation",
     mode: "lines",
-    line: { width: 1 },
+    line: { width: 1, color: PALETTE.elevationLine },
     fillcolor: "rgba(255,255,255,0.18)",
     opacity: 0.55,
     yaxis: "y2",
@@ -621,7 +621,7 @@ function buildCourseWeatherSpeedFigure(
       y: courseRows.map((row) => row.elev_hawaii_m ?? null),
       name: "Ironman Hawaii elevation",
       mode: "lines",
-      line: { width: 2, dash: "dash" },
+      line: { width: 2, dash: "dash", color: PALETTE.accent },
       opacity: 0.99,
       yaxis: "y2",
       hovertemplate: "Hawaii km %{x:.1f}<br>Elev: %{y:.0f} m<extra></extra>",
@@ -751,7 +751,8 @@ function buildCourseWeatherSpeedFigure(
     if (showArrow) {
       annotations.push({
         x: xValue,
-        y: 1.16,
+        y: 1,
+      yshift: 48,
         xref: "x",
         yref: "paper",
         text: arrow,
@@ -763,7 +764,8 @@ function buildCourseWeatherSpeedFigure(
     }
     annotations.push({
       x: xValue,
-      y: 1.09,
+      y: 1,
+      yshift: 29,
       xref: "x",
       yref: "paper",
       text: row.weatherEmoji ?? "❔",
@@ -774,7 +776,8 @@ function buildCourseWeatherSpeedFigure(
     });
     annotations.push({
       x: xValue,
-      y: 1.03,
+      y: 1,
+      yshift: 11,
       xref: "x",
       yref: "paper",
       text: row.temperature2m !== undefined ? `${row.temperature2m.toFixed(1)}°C` : "–",
@@ -788,7 +791,8 @@ function buildCourseWeatherSpeedFigure(
   annotations.push(
     {
       x: SWIM_KM / 2,
-      y: 1.26,
+      y: 1,
+      yshift: 68,
       xref: "x",
       yref: "paper",
       text: "Swim",
@@ -798,7 +802,8 @@ function buildCourseWeatherSpeedFigure(
     },
     {
       x: bikeOffset + BIKE_KM / 2,
-      y: 1.26,
+      y: 1,
+      yshift: 68,
       xref: "x",
       yref: "paper",
       text: "Bike",
@@ -808,7 +813,8 @@ function buildCourseWeatherSpeedFigure(
     },
     {
       x: runOffset + RUN_KM / 2,
-      y: 1.26,
+      y: 1,
+      yshift: 68,
       xref: "x",
       yref: "paper",
       text: "Run",
@@ -850,7 +856,7 @@ function buildCourseWeatherSpeedFigure(
       paper_bgcolor: "#7A7A7A",
       plot_bgcolor: "#7A7A7A",
       font: { color: "#ffffff" },
-      margin: { l: 46, r: 88, t: 88, b: 50 },
+      margin: { l: 8, r: 8, t: 80, b: 8 },
       height: 560,
       hovermode: "x unified",
       legend: {
@@ -865,7 +871,7 @@ function buildCourseWeatherSpeedFigure(
       annotations,
       shapes,
       xaxis: {
-        title: { text: "Distance (km)", font: { color: "#ffffff", size: 15 } },
+        title: { text: "Distance (km)", font: { color: "#ffffff" } },
         range: [0, xMax],
         tickmode: "array",
         tickvals: pairs.map((pair) => pair.value),
@@ -873,7 +879,7 @@ function buildCourseWeatherSpeedFigure(
         tickfont: { color: "#ffffff", size: 11 },
       },
       yaxis: {
-        title: { text: "Speed (km/h)", font: { color: "#ffffff", size: 15 } },
+        title: { text: "Speed (km/h)", font: { color: "#ffffff" } },
         range: [0, 70],
         tickmode: "array",
         tickvals: [0, 10, 20, 30, 40, 50, 60, 70],
@@ -882,7 +888,7 @@ function buildCourseWeatherSpeedFigure(
         tickfont: { color: "#ffffff", size: 11 },
       },
       yaxis2: {
-        title: { text: "Elevation (m)", font: { color: "#ffffff", size: 15 } },
+        title: { text: "Elevation (m)", font: { color: "#ffffff" } },
         overlaying: "y",
         side: "right",
         rangemode: "tozero",
@@ -913,9 +919,13 @@ export function buildCourseWeatherSpeedModel(
       ? Math.max(...longRows.map((row) => Number(row.year)).filter((year) => Number.isFinite(year)))
       : selectedYear;
 
-  const availableGroups = new Set<string>(longRows.map((row) => groupLabel(row)));
+  const isBand = selectedGroup === RANK_BAND_GROUP;
+  const groupRows = isBand ? longRows.filter((row) => isInRankBand(row.overall_rank)) : longRows;
+  const availableGroups = new Set<string>(groupRows.map((row) => groupLabel(row)));
   let groupsToPlot: string[] = [];
-  if (selectedGroup === "All") {
+  if (isBand) {
+    groupsToPlot = [GROUP_WHITE, GROUP_BLACK].filter((group) => availableGroups.has(group));
+  } else if (selectedGroup === "All") {
     groupsToPlot = GROUPS_ORDER.filter((group) => availableGroups.has(group));
   } else if (selectedGroup === GROUP_DNF) {
     groupsToPlot = [];
@@ -925,7 +935,7 @@ export function buildCourseWeatherSpeedModel(
 
   const splitDistMap = buildSplitDistMap(longRows, effectiveYear);
   const weatherRows = aggregateWeather(longRows, effectiveYear);
-  const speedRows = aggregateSpeedByGroup(longRows, effectiveYear, groupsToPlot);
+  const speedRows = aggregateSpeedByGroup(groupRows, effectiveYear, groupsToPlot);
 
   return {
     figure: buildCourseWeatherSpeedFigure(courseRows, weatherRows, speedRows, groupsToPlot, splitDistMap),

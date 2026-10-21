@@ -345,10 +345,12 @@ function buildTrendFigure(
         type: "bar",
         x: yearly.map((entry) => entry.year),
         y: yearly.map((entry) => entry.medianHours),
-        width: 0.2,
+        width: 0.5,
         marker: { color: PALETTE.bike },
         text: yearly.map((entry) => entry.label),
         textposition: "outside",
+        textfont: { size: 10, color: "#ffffff" },
+        cliponaxis: false,
         hovertemplate: "<b>Year</b>: %{x}<br><b>Median finish</b>: %{text}<extra></extra>",
       },
       {
@@ -378,7 +380,7 @@ function buildTrendFigure(
       },
       yaxis: {
         ...layout.yaxis,
-        title: { text: "Median finish time (hours)", font: { size: 11 } },
+        title: { text: "Median finish (h)", font: { size: 11 } },
         tickfont: { size: 10 },
       },
     },

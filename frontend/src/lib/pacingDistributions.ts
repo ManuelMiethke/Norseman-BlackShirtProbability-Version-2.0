@@ -1,12 +1,13 @@
 import type { Data, Layout } from "plotly.js";
 
-import type { GroupOption } from "@/config/raceRegistry";
+import { RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
 import {
   classifyFinishGroup,
   filterRowsByYear,
   isBlackFinishType,
   isTop10Rank,
   isWhiteFinishType,
+  isInRankBand,
 } from "@/lib/groups";
 import {
   secondsToHms,
@@ -16,8 +17,8 @@ import type { WideRow } from "@/types/data";
 
 import { PALETTE } from "@/lib/theme";
 type PaceMode = "min_per_100m" | "min_per_km" | "kmh" | null;
-type PaceTone = "top10" | "black" | "white";
-type PaceGroupKey = "Top 10" | "Black Shirt" | "White Shirt";
+type PaceTone = "top10" | "black" | "band" | "white";
+type PaceGroupKey = "Top 10" | "Black Shirt" | typeof RANK_BAND_GROUP | "White Shirt";
 type PaceTimeField =
   | "swim_time"
   | "t1_time"
@@ -107,6 +108,11 @@ const GROUP_CONFIG: Record<
     tone: "black",
     fill: "#000000",
     traceLabel: "Black Shirt",
+  },
+  [RANK_BAND_GROUP]: {
+    tone: "band",
+    fill: PALETTE.band,
+    traceLabel: RANK_BAND_GROUP,
   },
   "White Shirt": {
     tone: "white",
@@ -198,6 +204,13 @@ function toPreparedRows(rows: WideRow[], selectedYear: number | "All"): Prepared
       overall_time: timeToSeconds(row.overall_time),
     },
   }));
+}
+
+function rowsForChartGroup(rows: PreparedWideRow[], group: PaceGroupKey) {
+  if (group === RANK_BAND_GROUP) {
+    return rows.filter((row) => isInRankBand(row.overall_rank));
+  }
+  return rows.filter((row) => groupForChart(row) === group);
 }
 
 function groupForChart(row: PreparedWideRow): PaceGroupKey | null {
@@ -323,6 +336,9 @@ function statsGroupsForSelection(selectedGroup: GroupOption): PaceGroupKey[] {
   if (selectedGroup === "White Shirt") {
     return ["White Shirt"];
   }
+  if (selectedGroup === RANK_BAND_GROUP) {
+    return [RANK_BAND_GROUP];
+  }
   return [];
 }
 
@@ -332,6 +348,9 @@ function rowsForStatsGroup(rows: PreparedWideRow[], group: PaceGroupKey) {
   }
   if (group === "Black Shirt") {
     return rows.filter((row) => isBlackFinishType(row.finish_type));
+  }
+  if (group === RANK_BAND_GROUP) {
+    return rows.filter((row) => isInRankBand(row.overall_rank));
   }
   return rows.filter((row) => isWhiteFinishType(row.finish_type));
 }
@@ -343,12 +362,20 @@ function secondaryColumnLabel(mode: PaceMode) {
   return mode === "kmh" ? "Speed" : "Pace";
 }
 
-function buildFigure(rows: PreparedWideRow[], config: PaceLegConfig): PlotFigure {
+function buildFigure(
+  rows: PreparedWideRow[],
+  config: PaceLegConfig,
+  selectedGroup: GroupOption,
+): PlotFigure {
   const traces: Data[] = [];
+  // The comparison band is shown as an extra box next to the outcome groups.
+  const chartGroups: PaceGroupKey[] =
+    selectedGroup === RANK_BAND_GROUP
+      ? ["Top 10", "Black Shirt", RANK_BAND_GROUP, "White Shirt"]
+      : CHART_GROUP_ORDER;
 
-  for (const group of CHART_GROUP_ORDER) {
-    const samples = rows
-      .filter((row) => groupForChart(row) === group)
+  for (const group of chartGroups) {
+    const samples = rowsForChartGroup(rows, group)
       .map((row) => row.legSeconds[config.field])
       .filter(isFiniteNumber);
 
@@ -505,7 +532,7 @@ function buildLegModel(
   return {
     id: config.id,
     title: config.title,
-    figure: buildFigure(rows, config),
+    figure: buildFigure(rows, config, selectedGroup),
     table: buildTable(rows, config, selectedGroup),
   };
 }

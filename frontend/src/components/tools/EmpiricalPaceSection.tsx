@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { ChartInfoPopover } from "@/components/common/ChartInfoPopover";
+import type { ChartLegendItem } from "@/components/common/ChartLegend";
 import { PlotlyChart } from "@/components/common/PlotlyChart";
 import { SectionCard } from "@/components/common/SectionCard";
 import { StateBlock } from "@/components/common/StateBlock";
@@ -14,7 +15,13 @@ import {
   TRAINING_LABELS_SHORT,
   type EmpiricalPref,
 } from "@/lib/empiricalPace";
+import { PALETTE } from "@/lib/theme";
 import { useDashboard } from "@/state/DashboardContext";
+
+const PLANNER_LEGEND: ChartLegendItem[] = [
+  { label: "Recommended speed (km/h)", color: PALETTE.accent, shape: "line" },
+  { label: "Course elevation", color: PALETTE.elevationLine },
+];
 
 function preferenceLabel(
   pref: EmpiricalPref,
@@ -88,97 +95,105 @@ export function EmpiricalPaceSection() {
         )
       : null;
 
+  const disciplines: Array<{
+    key: "swim" | "bike" | "run";
+    label: string;
+    expertLabel: string;
+    value: EmpiricalPref;
+    onChange: (pref: EmpiricalPref) => void;
+    labels: Record<EmpiricalPref, string>;
+  }> = [
+    {
+      key: "swim",
+      label: "Swim training",
+      expertLabel: "Swim (CSS)",
+      value: swimPref,
+      onChange: setSwimPref,
+      labels: model.swimExpertLabels,
+    },
+    {
+      key: "bike",
+      label: "Bike training",
+      expertLabel: "Bike (FTP W/kg)",
+      value: bikePref,
+      onChange: setBikePref,
+      labels: model.bikeExpertLabels,
+    },
+    {
+      key: "run",
+      label: "Run training",
+      expertLabel: "Run (road marathon)",
+      value: runPref,
+      onChange: setRunPref,
+      labels: model.runExpertLabels,
+    },
+  ];
+  const legTiles = [
+    { label: "Swim", time: model.overview.swimTime, pace: model.overview.swimPace },
+    { label: "T1", time: model.overview.t1Time, pace: null },
+    { label: "Bike", time: model.overview.bikeTime, pace: model.overview.bikePace },
+    { label: "T2", time: model.overview.t2Time, pace: null },
+    { label: "Run", time: model.overview.runTime, pace: model.overview.runPace },
+  ];
+
   return (
     <SectionCard title="Pace Planner" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="tool-grid">
-          <label className="tool-field">
-            <span>{expertMode ? "Swim (CSS)" : "Swim Training Time"}</span>
-            <select
-              value={swimPref}
-              onChange={(event) => setSwimPref(event.target.value as EmpiricalPref)}
-            >
-              {EMPIRICAL_PREF_OPTIONS.map((pref) => (
-                <option key={pref} value={pref}>
-                  {preferenceLabel(pref, expertMode, model.swimExpertLabels)}
-                </option>
-              ))}
-            </select>
-          </label>
+        <div className="tool-panel">
+          <p className="tool-panel__intro">
+            How much do you train in each discipline? Pick a level and the planner splits a Black Shirt
+            target time across the legs based on historical Black Shirt finishers.
+          </p>
 
-          <label className="tool-field">
-            <span>{expertMode ? "Bike (FTP W/kg)" : "Bike Training Time"}</span>
-            <select
-              value={bikePref}
-              onChange={(event) => setBikePref(event.target.value as EmpiricalPref)}
-            >
-              {EMPIRICAL_PREF_OPTIONS.map((pref) => (
-                <option key={pref} value={pref}>
-                  {preferenceLabel(pref, expertMode, model.bikeExpertLabels)}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label className="tool-field">
-            <span>{expertMode ? "Run (Road Marathon Time)" : "Run Training Time"}</span>
-            <select
-              value={runPref}
-              onChange={(event) => setRunPref(event.target.value as EmpiricalPref)}
-            >
-              {EMPIRICAL_PREF_OPTIONS.map((pref) => (
-                <option key={pref} value={pref}>
-                  {preferenceLabel(pref, expertMode, model.runExpertLabels)}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        <div className="section-note">
-          <strong>Plan</strong>
-          <span>{model.caption}</span>
-        </div>
-
-        <details className="disclosure-panel">
-          <summary>
-            <span>Plan details</span>
-            <span className="disclosure-panel__chevron">⌄</span>
-          </summary>
-
-          <div className="disclosure-panel__body">
-            <div className="table-scroll">
-              <table className="data-table empirical-table">
-                <thead>
-                  <tr>
-                    <th>Swim Time</th>
-                    <th>Swim Pace</th>
-                    <th>T1 Time</th>
-                    <th>Bike Time</th>
-                    <th>Bike Pace</th>
-                    <th>T2 Time</th>
-                    <th>Run Time</th>
-                    <th>Run Pace</th>
-                    <th>Time at 37.5 km run</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{model.overview.swimTime}</td>
-                    <td>{model.overview.swimPace}</td>
-                    <td>{model.overview.t1Time}</td>
-                    <td>{model.overview.bikeTime}</td>
-                    <td>{model.overview.bikePace}</td>
-                    <td>{model.overview.t2Time}</td>
-                    <td>{model.overview.runTime}</td>
-                    <td>{model.overview.runPace}</td>
-                    <td>{model.overview.timeAtDecision}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="tool-choice-list">
+            {disciplines.map((discipline) => (
+              <div key={discipline.key} className="tool-choice">
+                <span className="tool-choice__label">
+                  {expertMode ? discipline.expertLabel : discipline.label}
+                </span>
+                <div
+                  className="segmented-control segmented-control--stretch"
+                  role="radiogroup"
+                  aria-label={expertMode ? discipline.expertLabel : discipline.label}
+                >
+                  {EMPIRICAL_PREF_OPTIONS.map((pref) => (
+                    <button
+                      key={pref}
+                      type="button"
+                      role="radio"
+                      aria-checked={discipline.value === pref}
+                      className={
+                        discipline.value === pref
+                          ? "segmented-control__button segmented-control__button--active"
+                          : "segmented-control__button"
+                      }
+                      onClick={() => discipline.onChange(pref)}
+                    >
+                      {preferenceLabel(pref, expertMode, discipline.labels)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        </details>
+        </div>
+
+        <div className="plan-tiles">
+          {legTiles.map((tile) => (
+            <article key={tile.label} className="plan-tile">
+              <span>{tile.label}</span>
+              <strong>{tile.time}</strong>
+              {tile.pace ? <em>{tile.pace}</em> : null}
+            </article>
+          ))}
+          <article className="plan-tile plan-tile--feature">
+            <span>At 37.5 km run</span>
+            <strong>{model.overview.timeAtDecision}</strong>
+            <em>Black Shirt decision</em>
+          </article>
+        </div>
+
+        <p className="tool-caption">{model.caption}</p>
 
         {longData.isLoading || courseProfileData.isLoading ? (
           <StateBlock
@@ -223,7 +238,9 @@ export function EmpiricalPaceSection() {
             <PlotlyChart
               data={detailChart.data}
               layout={detailChart.layout}
-              className="plot-card--xl"
+              className="plot-card--focus"
+              title="Recommended speed per segment"
+              legend={PLANNER_LEGEND}
             />
           ) : null}
 

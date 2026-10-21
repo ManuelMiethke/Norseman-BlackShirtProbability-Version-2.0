@@ -14,16 +14,31 @@ import {
 } from "@/lib/catchup";
 import { useDashboard } from "@/state/DashboardContext";
 
+type Leg = "bike" | "run";
+
+const LEG_LIMITS: Record<Leg, { max: number; placeholder: string; hint: string }> = {
+  bike: { max: 180, placeholder: "50", hint: "0 – 180 km on the bike" },
+  run: { max: 37, placeholder: "5", hint: "0 – 37 km on the run" },
+};
+
 function percentageLabel(value: number | null) {
   return value === null || Number.isNaN(value) ? "–" : `${(value * 100).toFixed(1)} %`;
+}
+
+function clampPercent(value: number | null) {
+  if (value === null || Number.isNaN(value)) {
+    return 0;
+  }
+  return Math.max(0, Math.min(100, value * 100));
 }
 
 export function CatchupSection() {
   const modelData = useModelData();
   const { selectedYear } = useDashboard();
-  const [bikeKm, setBikeKm] = useState("");
-  const [runKm, setRunKm] = useState("");
-  const [raceTime, setRaceTime] = useState("");
+  const [leg, setLeg] = useState<Leg>("bike");
+  const [km, setKm] = useState("");
+  const [hours, setHours] = useState("");
+  const [minutes, setMinutes] = useState("");
   const headerActions = (
     <div className="section-toolbar">
       <ChartInfoPopover title="Odds" info={CATCHUP_INFO} />
@@ -66,62 +81,129 @@ export function CatchupSection() {
     );
   }
 
+  // The estimator expects "hh:mm"; the form collects hours and minutes separately.
+  const raceTime =
+    hours.trim() || minutes.trim()
+      ? `${hours.trim() || "0"}:${(minutes.trim() || "0").padStart(2, "0")}`
+      : "";
   const empirical = computeEmpiricalParameters(rows);
-  const result = computeCatchup(rows, empirical, bikeKm, runKm, raceTime);
+  const result = computeCatchup(
+    rows,
+    empirical,
+    leg === "bike" ? km : "",
+    leg === "run" ? km : "",
+    raceTime,
+  );
+  const hasInput = km.trim() !== "" && raceTime !== "";
+  const probability = clampPercent(result.probabilityModel);
 
   return (
     <SectionCard title="Odds" headerActions={headerActions}>
       <div className="section-stack">
-        <div className="tool-grid">
-          <label className="tool-field">
-            <span>Bike km</span>
-            <input
-              type="text"
-              value={bikeKm}
-              onChange={(event) => setBikeKm(event.target.value)}
-              placeholder="e.g. 50"
-            />
-          </label>
+        <div className="tool-panel">
+          <p className="tool-panel__intro">
+            Where are you in the race? Enter your position and elapsed race time to see your Black Shirt
+            odds and the pace you need until the Stavsro cut-off.
+          </p>
 
-          <label className="tool-field">
-            <span>Run km</span>
-            <input
-              type="text"
-              value={runKm}
-              onChange={(event) => setRunKm(event.target.value)}
-              placeholder="e.g. 5"
-            />
-          </label>
+          <div className="tool-form">
+            <div className="tool-field">
+              <span>Leg</span>
+              <div className="segmented-control segmented-control--compact" role="tablist" aria-label="Current leg">
+                {(["bike", "run"] as const).map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    className={
+                      leg === option
+                        ? "segmented-control__button segmented-control__button--active"
+                        : "segmented-control__button"
+                    }
+                    onClick={() => setLeg(option)}
+                  >
+                    {option === "bike" ? "Bike" : "Run"}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-          <label className="tool-field tool-field--wide">
-            <span>Race time at this point (hh:mm)</span>
-            <input
-              type="text"
-              value={raceTime}
-              onChange={(event) => setRaceTime(event.target.value)}
-              placeholder="hh:mm"
-            />
-          </label>
+            <label className="tool-field">
+              <span>Distance on this leg</span>
+              <div className="tool-input">
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  max={LEG_LIMITS[leg].max}
+                  step={1}
+                  value={km}
+                  onChange={(event) => setKm(event.target.value)}
+                  placeholder={LEG_LIMITS[leg].placeholder}
+                />
+                <em>km</em>
+              </div>
+              <small>{LEG_LIMITS[leg].hint}</small>
+            </label>
+
+            <div className="tool-field">
+              <span>Race time so far</span>
+              <div className="tool-time">
+                <div className="tool-input">
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={23}
+                    step={1}
+                    value={hours}
+                    onChange={(event) => setHours(event.target.value)}
+                    placeholder="9"
+                    aria-label="Hours"
+                  />
+                  <em>h</em>
+                </div>
+                <div className="tool-input">
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={59}
+                    step={1}
+                    value={minutes}
+                    onChange={(event) => setMinutes(event.target.value)}
+                    placeholder="30"
+                    aria-label="Minutes"
+                  />
+                  <em>min</em>
+                </div>
+              </div>
+              <small>Since the swim start</small>
+            </div>
+          </div>
         </div>
 
         {result.kmError ? (
-          <StateBlock title="Distance error" description={result.kmError} tone="error" />
+          <StateBlock title="Distance" description={result.kmError} tone="error" />
         ) : null}
 
         {result.timeError ? (
-          <StateBlock title="Time error" description={result.timeError} tone="error" />
+          <StateBlock title="Race time" description={result.timeError} tone="error" />
         ) : null}
 
-        <div className="kpi-grid">
-          <article className="metric-card">
+        <div className="tool-results">
+          <article className="metric-card tool-result tool-result--feature">
             <div className="metric-card__header">
               <h4>Black Shirt probability</h4>
               <span>Model</span>
             </div>
             <strong className="tool-metric">{percentageLabel(result.probabilityModel)}</strong>
+            <div className="tool-meter" aria-hidden="true">
+              <div className="tool-meter__fill" style={{ width: `${probability}%` }} />
+            </div>
+            {!hasInput ? <p className="tool-result__hint">Fill in distance and race time above.</p> : null}
           </article>
 
-          <article className="metric-card">
+          <article className="metric-card tool-result">
             <div className="metric-card__header">
               <h4>Similar athletes</h4>
               <span>{result.sampleSize > 0 ? `n = ${result.sampleSize}` : "Historical share"}</span>
@@ -129,15 +211,15 @@ export function CatchupSection() {
             <strong className="tool-metric">{percentageLabel(result.probabilityEmpirical)}</strong>
           </article>
 
-          <article className="metric-card">
+          <article className="metric-card tool-result">
             <div className="metric-card__header">
-              <h4>Required bike pace</h4>
+              <h4>Required bike speed</h4>
               <span>Until Stavsro</span>
             </div>
             <strong className="tool-metric">{formatSpeedKmh(result.bikeSpeedRequired)}</strong>
           </article>
 
-          <article className="metric-card">
+          <article className="metric-card tool-result">
             <div className="metric-card__header">
               <h4>Required run pace</h4>
               <span>Until Stavsro</span>

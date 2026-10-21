@@ -1,11 +1,7 @@
 import type { Data, Layout } from "plotly.js";
 
-import { RACE_YEAR_REGISTRY, type GroupOption } from "@/config/raceRegistry";
-import {
-  isBlackFinishType,
-  isDnfFinishType,
-  isWhiteFinishType,
-} from "@/lib/groups";
+import { RACE_YEAR_REGISTRY, RANK_BAND_GROUP, type GroupOption } from "@/config/raceRegistry";
+import { isBlackFinishType, isDnfFinishType, isWhiteFinishType, isInRankBand } from "@/lib/groups";
 import type { LongRow } from "@/types/data";
 
 const SWIM_KM = 3.8;
@@ -232,9 +228,14 @@ function athleteInGroup(
   finishType: string,
   top10AtCutoff: boolean,
   group: GroupOption,
+  rankAtCutoff?: number,
 ): boolean {
   if (group === "All") {
     return true;
+  }
+
+  if (group === RANK_BAND_GROUP) {
+    return isInRankBand(rankAtCutoff);
   }
 
   if (group === "Top 10") {
@@ -667,7 +668,7 @@ function buildAllAthletesFigure(
   }));
 
   const athletes = athleteMeta
-    .filter((row) => athleteInGroup(row.finishType, row.top10AtCutoff, group))
+    .filter((row) => athleteInGroup(row.finishType, row.top10AtCutoff, group, row.lastRankAtCutoff))
     .sort((left, right) => left.lastRankAtCutoff - right.lastRankAtCutoff);
 
   if (athletes.length === 0) {

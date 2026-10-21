@@ -60,7 +60,8 @@ export function BlackShirtProbabilitySection() {
           <PlotlyChart
             data={model.figure.data}
             layout={model.figure.layout}
-            className="plot-card--xl"
+            className="plot-card--focus"
+            htmlLegend
           />
         ) : (
           <StateBlock
