@@ -205,9 +205,23 @@ function effectiveCutoffYears(selectedYear: YearOption) {
   return CUTOFF_37_5_YEARS;
 }
 
+/**
+ * Elapsed time at the 37.5 km cut-off (Stavsro). `run` is the full marathon,
+ * so only the share up to the cut-off counts.
+ */
+export function timeAtDecision(legTimes: EmpiricalLegTimes) {
+  return (
+    legTimes.swim +
+    legTimes.t1 +
+    legTimes.bike +
+    legTimes.t2 +
+    legTimes.run * (RUN_DECISION_DIST_KM / RUN_DIST_KM)
+  );
+}
+
+/** Scales all legs so the plan reaches the 37.5 km cut-off exactly at the target time. */
 function scaleLegsToTarget(legTimes: EmpiricalLegTimes) {
-  const baselineTotal = Object.values(legTimes).reduce((sum, value) => sum + value, 0);
-  const scale = TARGET_TOTAL_SECS / baselineTotal;
+  const scale = TARGET_TOTAL_SECS / timeAtDecision(legTimes);
   return {
     swim: legTimes.swim * scale,
     t1: legTimes.t1 * scale,
@@ -250,8 +264,8 @@ function applyPrefBiasesExplore(
 }
 
 function buildOverview(legTimes: EmpiricalLegTimes): EmpiricalOverviewRow {
-  // Preserve the original Streamlit table behavior exactly, even though the label
-  // refers to the 37.5 km decision point while the value is the summed plan time.
+  // "Run" is the full marathon (pace over 42.2 km); the decision time only
+  // counts the run up to the 37.5 km cut-off.
   return {
     swimTime: formatHms(legTimes.swim),
     swimPace: formatSwimPace(legTimes.swim),
@@ -261,9 +275,7 @@ function buildOverview(legTimes: EmpiricalLegTimes): EmpiricalOverviewRow {
     t2Time: formatHms(legTimes.t2),
     runTime: formatHms(legTimes.run),
     runPace: formatRunPace(legTimes.run),
-    timeAtDecision: formatHms(
-      legTimes.swim + legTimes.t1 + legTimes.bike + legTimes.t2 + legTimes.run,
-    ),
+    timeAtDecision: formatHms(timeAtDecision(legTimes)),
   };
 }
 
@@ -588,14 +600,14 @@ export function buildEmpiricalPlanModel({
     return accumulator;
   }, {} as Record<EmpiricalPref, string>);
 
-  const totalTime = Object.values(legTimes).reduce((sum, value) => sum + value, 0);
+  const totalTime = timeAtDecision(legTimes);
 
   return {
     legTimes,
     overview: buildOverview(legTimes),
     caption: exploreMode
-      ? `Explore mode: leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, and the total time is unlocked. The current plan sums to ${formatHms(totalTime)}.`
-      : `Leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, scaled to a fixed target total of ${formatHms(totalTime)} (median time of rank ~160 at the cut-off).`,
+      ? `Explore mode: leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, and the total time is unlocked. The current plan reaches the 37.5 km cut-off after ${formatHms(totalTime)}.`
+      : `Leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, scaled so the plan reaches the 37.5 km cut-off after ${formatHms(totalTime)} (median time of rank ~160 at the cut-off).`,
     swimExpertLabels,
     bikeExpertLabels,
     runExpertLabels,

@@ -8,10 +8,10 @@ import {
   matchesGroup,
   isWhiteFinishType,
 } from "@/lib/groups";
+import { FONT_BODY, PALETTE } from "@/lib/theme";
 import { formatDelta, secondsToHms, timeToSeconds } from "@/lib/time";
 import type { WideRow } from "@/types/data";
 
-import { PALETTE } from "@/lib/theme";
 const SEGMENT_LABELS = ["Swim", "Bike", "Run"];
 const SEGMENT_DISTANCES = [3.8, 180.2, 42.2];
 const SEGMENT_COLORS = {
@@ -33,7 +33,11 @@ function buildPieFigure(
   text: string[],
   titleBackground: string,
   titleColor: string,
+  options: { swimOutside?: boolean } = {},
 ): GroupFigure {
+  // The swim slice of the distance pie is only ~2 % – too thin for an inside
+  // label, so it is pulled out and labelled outside in a larger font.
+  const swimOutside = options.swimOutside ?? false;
   return {
     key: title,
     title,
@@ -48,18 +52,26 @@ function buildPieFigure(
         },
         text,
         textinfo: "text",
-        textposition: "inside",
+        textposition: swimOutside ? ["outside", "inside", "inside"] : "inside",
         insidetextorientation: "horizontal",
-        domain: {
-          x: [0.04, 0.96],
-          y: [0.04, 0.96],
-        },
+        pull: swimOutside ? [0.1, 0, 0] : 0,
+        // Swim first, clockwise from ~3 o'clock, so its outside label sits on
+        // the free right-hand side of the panel.
+        ...(swimOutside ? { sort: false, direction: "clockwise", rotation: 84 } : {}),
+        domain: swimOutside
+          ? { x: [0.02, 0.72], y: [0.04, 0.9] }
+          : { x: [0.04, 0.96], y: [0.04, 0.96] },
         textfont: {
           size: 14,
           color: "#ffffff",
         },
+        outsidetextfont: {
+          size: 15,
+          color: "#ffffff",
+          family: FONT_BODY,
+        },
         hovertemplate: "%{label}<br>%{text}<extra></extra>",
-      },
+      } as Data,
     ],
     layout: {
       paper_bgcolor: "rgba(0,0,0,0)",
@@ -191,7 +203,14 @@ export function buildTimeRelationFigures(
   );
 
   const figures: GroupFigure[] = [
-    buildPieFigure("Distance", distancePercentages, distanceText, "rgba(0,0,0,0)", "#ffffff"),
+    buildPieFigure(
+      "Distance",
+      distancePercentages,
+      distanceText.map((label, index) => (index === 0 ? `<b>Swim</b><br>${label}` : label)),
+      "rgba(0,0,0,0)",
+      "#ffffff",
+      { swimOutside: true },
+    ),
   ];
 
   if (selectedGroup === "DNF") {

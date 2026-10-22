@@ -12,6 +12,7 @@ import {
   buildEmpiricalDetailChart,
   buildEmpiricalPlanModel,
   EMPIRICAL_PREF_OPTIONS,
+  timeAtDecision,
   TRAINING_LABELS_SHORT,
   type EmpiricalPref,
 } from "@/lib/empiricalPace";
@@ -178,10 +179,7 @@ export function EmpiricalPaceSection() {
       placement: place("runToCutoff", legTimes.run * RUN_TO_CUTOFF_SHARE),
     },
   ];
-  const decisionPlacement = place(
-    "atCutoff",
-    legTimes.swim + legTimes.t1 + legTimes.bike + legTimes.t2 + legTimes.run,
-  );
+  const decisionPlacement = place("atCutoff", timeAtDecision(legTimes));
 
   return (
     <SectionCard title="Pace Planner" headerActions={headerActions}>
