@@ -35,8 +35,8 @@ function buildPieFigure(
   titleColor: string,
   options: { swimOutside?: boolean } = {},
 ): GroupFigure {
-  // The swim slice of the distance pie is only ~2 % – too thin for an inside
-  // label, so it is pulled out and labelled outside in a larger font.
+  // The swim slice of the distance pie is only ~2 % – too thin for a readable
+  // inside label, so its label sits just outside the slice instead.
   const swimOutside = options.swimOutside ?? false;
   return {
     key: title,
@@ -54,19 +54,15 @@ function buildPieFigure(
         textinfo: "text",
         textposition: swimOutside ? ["outside", "inside", "inside"] : "inside",
         insidetextorientation: "horizontal",
-        pull: swimOutside ? [0.1, 0, 0] : 0,
-        // Swim first, clockwise from ~3 o'clock, so its outside label sits on
-        // the free right-hand side of the panel.
-        ...(swimOutside ? { sort: false, direction: "clockwise", rotation: 84 } : {}),
         domain: swimOutside
-          ? { x: [0.02, 0.72], y: [0.04, 0.9] }
+          ? { x: [0.1, 0.9], y: [0.04, 0.84] }
           : { x: [0.04, 0.96], y: [0.04, 0.96] },
         textfont: {
           size: 14,
           color: "#ffffff",
         },
         outsidetextfont: {
-          size: 15,
+          size: 11,
           color: "#ffffff",
           family: FONT_BODY,
         },
@@ -206,7 +202,7 @@ export function buildTimeRelationFigures(
     buildPieFigure(
       "Distance",
       distancePercentages,
-      distanceText.map((label, index) => (index === 0 ? `<b>Swim</b><br>${label}` : label)),
+      distanceText,
       "rgba(0,0,0,0)",
       "#ffffff",
       { swimOutside: true },
