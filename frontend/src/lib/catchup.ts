@@ -1,10 +1,11 @@
+import { BLACK_SHIRT_TARGET_AT_CUTOFF_S } from "@/config/raceRegistry";
 import type { ModelRow } from "@/types/data";
 
 const SWIM_DIST_KM = 3.8;
 const BIKE_DIST_KM = 180;
 const RUN_STAVSRO_DIST_KM = 37.5;
 const TOTAL_STAVSRO_DIST_AFTER_SWIM = BIKE_DIST_KM + RUN_STAVSRO_DIST_KM;
-const STAVSRO_CUTOFF_TIME_S = 13 * 3600 + 51 * 60;
+const STAVSRO_CUTOFF_TIME_S = BLACK_SHIRT_TARGET_AT_CUTOFF_S;
 const T2_FIXED_TIME_S = 4 * 60;
 const RUN_ALERT_PACE_MIN_PER_KM = 5.5;
 

@@ -543,24 +543,27 @@ export const EMPIRICAL_PACE_INFO: ChartInfoSpec = {
     {
       heading: "What is shown",
       bullets: [
-        "This planner builds a Black Shirt pacing blueprint for a 13:51 finish target.",
-        "The overview table and detailed chart scale historical Black Shirt pacing patterns from the years that used the 37.5 km decision rule.",
-        "Explore mode lets you redistribute strength across swim, bike and run while keeping the target framework intact.",
+        "This planner builds a Black Shirt pacing blueprint for a 13:48 target at the 37.5 km decision point – the median time of rank ~160 at the cut-off in 2024–2026.",
+        "Pick a training level per discipline; the leg times and paces below are scaled from historical Black Shirt pacing patterns of the years with the 37.5 km decision rule.",
+        "Each tile also shows how the planned time ranks in the most recent race: the share of the whole field and of the Black Shirt finishers that were slower.",
+        "The chart overlays the recommended speed with the course profile to show where the plan accelerates or softens.",
       ],
     },
     {
-      heading: "How to interpret it",
+      heading: "How to read the percentages",
       bullets: [
-        "The summary table translates the target into leg times and paces.",
-        "The detailed chart overlays recommended speed with the course profile to show where the plan accelerates or softens.",
-        "Changing the discipline preferences shifts the distribution while preserving the overall pacing logic.",
+        "\"Field\" = everyone of the latest race year with a valid time for that leg (Black, White and DNF athletes up to where they stopped).",
+        "\"Black Shirts\" = only that year's Black Shirt finishers. 59 % means: 59 % of the Black Shirts were slower in this leg than your plan.",
+        "Run is compared only up to the 37.5 km cut-off at Stavsro, because White Shirts finish at a different place and their full run time is not comparable.",
+        "\"At 37.5 km run\" compares the plan with the elapsed race time at the Stavsro cut-off.",
+        "The comparison always uses the latest race year, independent of the year filter – conditions such as water temperature or wind change a lot from year to year.",
       ],
     },
     {
-      heading: "Why it is useful",
+      heading: "Modes",
       bullets: [
-        "It turns historical Black Shirt outcomes into a realistic pacing benchmark.",
-        "It helps test how discipline strengths affect a full-race plan before race day.",
+        "Explore mode lets you redistribute strength across swim, bike and run and unlocks the total time.",
+        "Expert mode replaces the training levels with concrete benchmarks (CSS, FTP in W/kg, road marathon time).",
       ],
     },
   ],

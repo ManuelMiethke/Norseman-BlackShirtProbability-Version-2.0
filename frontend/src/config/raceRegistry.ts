@@ -4,6 +4,14 @@
  * move the band, e.g. to 120–160.
  */
 export const RANK_BAND = { min: 140, max: 180 } as const;
+
+/**
+ * Black Shirt target time at the 37.5 km cut-off (Stavsro): the median elapsed
+ * time of rank ~160 at the cut-off over the years with the 37.5 km rule
+ * (2024–2026, see "Outcome Mix" on the overview). Updated from 13:51 to 13:48
+ * after adding the 2026 race. Used by the Pace Planner and the Odds tool.
+ */
+export const BLACK_SHIRT_TARGET_AT_CUTOFF_S = 13 * 3600 + 48 * 60;
 export const RANK_BAND_GROUP = "Places 140–180" as const;
 
 export type GroupOption =

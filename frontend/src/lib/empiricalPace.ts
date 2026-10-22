@@ -1,10 +1,10 @@
 import type { Data, Layout } from "plotly.js";
 
-import { CUTOFF_37_5_YEARS } from "@/config/raceRegistry";
+import { BLACK_SHIRT_TARGET_AT_CUTOFF_S, CUTOFF_37_5_YEARS } from "@/config/raceRegistry";
 import type { CourseProfileRow, LongRow } from "@/types/data";
 
 import { PALETTE } from "@/lib/theme";
-const TARGET_TOTAL_SECS = 13 * 3600 + 51 * 60;
+const TARGET_TOTAL_SECS = BLACK_SHIRT_TARGET_AT_CUTOFF_S;
 const PREF_OPTIONS = ["p10", "p25", "p50", "p75", "p90"] as const;
 
 const PREF_FACTORS: Record<EmpiricalPref, number> = {
@@ -595,7 +595,7 @@ export function buildEmpiricalPlanModel({
     overview: buildOverview(legTimes),
     caption: exploreMode
       ? `Explore mode: leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, and the total time is unlocked. The current plan sums to ${formatHms(totalTime)}.`
-      : `Leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, scaled to a fixed target total of ${formatHms(totalTime)} (13:51).`,
+      : `Leg distribution is based on empirical Black Shirt medians from the years with the 37.5 km Black-Shirt cut-off, scaled to a fixed target total of ${formatHms(totalTime)} (median time of rank ~160 at the cut-off).`,
     swimExpertLabels,
     bikeExpertLabels,
     runExpertLabels,
