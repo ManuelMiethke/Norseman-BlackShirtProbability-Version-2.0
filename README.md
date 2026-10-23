@@ -76,6 +76,16 @@ The main migrated route is available at `http://127.0.0.1:5173/overview`.
 
 The migrated `Pacing & Course` route is available at `http://127.0.0.1:5173/pacing-course`.
 
+### Publish the React app on GitHub Pages
+
+The workflow `.github/workflows/deploy-pages.yml` builds `frontend/` and deploys it on every push to `main`.
+
+- One-time setup: GitHub repo → Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+- Live URL: https://manuelmiethke.github.io/Norseman-BlackShirtProbability-Version-2.0/
+- The workflow sets `BASE_PATH=/<repository>/`; locally the app keeps running under `/`.
+- `npm run build` first runs `scripts/prepare-data.mjs` (trimmed CSVs, no athlete names) and afterwards copies `index.html` to `404.html` so deep links like `/tools` work.
+- Test the Pages build locally: `cd frontend && BASE_PATH=/Norseman-BlackShirtProbability-Version-2.0/ npm run build && npx vite preview --base /Norseman-BlackShirtProbability-Version-2.0/`
+
 ## Current architecture decisions
 
 ### 1. Shared configuration first, not a rewrite
